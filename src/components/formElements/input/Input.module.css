@@ -1,0 +1,49 @@
+.wrapper {
+   width: 400px;
+   height: 60px;
+   position: relative;
+}
+.label {
+   color: black;
+   font-size: 18px;
+   font-weight: 400;
+   margin-top: 10px;
+}
+.input {
+   background: white;
+   color: black;
+   height: 26px;
+   width: 350px;
+   font-size: 16px;
+   font-weight: 400;
+   margin-top: 10px;
+   border: 2px solid rgb(212, 212, 243);
+}
+.hint {
+   height: 22px;
+   width: 480px;
+   font-size: 16px;
+   background: red;
+   border: 1px solid red;
+   color: white;
+   padding-top: 8px;
+   margin-top: -8px;
+   position: absolute;
+   margin-top: 10px;
+   margin-left: 10px;
+   opacity: 0;
+}
+.hint::before {
+   content: "";
+   width: 0;
+   height: 0;
+   border-top: 10px solid transparent;
+   border-bottom: 10px solid transparent;
+   border-right: 10px solid red;
+   position: absolute;
+   margin-left: -10px;
+   margin-top: -4px;
+}
+.input:invalid + .hint {
+   opacity: 1;
+}

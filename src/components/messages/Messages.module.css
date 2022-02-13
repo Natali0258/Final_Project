@@ -1,0 +1,52 @@
+.messages {
+   display: flex;
+   justify-content: center;
+   width: 100%;
+   background-color: black;
+   height: 700px;
+}
+.wrapper {
+   display: flex;
+   justify-content: center;
+   min-width: 1235px;
+   margin: 0 auto;
+   position: relative;
+   font-family: "Inter", sans-serif;
+}
+.messageBike {
+   background-image: url(./messageBike.jpg);
+   position: absolute;
+   background-position: center center;
+   min-width: 1235px;
+   height: 700px;
+   margin: 0 auto;
+   z-index: 1;
+}
+.table {
+   position: absolute;
+   margin: 100px 20px;
+   width: calc(100%-20px);
+   padding: 10px 0;
+   border: 2px solid #000000;
+   border-collapse: collapse;
+   background: rgba(245, 237, 221, 0.993);
+   border: 1px solid #000000;
+   color: #000000;
+   z-index: 2;
+}
+th,
+td {
+   height: 100%;
+   border: 2px solid #000000;
+   padding: 5px;
+}
+.delCheck {
+   align-items: center;
+   text-align: center;
+   font-size: 24px;
+}
+.btn {
+   margin-top: 600px;
+   margin-left: 930px;
+   z-index: 2;
+}
