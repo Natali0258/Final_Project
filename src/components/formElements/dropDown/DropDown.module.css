@@ -1,0 +1,24 @@
+.wrap {
+   width: 400px;
+   height: 60px;
+   margin-top: 10px;
+   position: relative;
+}
+.label {
+   height: 26px;
+   width: 350px;
+   color: black;
+   font-size: 18px;
+   font-weight: 400;
+}
+.select {
+   display: flex;
+}
+.select,
+option {
+   height: 26px;
+   width: 350px;
+   color: black;
+   font-size: 16px;
+   font-weight: 400;
+}

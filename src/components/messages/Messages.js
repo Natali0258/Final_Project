@@ -1,8 +1,18 @@
 import React from 'react';
+import { useState } from 'react';
 import Button from '../formElements/button/Button';
 import css from './Messages.module.css';
 
 const Messages = (props) => {
+   const { messages } = props;
+   const [checked, setChecked] = useState(false);
+
+   const chengeCheckbox = () => {
+      setChecked(checked => {
+         return !checked
+      });
+   }
+
    return (
       <div className={css.messages}>
          <div className={css.wrapper}>
@@ -19,44 +29,26 @@ const Messages = (props) => {
                   <th>Статус сообщения</th>
                   <th>Удалить сообщение</th>
                </tr>
-               <tr>
-                  <td>Иванов</td>
-                  <td>30.07.2021</td>
-                  <td>29.07.2021</td>
-                  <td>2200000022222</td>
-                  <td>sport</td>
-                  <td>фиолетовый</td>
-                  <td>Петров А.В.</td>
-                  <td>одобрен</td>
-                  <td className={css.delCheck}><input type='checkbox' name='del' /></td>
-               </tr>
-               <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td className={css.delCheck}><input type='checkbox' name='del' /></td>
-               </tr>
-               <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td className={css.delCheck}><input type='checkbox' name='del' /></td>
-               </tr>
-               <tr></tr>
+               {messages.map(message => {
+                  return (
+                     <tr>
+                        <td>{message.ownerFullName}</td>
+                        <td>{message.createdAd}</td>
+                        <td>{message.date}</td>
+                        <td>{message.licenseNumber}</td>
+                        <td>{message.type}</td>
+                        <td>{message.color}</td>
+                        <td>{message.officer}</td>
+                        <td>{message.status}</td>
+                        <td className={css.delCheck}><input type='checkbox' name='del' onChange={chengeCheckbox} /></td>
+                     </tr>
+                  )
+               })
+               }
             </table>
             <Button name={'Удалить'} />
          </div>
-      </div>
+      </div >
    )
 }
 export default Messages;

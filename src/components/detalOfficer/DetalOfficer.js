@@ -14,7 +14,7 @@ const DetalOfficer = (props) => {
                <p className={css.title}>Детальная страница сотрудника</p>
                <form className={css.container}>
                   <label className={css.label}>Фамилия сотрудника:</label>
-                  <input className={css.input}></input>
+                  <input className={css.label}></input>
                   <label className={css.label}>Имя сотрудника:</label>
                   <input className={css.input}></input>
                   <label className={css.label}>E-mail адрес сотрудника:</label>

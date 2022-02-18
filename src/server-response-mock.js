@@ -31,7 +31,7 @@ const mock = {
          updatedAd: '2021-07-30',
          color: 'black',
          date: '2021-07-19',
-         officer: 1,
+         officer: 'Сидоров',
          description: 'контакт.телефон:+7(913)222-22-22',
          resolution: '',
       },
@@ -45,7 +45,7 @@ const mock = {
          updatedAd: '2021-09-11',
          color: 'blue',
          date: '2021-08-04',
-         officer: 1,
+         officer: 'Сидоров',
          description: 'контакт.телефон:+7(913)777-22-33',
          resolution: '',
       }

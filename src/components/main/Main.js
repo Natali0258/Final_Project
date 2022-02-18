@@ -9,13 +9,15 @@ import DetalOfficer from '../detalOfficer/DetalOfficer';
 import css from './Main.module.css';
 
 const Main = (props) => {
+   const { messages, setMessages, users, setUsers, addNewMessages } = props;
+
    return (
       <main className={css.main}>
          <MainPage />
-         <MessageForm />
-         <Messages />
+         <MessageForm messages={messages} addNewMessages={addNewMessages} />
+         <Messages messages={messages} />
          <DetalMessage />
-         <Officer />
+         <Officer users={users} />
          <DetalOfficer />
       </main >
    )

@@ -8,12 +8,15 @@ import Registration from '../registration/Registration';
 import AuthorizationResult from '../authorizationResult/AuthorizationResult';
 
 const Header = (props) => {
+   const { isLogged, loggedUser, addNewOfficer, ref } = props;
+
    const [isResult, setResultat] = useState(false);//результат отправки пароля (true-пользователь существует)
-   const { isLogged, loggedUser } = props;
+
    console.log('isLogged=', isLogged);
    console.log('isResult in Header=', isResult);
    const [isFormAuthorization, setFormAuthorization] = useState(false);
    const [isFormRegistration, setFormRegistration] = useState(false);
+
    const handleClickAuthorization = () => {
       //event.preventDeflt();
       console.log('Entry');
@@ -22,7 +25,6 @@ const Header = (props) => {
    }
 
    const handleClickRegistration = () => {
-      //event.preventDeflt();
       console.log('Registration');
       setFormRegistration(!isFormRegistration);
       console.log('Регистрация');
@@ -55,7 +57,10 @@ const Header = (props) => {
                {isFormRegistration &&
                   (<>
                      <button className={css.registration} type='button' onClick={handleClickRegistration}>Регистрация</button>
-                     < Registration />
+                     < Registration addNewOfficer={addNewOfficer}
+                        isFormRegistration={isFormRegistration}
+                        setFormRegistration={setFormRegistration}
+                        ref={ref} />
                   </>)
                }
 

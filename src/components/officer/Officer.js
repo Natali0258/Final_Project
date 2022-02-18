@@ -2,6 +2,7 @@ import React from 'react';
 import css from './Officer.module.css';
 
 const Officer = (props) => {
+   const { users } = props;
    return (
       <div className={css.officer}>
          <div className={css.wrapper}>
@@ -14,11 +15,16 @@ const Officer = (props) => {
                   <div className={css.email}>E-mail адрес сотрудника</div>
                   <div className={css.approved}>Статус сотрудника</div>
                   <div className={css.del}>удалить</div>
-                  <div>Сидоров</div>
-                  <div>Петр</div>
-                  <div>123@mail.ru</div>
-                  <div>одобрен</div>
-                  <div><input className={css.delCheck} type='checkbox' name='del'></input></div>
+                  {users.map(user => {
+                     return (<>
+                        <div>{user.lastName}</div>
+                        <div>{user.firstName}</div>
+                        <div>{user.email}</div>
+                        <div>{user.approved ? 'одобрен' : ''}</div>
+                        <div><input className={css.delCheck} type='checkbox' name='del'></input></div>
+                     </>)
+                  })}
+
                </div>
                <button className={css.btn}>Удалить</button>
             </div>

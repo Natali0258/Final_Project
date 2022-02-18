@@ -1,0 +1,20 @@
+.wrapper {
+   margin-top: 10px;
+   width: 400px;
+   position: relative;
+}
+.label {
+   color: black;
+   font-size: 18px;
+   font-weight: 400;
+}
+.textarea {
+   background: white;
+   color: black;
+   width: 350px;
+   height: 95px;
+   font-size: 18px;
+   font-weight: 400;
+   margin-top: 7px;
+   border: 2px solid rgb(212, 212, 243);
+}
