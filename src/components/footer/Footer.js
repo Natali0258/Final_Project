@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import css from './Footer.module.css';
 import logo from './bike-orang.png';
 import facebook from './icon-facebook.png';
@@ -15,10 +16,10 @@ const Footer = (props) => {
             </div>
             <div className={css.container}>
                <nav className={css.nav}>
-                  <a href='' className={css.link}>О нас</a>
-                  <a href='' className={css.link}>Сообщить о краже</a>
-                  <a href='' className={css.link}>Сообщения о краже</a>
-                  <a href='' className={css.link}>Ответственные сотрудники</a>
+                  <Link to={'/'}><a href='#' className={css.link}>О нас</a></Link>
+                  <Link to={'/caseform'}><a href='#' className={css.link}>Сообщить о краже</a></Link>
+                  <Link to={'/case'}><a href='#' className={css.link}>Сообщения о краже</a></Link>
+                  <Link to={'/officer'}><a href='#' className={css.link}>Ответственные сотрудники</a></Link>
                </nav>
                <div className={css.contacts}>
                   <p>+7(913)333-33-33</p>

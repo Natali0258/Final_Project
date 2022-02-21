@@ -3,11 +3,11 @@ import Input from '../formElements/input/Input';
 import Textarea from '../formElements/textarea/Textarea';
 import DropDovn from '../formElements/dropDown/DropDown';
 import Button from '../formElements/button/Button';
-import css from './MessageForm.module.css';
+import css from './CaseForm.module.css';
 import { useState } from 'react';
 
-const MessageForm = (props) => {
-   const { messages, addNewMessages } = props;
+const CaseForm = (props) => {
+   const { cases, addNewCase } = props;
 
    const [values, setValues] = useState({
       status: '',
@@ -32,40 +32,40 @@ const MessageForm = (props) => {
 
    const handleSubmitMessageForm = (e) => {
       e.preventDefault();
-      addNewMessages(values.licenseNumber, values.ownerFullName, values.type, values.color, values.date, values.description, values.officer);
+      addNewCase(values.licenseNumber, values.ownerFullName, values.type, values.color, values.date, values.description, values.officer);
    }
 
    return (
-      <div className={css.messageForm}>
+      <div className={css.caseForm}>
          <div className={css.wrapper}>
             <div className={css.formBike}></div>
             <form className={css.form} onSubmit={handleSubmitMessageForm}>
-               <p className={css.title}>Информация о краже</p>
+               <h2 className={css.title}>Информация о краже</h2>
                <div className={css.container}>
                   <div className={css.formLeft}>
                      <Input title={'Номер лицензии:'}
-                        id={'licenseNumberMessageForm'}
+                        id={'licenseNumberCaseForm'}
                         type={'number'}
                         name={'licenseNumber'}
                         value={values.licenseNumber}
                         placeholder={'  110012'}
                         onChange={handleChange} />
                      <Input title={'ФИО пользователя:'}
-                        id={'ownerFullNameMessageForm'}
+                        id={'ownerFullNameCaseForm'}
                         type={'text'}
                         name={'ownerFullName'}
                         value={values.ownerFullName}
                         placeholder={'  Иванов Иван Иванович'}
                         onChange={handleChange} />
                      <DropDovn title={'Tип велосипеда:'}
-                        id={'typeBikeMessageForm'}
+                        id={'typeBikeCaseForm'}
                         type={'text'}
                         name={'type'}
                         options={bikeType}
                         value={values.type}
                         onChange={handleChange} />
                      <Input title={'Цвет велосипеда:'}
-                        id={'colorBikeMessageForm'}
+                        id={'colorBikeCaseForm'}
                         type={'text'}
                         name={'color'}
                         value={values.color}
@@ -74,19 +74,19 @@ const MessageForm = (props) => {
                   </div>
                   <div className={css.formRight}>
                      <Input title={'Дата кражи:'}
-                        id={'dateMessageForm'}
+                        id={'dateCaseForm'}
                         type={'date'}
                         name={'date'}
                         value={values.date}
                         onChange={handleChange} />
                      <Textarea title={'Дополнительный комментарий:'}
-                        id={'descriptionMessageForm'}
+                        id={'descriptionCaseForm'}
                         type={'text'}
                         name={'description'}
                         value={values.description}
                         onChange={handleChange} />
                      <Input title={'Ответственный сотрудник:'}
-                        id={'officerMessageForm'}
+                        id={'officerCaseForm'}
                         type={'text'}
                         name={'officer'}
                         value={values.officer}
@@ -101,4 +101,4 @@ const MessageForm = (props) => {
       </div >
    )
 }
-export default MessageForm;
+export default CaseForm;

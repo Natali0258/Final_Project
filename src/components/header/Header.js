@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import logo from './bike-orang.png';
 import Button from '../formElements/button';
 import css from './Header.module.css';
@@ -8,26 +9,19 @@ import Registration from '../registration/Registration';
 import AuthorizationResult from '../authorizationResult/AuthorizationResult';
 
 const Header = (props) => {
-   const { isLogged, loggedUser, addNewOfficer, ref } = props;
+   const { isLogged, loggedOfficer, addNewOfficer } = props;
 
    const [isResult, setResultat] = useState(false);//результат отправки пароля (true-пользователь существует)
 
-   console.log('isLogged=', isLogged);
-   console.log('isResult in Header=', isResult);
    const [isFormAuthorization, setFormAuthorization] = useState(false);
    const [isFormRegistration, setFormRegistration] = useState(false);
 
    const handleClickAuthorization = () => {
-      //event.preventDeflt();
-      console.log('Entry');
       setFormAuthorization(!isFormAuthorization);
-      console.log('isFormAuthorization=', isFormAuthorization);
    }
 
    const handleClickRegistration = () => {
-      console.log('Registration');
       setFormRegistration(!isFormRegistration);
-      console.log('Регистрация');
    }
 
    return (
@@ -38,15 +32,19 @@ const Header = (props) => {
                <p className={css.text}>С ВЕТЕРКОМ</p>
             </div>
             {isLogged ?
-               (<nav className={css.nav}>
-                  <a href='#' className={css.link}>О нас</a>
-                  <a href='#' className={css.link}>Сообщить о краже</a>
-                  <a href='#' className={css.link}>Сообщения о краже</a>
-                  <a href='#' className={css.link}>Ответственные сотрудники</a>
+               (<nav>
+                  <ul className={css.nav}>
+                     <li><Link to={'/'}><p className={css.link}>О нас</p></Link></li>
+                     <li><Link to={'/caseform'}><p className={css.link}>Сообщить о краже</p></Link></li>
+                     <li><Link to={'/cases'}><p className={css.link}>Сообщения о краже</p></Link></li>
+                     <li><Link to={'/officers'}><p className={css.link}>Ответственные сотрудники</p></Link></li>
+                  </ul>
                </nav>) :
-               (<nav className={css.nav}>
-                  <a href='#' className={css.link}>О нас</a>
-                  <a href='#' className={css.link}>Сообщить о краже</a>
+               (<nav>
+                  <ul className={css.nav}>
+                     <li><a href='#' className={css.link}>О нас</a></li>
+                     <li><a href='#' className={css.link}>Сообщить о краже</a></li>
+                  </ul>
                </nav>)
             }
 
@@ -59,8 +57,7 @@ const Header = (props) => {
                      <button className={css.registration} type='button' onClick={handleClickRegistration}>Регистрация</button>
                      < Registration addNewOfficer={addNewOfficer}
                         isFormRegistration={isFormRegistration}
-                        setFormRegistration={setFormRegistration}
-                        ref={ref} />
+                        setFormRegistration={setFormRegistration} />
                   </>)
                }
 
@@ -76,7 +73,7 @@ const Header = (props) => {
                {isFormAuthorization && isResult &&
                   (<>
                      <button className={css.authorization} type='button' onClick={handleClickAuthorization}>{isLogged ? 'Вход' : 'Выход'}</button>
-                     < AuthorizationResult isLogged={isLogged} loggedUser={loggedUser} />
+                     < AuthorizationResult isLogged={isLogged} loggedUser={loggedOfficer} />
                   </>)
                }
             </div>

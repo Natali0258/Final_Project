@@ -1,6 +1,6 @@
 const mock = {
-   activeUserId: 1,
-   users: [
+   activeOfficerId: 1,
+   officers: [
       {
          id: 1,
          lastName: 'Сидоров',
@@ -20,8 +20,9 @@ const mock = {
          approved: false,
       }
    ],
-   messages: [
+   cases: [
       {
+         id: 1,
          status: 'new',
          licenseNumber: '110012',
          type: 'general',
@@ -36,6 +37,7 @@ const mock = {
          resolution: '',
       },
       {
+         id: 2,
          status: 'new',
          licenseNumber: '110012',
          type: 'sport',

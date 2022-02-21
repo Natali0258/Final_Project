@@ -6,7 +6,7 @@ import AuthorizationResult from '../authorizationResult/AuthorizationResult';
 import css from './Registration.module.css';
 
 const Registration = (props) => {
-   const { isResult, setResult, addNewOfficer, isFormRegistration, setFormRegistration, ref } = props;
+   const { isResult, setResult, addNewOfficer, isFormRegistration, setFormRegistration } = props;
    const [values, setValues] = useState({
       lastName: '',
       firstName: '',
@@ -42,7 +42,7 @@ const Registration = (props) => {
          {isResult ?
             (<AuthorizationResult />) :
             (<div className={css.form} id="entry">
-               <form ref={ref} onSubmit={handleSubmitRegistration}>
+               <form onSubmit={handleSubmitRegistration}>
                   <div className={css.container}>
                      <p className={css.comment}>* Обязательные поля</p>
                      <Input title={'Фамилия:'}

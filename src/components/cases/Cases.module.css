@@ -1,4 +1,4 @@
-.messages {
+.cases {
    display: flex;
    justify-content: center;
    width: 100%;
@@ -13,8 +13,8 @@
    position: relative;
    font-family: "Inter", sans-serif;
 }
-.messageBike {
-   background-image: url(./messageBike.jpg);
+.caseBike {
+   background-image: url(./caseBike.jpg);
    position: absolute;
    background-position: center center;
    min-width: 1235px;
@@ -22,9 +22,17 @@
    margin: 0 auto;
    z-index: 1;
 }
+.title {
+   position: absolute;
+   margin: 130px 20px;
+   color: #ffa500;
+   font-size: 22px;
+   font-weight: 700;
+   z-index: 2;
+}
 .table {
    position: absolute;
-   margin: 100px 20px;
+   margin: 170px 20px;
    width: calc(100%-20px);
    padding: 10px 0;
    border: 2px solid #000000;
@@ -40,6 +48,9 @@ td {
    height: 100%;
    border: 2px solid #000000;
    padding: 3px;
+}
+.link:hover {
+   cursor: pointer;
 }
 .delCheck {
    align-items: center;

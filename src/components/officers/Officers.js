@@ -1,8 +1,10 @@
 import React from 'react';
-import css from './Officer.module.css';
+import { Link } from 'react-router-dom';
+import css from './Officers.module.css';
 
-const Officer = (props) => {
-   const { users } = props;
+const Officers = (props) => {
+   const { officers } = props;
+
    return (
       <div className={css.officer}>
          <div className={css.wrapper}>
@@ -15,12 +17,12 @@ const Officer = (props) => {
                   <div className={css.email}>E-mail адрес сотрудника</div>
                   <div className={css.approved}>Статус сотрудника</div>
                   <div className={css.del}>удалить</div>
-                  {users.map(user => {
+                  {officers.map(officer => {
                      return (<>
-                        <div>{user.lastName}</div>
-                        <div>{user.firstName}</div>
-                        <div>{user.email}</div>
-                        <div>{user.approved ? 'одобрен' : ''}</div>
+                        <div><Link to="/officers/detalofficer/:officerId">{officer.lastName}</Link></div>
+                        <div><Link to="/officers/detalofficer/:officerId">{officer.firstName}</Link></div>
+                        <div><Link to="/officers/detalofficer/:officerId">{officer.email}</Link></div>
+                        <div><Link to="/officers/detalofficer/:officerId">{officer.approved ? 'одобрен' : ''}</Link></div>
                         <div><input className={css.delCheck} type='checkbox' name='del'></input></div>
                      </>)
                   })}
@@ -32,4 +34,4 @@ const Officer = (props) => {
       </div>
    )
 }
-export default Officer;
+export default Officers;

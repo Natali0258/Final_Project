@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
+import { useMatch } from 'react-router-dom';
+import Input from '../formElements/input/Input';
 import css from './DetalOfficer.module.css';
 
 const DetalOfficer = (props) => {
+   const { officers } = props;
+   const match = useMatch();
+   const officerId = match.params;
+
+   const officer = officers.find(officer => officerId === officer.id)
+
    const [value, setValue] = useState('');
-   const handleChange = (event) => {
-      setValue({ value: event.target.value });
+   const handleChange = (e) => {
+      const fieldName = e.target.name;
+      setValue({ ...value, [fieldName]: e.target.value });
    }
    return (
       <div className={css.detalOfficer}>
@@ -13,10 +22,20 @@ const DetalOfficer = (props) => {
             <div className={css.form}>
                <p className={css.title}>Детальная страница сотрудника</p>
                <form className={css.container}>
-                  <label className={css.label}>Фамилия сотрудника:</label>
-                  <input className={css.label}></input>
-                  <label className={css.label}>Имя сотрудника:</label>
-                  <input className={css.input}></input>
+                  <Input title={'Фамилия сотрудника:'}
+                     id={'lastNameDetalOfficer'}
+                     type={'text'}
+                     name={'lastName'}
+                     value={officer.lastName}
+                     placeholder={'  Иванов'}
+                     onChange={handleChange} />
+                  <Input title={'Имя сотрудника:'}
+                     id={'firstNameDetalOfficer'}
+                     type={'text'}
+                     name={'firstName'}
+                     value={officer.firstName}
+                     placeholder={'  Иван'}
+                     onChange={handleChange} />
                   <label className={css.label}>E-mail адрес сотрудника:</label>
                   <input className={css.input}></input>
                   <label className={css.label}>clientId:</label>

@@ -81,11 +81,3 @@ const Authorization = (props) => {
    )
 }
 export default Authorization;
-
-/*<div className={css.authorization}>
-<div className={css.wrapper}>
-   <div className={css.imgAuthorization}></div>
-
-   
-         </div>
-      </div>*/

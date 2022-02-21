@@ -1,20 +1,21 @@
-.detalMessage {
+.caseForm {
    display: flex;
    justify-content: center;
    width: 100%;
    background-color: black;
    height: 700px;
+   margin: 40px auto 0;
 }
 .wrapper {
    display: flex;
-   justify-content: center;
+   justify-content: space-between;
    min-width: 1235px;
    margin: 0 auto;
    position: relative;
    font-family: "Inter", sans-serif;
 }
-.messageBike {
-   background-image: url(./messageBike.jpg);
+.formBike {
+   background-image: url(./formBike.jpg);
    position: absolute;
    background-position: center center;
    min-width: 1235px;
@@ -22,11 +23,11 @@
    margin: 0 auto;
    z-index: 1;
 }
-.border {
+.form {
    display: flex;
    flex-direction: column;
    width: 900px;
-   height: 550px;
+   height: 450px;
    border: 2px solid rgb(58, 58, 240);
    background: rgb(212, 212, 243);
    border-radius: 20px;
@@ -53,18 +54,8 @@
    margin-top: 20px;
    z-index: 2;
 }
-.label {
-   color: black;
-   font-size: 18px;
-   font-weight: 400;
-   margin: 10px 0 0 20px;
-}
-.input {
-   background: white;
-   color: black;
-   width: 350px;
-   font-size: 18px;
-   font-weight: 400;
-   margin: 10px 0 0 20px;
-   border: 2px solid rgb(212, 212, 243);
+.button {
+   display: flex;
+   margin: auto;
+   margin-bottom: 30px;
 }

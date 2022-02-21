@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
@@ -7,30 +7,16 @@ import data from '../../server-response-mock.js';
 import uniqid from 'uniqid';
 import css from './App.module.css';
 
-function App() { //почему-то mock.activeUserId = undefined ??????:
-  const { activeUserId, users, messages } = data;
-  console.log('data.activeUserId=', activeUserId);
-  const isLogged = activeUserId !== null; //если пользователь зарегистрирован
-  console.log('App-isLogged=', isLogged);
+function App() { //почему-то mock.activeOfficerId = undefined ??????:
+  const { activeOfficerId, officers, cases } = data;
+  const isLogged = activeOfficerId !== null; //если пользователь зарегистрирован
 
-  const ref = useRef();
-  const [isMessages, setMessages] = useState(messages);
-  const [isUsers, setUsers] = useState(users);
+  const [isCases, setCases] = useState(cases);
+  const [isOfficers, setOfficers] = useState(officers);
 
-  const loggedUser = data.users.find(user => user.id === activeUserId)
-  console.log('loggedUser=', loggedUser);
+  const loggedOfficer = data.officers.find(officer => officer.id === activeOfficerId)
 
   const addNewOfficer = (lastName, firstName, email, password, clientId) => {
-    // if (users.lenght == 0) {
-    //   const newOfficer = {
-    //     id: uniqid(),
-    //     lastName: lastName,
-    //     firstName: firstName,
-    //     email: email,
-    //     password: password,
-    //     approved: true,
-    //   }
-    // } else {}
     const newOfficer = {
       id: uniqid(),
       lastName: lastName,
@@ -39,13 +25,11 @@ function App() { //почему-то mock.activeUserId = undefined ??????:
       password: password,
       approved: false,
     };
-    setUsers(isUsers => { return [...isUsers, newOfficer] });
-    console.log('isUsers=', isUsers);
-    console.log('newOfficer=', newOfficer);
+    setOfficers(isOfficers => { return [...isOfficers, newOfficer] });
   }
 
-  const addNewMessages = (status, licenseNumber, type, ownerFullName, createdAd, updatedAd, color, date, officer, description,) => {
-    const newMessage = {
+  const addNewCase = (status, licenseNumber, type, ownerFullName, createdAd, updatedAd, color, date, officer, description,) => {
+    const newCase = {
       status: status,
       licenseNumber: licenseNumber,
       type: type,
@@ -59,25 +43,26 @@ function App() { //почему-то mock.activeUserId = undefined ??????:
       description: description,
       resolution: '',
     };
-    setMessages([...isMessages, newMessage]);
-    console.log(messages);
+    setCases([...isCases, newCase]);
+    console.log(cases);
   }
 
   return (
-    <div className={css.App}>
-      <Header isLogged={isLogged}
-        loggedUser={loggedUser}
-        addNewOfficer={addNewOfficer}
-        ref={ref} />
-      <Main isLogged={isLogged}
-        loggedUser={loggedUser}
-        addNewMessages={addNewMessages}
-        addNewOfficer={addNewOfficer}
-        users={isUsers} setUsers={setUsers}
-        messages={isMessages}
-        setMessages={setMessages} />
-      <Footer />
-    </div >
+    <BrowserRouter>
+      <div className={css.App}>
+        <Header isLogged={isLogged}
+          loggedOfficer={loggedOfficer}
+          addNewOfficer={addNewOfficer} />
+        <Main isLogged={isLogged}
+          loggedOfficer={loggedOfficer}
+          addNewCase={addNewCase}
+          addNewOfficer={addNewOfficer}
+          officers={isOfficers} setOfficers={setOfficers}
+          cases={isCases}
+          setCases={setCases} />
+        <Footer />
+      </div >
+    </BrowserRouter>
   );
 }
 
