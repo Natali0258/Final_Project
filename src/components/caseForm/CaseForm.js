@@ -41,23 +41,24 @@ const CaseForm = (props) => {
             <div className={css.formBike}></div>
             <form className={css.form} onSubmit={handleSubmitMessageForm}>
                <h2 className={css.title}>Информация о краже</h2>
+               <p className={css.comment}>* Обязательные поля</p>
                <div className={css.container}>
                   <div className={css.formLeft}>
-                     <Input title={'Номер лицензии:'}
+                     <Input title={'Номер лицензии: *'}
                         id={'licenseNumberCaseForm'}
                         type={'number'}
                         name={'licenseNumber'}
                         value={values.licenseNumber}
-                        placeholder={'  110012'}
+                        placeholder={'110012'}
                         onChange={handleChange} />
-                     <Input title={'ФИО пользователя:'}
+                     <Input title={'ФИО пользователя: *'}
                         id={'ownerFullNameCaseForm'}
                         type={'text'}
                         name={'ownerFullName'}
                         value={values.ownerFullName}
-                        placeholder={'  Иванов Иван Иванович'}
+                        placeholder={'Иванов Иван Иванович'}
                         onChange={handleChange} />
-                     <DropDovn title={'Tип велосипеда:'}
+                     <DropDovn title={'Tип велосипеда: *'}
                         id={'typeBikeCaseForm'}
                         type={'text'}
                         name={'type'}
@@ -69,7 +70,7 @@ const CaseForm = (props) => {
                         type={'text'}
                         name={'color'}
                         value={values.color}
-                        placeholder={'  black'}
+                        placeholder={'black'}
                         onChange={handleChange} />
                   </div>
                   <div className={css.formRight}>

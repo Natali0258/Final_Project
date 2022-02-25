@@ -19,9 +19,9 @@ const Main = (props) => {
             <Route exact path="/" element={<MainPage />} />
             <Route path="/caseform" element={<CaseForm addNewCase={addNewCase} cases={cases} />} />
             <Route exact path="/cases" element={<Cases cases={cases} />} />
-            <Route path="/cases/detalcase/:caseId" element={<DetalCase />} />
-            <Route exact path="/officers" element={<Officers officers={officers} />} />
-            <Route path="/officers/detalofficer/:officerId" element={<DetalOfficer />} />
+            <Route path="/cases/:caseId" element={<DetalCase cases={cases} />} />
+            <Route exact path="/officers" element={<Officers officers={officers} setOfficers={setOfficers} />} />
+            <Route path="/officers/:officerId" element={<DetalOfficer officers={officers} setOfficers={setOfficers} />} />
          </Routes>
       </main >
    )

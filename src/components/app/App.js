@@ -57,7 +57,8 @@ function App() { //почему-то mock.activeOfficerId = undefined ??????:
           loggedOfficer={loggedOfficer}
           addNewCase={addNewCase}
           addNewOfficer={addNewOfficer}
-          officers={isOfficers} setOfficers={setOfficers}
+          officers={isOfficers}
+          setOfficers={setOfficers}
           cases={isCases}
           setCases={setCases} />
         <Footer />

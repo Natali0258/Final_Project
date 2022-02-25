@@ -16,12 +16,14 @@ const Input = (props) => {
             minlength={minlength}
             handleChange={handleChange}
          ></input>
-         {type == 'password' &&
-            (<span className={css.hint}>Пароль должен содержать восемь или более символов.</span>)
+         {type === 'password' &&
+            (<div className={css.hint}>Пароль должен содержать восемь или более символов.</div>)
          }
-         {type == 'email' &&
-            (<span className={css.hint}>Адрес электронной почты должен содержать символ "@".</span>)
+         {type === 'email' &&
+            (<div className={css.hint}>Адрес электронной почты должен содержать символ "@".</div>)
          }
+         {type !== 'password' && type !== 'email' &&
+            (<div className={css.none}></div>)}
       </div>
    )
 }

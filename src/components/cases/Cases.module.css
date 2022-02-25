@@ -24,10 +24,12 @@
 }
 .title {
    position: absolute;
-   margin: 130px 20px;
+   margin: 130px 20px 0;
    color: #ffa500;
    font-size: 22px;
    font-weight: 700;
+
+   font-family: "Inter", sans-serif;
    z-index: 2;
 }
 .table {

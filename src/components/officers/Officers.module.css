@@ -1,4 +1,4 @@
-.officer {
+.officers {
    display: flex;
    justify-content: center;
    width: 100%;
@@ -27,7 +27,7 @@
    display: flex;
    flex-direction: column;
    align-items: center;
-   margin: 100px 0 0 50px;
+   margin: 120px 0 0 50px;
    background: rgba(255, 218, 151, 0.993);
    border: 2px solid #ffa500;
    border: 2px solid #000000;
@@ -38,9 +38,8 @@
    z-index: 2;
 }
 .title {
-   font-style: 26px;
-   font-weight: 900;
-   font-family: "Inter", sans-serif;
+   font-style: 22px;
+   font-weight: 700;
    color: #000000;
    margin-top: 30px;
 }
@@ -73,11 +72,11 @@
    border: 1px solid #000000;
    padding: 5px;
 }
-
 .delCheck {
    align-items: center;
    text-align: center;
    font-size: 24px;
+   z-index: 3;
 }
 .btn {
    font-weight: 700;

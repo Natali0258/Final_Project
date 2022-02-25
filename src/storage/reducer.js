@@ -1,7 +1,7 @@
 import { ACTIONS } from "./actions";
 
 const initialState = {
-   user: {
+   officer: {
       email: '',
       password: '',
       firstName: '',
@@ -11,16 +11,28 @@ const initialState = {
 }
 const reduser = (state = initialState, action) => {
    switch (action.type) {
-      case ACTIONS.ADD_TO_USER:
+      case ACTIONS.ADD_TO_OFFICER:
          return {
             ...state,
-            user: {
-               ...state.user,
+            officer: {
+               ...state.officer,
                email: action.email,
                password: action.password,
                firstName: action.firstName,
                lastName: action.lastName,
             }
          }
+      case ACTIONS.REMOVE_FROM_OFFICER:
+         return {
+            ...state,
+            officers: state.officers.filter(officer => {
+               officer.id === action.officer.id
+            })
+         }
+      case ACTIONS.ADD_TO_CHECKED_DELETE_OFFICER:
+         return {
+
+         }
+      default: return state
    }
 }

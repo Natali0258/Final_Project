@@ -37,7 +37,7 @@ const Header = (props) => {
                      <li><Link to={'/'}><p className={css.link}>О нас</p></Link></li>
                      <li><Link to={'/caseform'}><p className={css.link}>Сообщить о краже</p></Link></li>
                      <li><Link to={'/cases'}><p className={css.link}>Сообщения о краже</p></Link></li>
-                     <li><Link to={'/officers'}><p className={css.link}>Ответственные сотрудники</p></Link></li>
+                     <li><Link to={'/officers'}><p className={css.link} addNewOfficer={addNewOfficer}>Ответственные сотрудники</p></Link></li>
                   </ul>
                </nav>) :
                (<nav>

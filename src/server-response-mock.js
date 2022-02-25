@@ -2,7 +2,7 @@ const mock = {
    activeOfficerId: 1,
    officers: [
       {
-         id: 1,
+         id: '1',
          lastName: 'Сидоров',
          firstName: 'Петр',
          email: 'Sidorov@mail.ru',
@@ -11,7 +11,7 @@ const mock = {
          approved: true,
       },
       {
-         id: 2,
+         id: '2',
          lastName: 'Иванов',
          firstName: 'Сергей',
          email: 'Ivanov@mail.ru',
@@ -22,7 +22,7 @@ const mock = {
    ],
    cases: [
       {
-         id: 1,
+         id: '1',
          status: 'new',
          licenseNumber: '110012',
          type: 'general',
@@ -37,7 +37,7 @@ const mock = {
          resolution: '',
       },
       {
-         id: 2,
+         id: '2',
          status: 'new',
          licenseNumber: '110012',
          type: 'sport',

@@ -76,7 +76,6 @@ const Registration = (props) => {
                         minlength={'8'} //минимальное кол-во знаков
                         required={'required'}
                         onChange={handleChange} />
-
                      <div className={css.btn}>
                         <Button type={'submit'} name={'Сохранить'} />
                      </div>

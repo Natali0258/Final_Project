@@ -40,31 +40,38 @@
    color: black;
    font-size: 22px;
    font-weight: 700;
-   margin-top: 30px;
+   margin-top: 20px;
 }
 .container {
    display: flex;
    justify-content: space-evenly;
+   margin-left: 40px;
 }
 .formLeft,
 .formRight {
    display: flex;
    flex-direction: column;
-   margin-top: 20px;
+   margin-top: 10px;
    z-index: 2;
 }
 .label {
    color: black;
+   height: 22px;
    font-size: 18px;
    font-weight: 400;
-   margin: 10px 0 0 20px;
+   margin-top: 10px;
 }
 .input {
    background: white;
    color: black;
-   width: 350px;
-   font-size: 18px;
+   width: 340px;
+   height: 22px;
+   font-size: 16px;
    font-weight: 400;
-   margin: 10px 0 0 20px;
+   margin-top: 6px;
    border: 2px solid rgb(212, 212, 243);
+   padding: 5px 0 0 10px;
+}
+.btn {
+   margin: 15px auto;
 }
