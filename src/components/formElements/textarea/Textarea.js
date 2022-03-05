@@ -2,7 +2,7 @@ import React from "react";
 import css from './Textarea.module.css';
 
 const Textarea = (props) => {
-   const { title, id, type, name, value, placeholder, handleChange } = props;
+   const { title, id, type, name, value, placeholder, onChange } = props;
    return (
       <div className={css.wrapper}>
          <label className={css.label} htmlFor={id}>{title}</label>
@@ -12,7 +12,7 @@ const Textarea = (props) => {
             name={name}
             value={value.name}
             placeholder={placeholder}
-            handleChange={handleChange} />
+            onChange={e => onChange(e.target.value)} />
       </div>
    )
 }

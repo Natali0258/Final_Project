@@ -2,7 +2,7 @@ import React from 'react';
 import mainPage from './main-page.jpg';
 import css from './MainPage.module.css';
 
-const MainPage = (pops) => {
+const MainPage = () => {
    return (
       <div className={css.mainPage}>
          <div className={css.wrapper}>

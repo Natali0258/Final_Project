@@ -2,7 +2,7 @@ import React from 'react';
 import css from './Input.module.css';
 
 const Input = (props) => {
-   const { title, id, type, name, value, required, placeholder, minlength, handleChange } = props;
+   const { title, id, type, name, value, required, placeholder, minlength, onChange } = props;
    return (
       <div className={css.wrapper}>
          <label className={css.label} htmlFor={id}>{title}</label>
@@ -14,7 +14,7 @@ const Input = (props) => {
             required={required}
             placeholder={placeholder}
             minlength={minlength}
-            handleChange={handleChange}
+            onChange={e => onChange(e.target.value)}
          ></input>
          {type === 'password' &&
             (<div className={css.hint}>Пароль должен содержать восемь или более символов.</div>)

@@ -6,7 +6,7 @@ const DropDown = (props) => {
    return (
       <div className={css.wrap}>
          <label className={css.label} htmlFor={id}> {title}</label>
-         <select className={css.select} value={value} id={id}>
+         <select className={css.select} value={value} id={id} onChange={e => e.target.value}>
             {
                options.map((item, index) => {
                   <option className={css.option} value={index}>{item}</option>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Button from '../formElements/button/Button';
 import Input from '../formElements/input';
 import AuthorizationResult from '../authorizationResult';
@@ -6,6 +7,7 @@ import css from './Authorization.module.css';
 
 const Authorization = (props) => {
    const { isResult, setResultat } = props;
+   const [isFormOpen, setFormOpen] = useState(true);
    console.log('isResult in Aut=', isResult);
 
    const [values, setValues] = useState({
@@ -62,7 +64,7 @@ const Authorization = (props) => {
                      value={values.email}
                      required={'required'}
                      placeholder={'IvanovIvan@mail.ru'}
-                     onChange={handleChange} />
+                     onChange={email => setValues({ ...values, email })} />
                   <Input title={'Введите пароль:'} id={'passwordAuthorization'}
                      type={'password'}
                      name={'password'}
@@ -70,8 +72,7 @@ const Authorization = (props) => {
                      required={'required'}
                      placeholder={'********'}
                      minlength={'8'}
-                     onChange={handleChange} />
-
+                     onChange={password => setValues({ ...values, password })} />
                   <div className={css.btn}>
                      <Button type={'submit'} name={'Авторизация'} />
                   </div>

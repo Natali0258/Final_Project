@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import logo from './bike-orang.png';
 import Button from '../formElements/button';
 import css from './Header.module.css';
@@ -9,7 +9,7 @@ import Registration from '../registration/Registration';
 import AuthorizationResult from '../authorizationResult/AuthorizationResult';
 
 const Header = (props) => {
-   const { isLogged, loggedOfficer, addNewOfficer } = props;
+   const { isLogged, loggedOfficer } = props;
 
    const [isResult, setResultat] = useState(false);//результат отправки пароля (true-пользователь существует)
 
@@ -34,10 +34,10 @@ const Header = (props) => {
             {isLogged ?
                (<nav>
                   <ul className={css.nav}>
-                     <li><Link to={'/'}><p className={css.link}>О нас</p></Link></li>
-                     <li><Link to={'/caseform'}><p className={css.link}>Сообщить о краже</p></Link></li>
-                     <li><Link to={'/cases'}><p className={css.link}>Сообщения о краже</p></Link></li>
-                     <li><Link to={'/officers'}><p className={css.link} addNewOfficer={addNewOfficer}>Ответственные сотрудники</p></Link></li>
+                     <li><NavLink to={'/'}><p className={css.link}>О нас</p></NavLink></li>
+                     <li><NavLink to={'/caseform'}><p className={css.link}>Сообщить о краже</p></NavLink></li>
+                     <li><NavLink to={'/cases'}><p className={css.link}>Сообщения о краже</p></NavLink></li>
+                     <li><NavLink to={'/officers'}><p className={css.link}>Ответственные сотрудники</p></NavLink></li>
                   </ul>
                </nav>) :
                (<nav>
@@ -55,7 +55,7 @@ const Header = (props) => {
                {isFormRegistration &&
                   (<>
                      <button className={css.registration} type='button' onClick={handleClickRegistration}>Регистрация</button>
-                     < Registration addNewOfficer={addNewOfficer}
+                     < Registration
                         isFormRegistration={isFormRegistration}
                         setFormRegistration={setFormRegistration} />
                   </>)

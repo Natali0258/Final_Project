@@ -8,7 +8,7 @@ const mock = {
          email: 'Sidorov@mail.ru',
          password: 'SP1991',
          clientId: '995544',
-         approved: true,
+         approved: 'true',
       },
       {
          id: '2',
@@ -17,7 +17,7 @@ const mock = {
          email: 'Ivanov@mail.ru',
          password: 'IS1993',
          clientId: '995544',
-         approved: false,
+         approved: 'false',
       }
    ],
    cases: [

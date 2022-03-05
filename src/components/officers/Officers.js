@@ -1,12 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import css from './Officers.module.css';
 
 const Officers = (props) => {
-   const { officers, setOfficers, addNewOfficer } = props;
+   const { setOfficers, addNewOfficer } = props;
    const [checked, setChecked] = useState(false);
 
+   const dispatch = useDispatch();
+   const officers = useSelector(state => state.officers);
+   //const {id, email, password, firstName, lastName, clientId, approved}= officers;
    console.log('officers=', officers);
 
    function handleChange() {
@@ -14,16 +18,6 @@ const Officers = (props) => {
          return !checked
       })
    }
-
-   // const handleChange = (e) => {
-   //const fieldName = e.target.name
-   //setChecked([fieldName]: e.target.checked)
-   //const { name } = e.target;
-   //const { checked } = e.target;
-   //setChecked({ [name]: checked });
-   //setChecked(checked => { return !checked });
-   //console.log('!!!')
-   // }
 
    return (
       <div className={css.officers}>
@@ -37,15 +31,15 @@ const Officers = (props) => {
                   <div className={css.email}>E-mail адрес сотрудника</div>
                   <div className={css.approved}>Статус сотрудника</div>
                   <div className={css.del}>удалить</div>
-                  {officers.map(officer => {
+                  {/* {officers.map(officer => {
                      return (<>
-                        <div><Link to={`/officers/${officer.id}`} key={officer.id} {...props}>{officer.lastName}</Link></div>
-                        <div><Link to={`/officers/${officer.id}`} key={officer.id} {...props}>{officer.firstName}</Link></div>
-                        <div><Link to={`/officers/${officer.id}`} key={officer.id} {...props}>{officer.email}</Link></div>
-                        <div><Link to={`/officers/${officer.id}`} key={officer.id} {...props}>{officer.approved ? 'одобрен' : ''}</Link></div>
+                        <div><Link to={`/officers/${officer.id}`} key={officer.id}>{officer.lastName}</Link></div>
+                        <div><Link to={`/officers/${officer.id}`} key={officer.id}>{officer.firstName}</Link></div>
+                        <div><Link to={`/officers/${officer.id}`} key={officer.id}>{officer.email}</Link></div>
+                        <div><Link to={`/officers/${officer.id}`} key={officer.id}>{officer.approved ? 'одобрен' : ''}</Link></div>
                         <div><input className={css.delCheck} type='checkbox' name={officer.id} checked={checked} onChange={handleChange} /></div>
                      </>)
-                  })}
+                  })} */}
 
                </div>
                <button className={css.btn}>Удалить</button>

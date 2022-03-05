@@ -1,12 +1,14 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import Button from '../formElements/button/Button';
 import css from './Cases.module.css';
 
 const Cases = (props) => {
-   const { cases } = props;
    const [checked, setChecked] = useState(false);
+   const dispatch = useDispatch();
+   const cases = useSelector(state => state.cases);
 
    const changeCheckbox = () => {
       setChecked(checked => {
@@ -33,15 +35,15 @@ const Cases = (props) => {
                </tr>
                {cases.map(cas => {
                   return (
-                     <tr>
-                        <td><Link to={`/cases/${cas.id}`} key={cas.id} className={css.link}>{cas.ownerFullName}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} key={cas.id} className={css.link}>{cas.createdAd}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} key={cas.id} className={css.link}>{cas.date}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} key={cas.id} className={css.link}>{cas.licenseNumber}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} key={cas.id} className={css.link}>{cas.type}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} key={cas.id} className={css.link}>{cas.color}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} key={cas.id} className={css.link}>{cas.officer}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} key={cas.id} className={css.link}>{cas.status}</Link></td>
+                     <tr key={cas.id}>
+                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.ownerFullName}</Link></td>
+                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.createdAd}</Link></td>
+                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.date}</Link></td>
+                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.licenseNumber}</Link></td>
+                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.type}</Link></td>
+                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.color}</Link></td>
+                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.officer}</Link></td>
+                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.status}</Link></td>
                         <td className={css.delCheck}><input key={cas.id} type='checkbox' name={cas.id} checked={checked} onChange={changeCheckbox} /></td>
                      </tr>
                   )
