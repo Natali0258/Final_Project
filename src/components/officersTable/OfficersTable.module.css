@@ -1,0 +1,35 @@
+.thead,
+.tbody {
+   display: block;
+   overflow-y: scroll;
+}
+.tbody {
+   height: 400px;
+}
+.th,
+.tr {
+   display: grid;
+   grid-template-columns: 15fr 12fr 20fr 10fr 10fr;
+   text-align: center;
+   /* vertical-align: bottom; */
+   width: center;
+}
+.th {
+   margin: 20px 20px 0;
+   grid-template-rows: 50px;
+}
+.tr {
+   margin: 0 20px 0;
+   grid-auto-rows: 33px;
+}
+.lastName,
+.firstName,
+.email,
+.approved,
+.del {
+   border: 1px solid #000000;
+}
+.delCheck {
+   font-size: 24px;
+   vertical-align: bottom;
+}

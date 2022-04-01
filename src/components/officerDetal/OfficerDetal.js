@@ -4,12 +4,9 @@ import { useParams } from 'react-router-dom';
 import { fatchOfficerGetStarted, fatchOfficerGetSuccess, fatchOfficerGetError, fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidityError } from '../../storage/actions/officerActions';
 import Button from '../formElements/button/Button';
 import Input from '../formElements/input/Input';
-import css from './DetalOfficer.module.css';
+import css from './OfficerDetal.module.css';
 
-const DetalOfficer = (props) => {
-   //const { officers, setOfficers, addNewOfficer } = props;
-   //const [isButton, setButton] = useState(false);
-   //const [officer, setOfficer] = useState();
+const OfficerDetal = () => {
    const [isEdit, setEdit] = useState(false);
    const params = useParams();
    const { officerId } = params;
@@ -55,7 +52,7 @@ const DetalOfficer = (props) => {
             .then((response) => { return response.json(); })
             .then((data) => {
                console.log("data=", data);
-               dispatch(fatchOfficerGetSuccess(data.data))
+               dispatch(fatchOfficerGetSuccess(data))
             })
             .catch(error => {
                console.log('error', error)
@@ -78,9 +75,8 @@ const DetalOfficer = (props) => {
       })
 
    const handleEdit = (e) => {
-      // e.preventDefault();
+      e.preventDefault();
       setEdit(!isEdit);
-      console.log('isEdit=', isEdit)
    }
 
    const handleChange = (e) => {
@@ -95,16 +91,14 @@ const DetalOfficer = (props) => {
       const index = officers.indexOf(officer)
       //setOfficers([...officers.slice(0, index), newOfficer, ...officers.slice((index + 1), officers.length)])
    }
+
    const [value, setValue] = useState('1');
-   //const handleChange = (e) => {   
-   //const fieldName = e.target.name;
-   //setValue({ ...value, [fieldName]: e.target.value });
-   //}
+
    const handleChecked = (e) => {
       setValue(e.target.checked);
    }
 
-   const handleSave = async (e) => {
+   const handleSubmit = async (e) => {
       const token = localStorage.getItem('token');
       console.log('token=', token);
       if (token) {
@@ -170,7 +164,7 @@ const DetalOfficer = (props) => {
             <div className={css.imgOfficer}></div>
             <div className={css.form}>
                <p className={css.title}>Детальная страница сотрудника</p>
-               <form className={css.container} onClick={handleSave}>
+               <form className={css.container} onClick={handleSubmit}>
                   {!isEdit && (
                      <div>
                         <h3 className={css.label}>{'Фамилия сотрудника:'}</h3>
@@ -210,7 +204,7 @@ const DetalOfficer = (props) => {
                      {!isEdit && (
                         <Button name={'Редактировать'} onClick={handleEdit} />)}
                      {isEdit && (
-                        <Button name={'Сохранить'} onClick={handleSave} />)}
+                        <Button name={'Сохранить'} />)}
                   </div>
                </form>
             </div>
@@ -218,4 +212,4 @@ const DetalOfficer = (props) => {
       </div >
    )
 }
-export default DetalOfficer;
+export default OfficerDetal;

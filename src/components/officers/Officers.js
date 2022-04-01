@@ -1,7 +1,10 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { fatchOfficersGetStarted, fatchOfficersGetSuccess, fatchOfficersGetError, fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidityError } from '../../storage/actions/officerActions';
+//import { tokenValidityCheck } from '../../func/tokenValidityCheck';
+import OfficersTable from '../officersTable/OfficersTable';
+import Loader from '../loader/Loader';
 import css from './Officers.module.css';
 
 const Officers = (props) => {
@@ -10,14 +13,54 @@ const Officers = (props) => {
 
    const dispatch = useDispatch();
    const officers = useSelector(state => state.officers);
-   //const {id, email, password, firstName, lastName, clientId, approved}= officers;
-   console.log('officers=', officers);
+   const isLoading = useSelector(state => state.isLoading);
 
-   function handleChange() {
-      setChecked(checked => {
-         return !checked
-      })
-   }
+   useEffect(async () => {
+      const token = localStorage.getItem('token');
+      console.log('token=', token);
+      if (token) {
+         //Запрос для проверки валидности токена.
+         dispatch(fatchTokenValidityStarted());
+         await fetch('https://sf-final-project.herokuapp.com/api/auth/', { headers: { "Authorization": `Bearer ${token}` } })
+            .then((response) => {
+               if (response.status !== 200) {
+                  return Promise.reject(new Error(response.status))
+               }
+               return Promise.resolve(response)
+            })
+            .then((response) => { return response.json(); })
+            .then((data) => {
+               console.log("data=", data);
+               dispatch(fatchTokenValiditySuccess(data))
+            })
+            .catch(error => {
+               console.log('error', error)
+               dispatch(fatchTokenValidityError(error))
+            })
+         // Запрос для получения списка всех сотрудников (доступен только авторизованным пользователям):
+         dispatch(fatchOfficersGetStarted());
+         await fetch('https://sf-final-project.herokuapp.com/api/officers/', { headers: { "Authorization": `Bearer ${token}` } })
+            .then((response) => {
+               console.log(response);
+               if (response.status !== 200) {
+                  return Promise.reject(new Error(response.status))
+               }
+               return Promise.resolve(response)
+            })
+            .then((response) => { return response.json(); })
+            .then((data) => {
+               console.log("data=", data);
+               dispatch(fatchOfficersGetSuccess(data.officers))
+            })
+            .catch(error => {
+               console.log('error', error)
+               dispatch(fatchOfficersGetError(error))
+            })
+
+      } else {
+         console.log('token нет в localStorage, авторизуйтесь')
+      }
+   }, [dispatch])
 
    return (
       <div className={css.officers}>
@@ -25,27 +68,14 @@ const Officers = (props) => {
             <div className={css.imgOfficer}></div>
             <div className={css.border}>
                <h3 className={css.title}>Ответственные сотрудники</h3>
-               <div className={css.container}>
-                  <div className={css.lastName}>Фамилия сотрудника</div>
-                  <div className={css.firstName}>Имя сотрудника</div>
-                  <div className={css.email}>E-mail адрес сотрудника</div>
-                  <div className={css.approved}>Статус сотрудника</div>
-                  <div className={css.del}>удалить</div>
-                  {/* {officers.map(officer => {
-                     return (<>
-                        <div><Link to={`/officers/${officer.id}`} key={officer.id}>{officer.lastName}</Link></div>
-                        <div><Link to={`/officers/${officer.id}`} key={officer.id}>{officer.firstName}</Link></div>
-                        <div><Link to={`/officers/${officer.id}`} key={officer.id}>{officer.email}</Link></div>
-                        <div><Link to={`/officers/${officer.id}`} key={officer.id}>{officer.approved ? 'одобрен' : ''}</Link></div>
-                        <div><input className={css.delCheck} type='checkbox' name={officer.id} checked={checked} onChange={handleChange} /></div>
-                     </>)
-                  })} */}
-
-               </div>
+               {isLoading ?
+                  <Loader /> :
+                  <OfficersTable checked={checked} setChecked={setChecked} officers={officers} />
+               }
                <button className={css.btn}>Удалить</button>
             </div>
          </div>
-      </div>
+      </div >
    )
 }
 export default Officers;

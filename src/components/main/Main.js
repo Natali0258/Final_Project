@@ -1,17 +1,17 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { useLocation, Redirect } from 'react-router-dom';
+//import { PrivateRoute } from '../privateRoute/PrivateRoute';
 import MainPage from '../mainPage/MainPage';
-import Authorization from '../authorization/Authorization';
 import CaseForm from '../caseForm/CaseForm';
 import Cases from '../cases/Cases';
 import DetalCase from '../detalCase/DetalCase';
 import Officers from '../officers/Officers';
 import DetalOfficer from '../detalOfficer/DetalOfficer';
+import OfficerDetal from '../officerDetal/OfficerDetal';
 import css from './Main.module.css';
 
-const Main = (props) => {
-   // const { cases, setCases, officers, setOfficers, addNewCase } = props;
-
+const Main = () => {
    return (
       <main className={css.main} >
          <Routes>
@@ -20,7 +20,9 @@ const Main = (props) => {
             <Route exact path="/cases" element={<Cases />} />
             <Route path="/cases/:caseId" element={<DetalCase />} />
             <Route exact path="/officers" element={<Officers />} />
-            <Route path="/officers/:officerId" element={<DetalOfficer />} />
+            <Route path="/officers/:officerId" element={<OfficerDetal />} />
+            {/* <Route path="/officers/:officerId" element={<DetalOfficer />} /> */}
+            {/* <Redirect to="/" /> */}
             {/* <Route path="*" element={<Error />} /> */}
          </Routes>
       </main >

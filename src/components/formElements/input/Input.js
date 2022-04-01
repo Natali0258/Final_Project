@@ -15,7 +15,7 @@ const Input = (props) => {
             placeholder={placeholder}
             minlength={minlength}
             onChange={e => onChange(e.target.value)}
-         ></input>
+         >{value.name}</input>
          {type === 'password' &&
             (<div className={css.hint}>Пароль должен содержать восемь или более символов.</div>)
          }

@@ -1,58 +1,57 @@
-export const CASE_ACTIONS = {
-   ADD_TO_CASE: 'ADD_TO_CASE',
-   REMOVE_FROM_CASE: 'REMOVE_FROM_CASE',
-   ADD_TO_CHECKED_DELETE_OFFICER: 'ADD_TO_CHECKED_DELETE_CASE', //пометить случай на удаление
-   REMOVE_FROM_CHECKED_DELETE_OFFICER: 'REMOVE_FROM_CHECKED_DELETE_CASE', //снять отметку с случая на удаление
+export const CAS_ACTIONS = {
+   ADD_TO_CAS: 'ADD_TO_CAS',
+   REMOVE_FROM_CAS: 'REMOVE_FROM_CAS',
+   //marked for deletion
+   REMOVE_FROM_CHECKED_DELET_CAS: 'REMOVE_FROM_CHECKED_DELET_CAS', //пометить(снять пометку) случай на удаление
 }
 
-export const addToCase = (id, status, licenseNumber, type, ownerFullName, clientId, createdAd, updatedAd, color, date, officer, description, resolution) => {
+export const addToCas = (id, status, licenseNumber, type, ownerFullName, clientId, createdAd, updatedAd, color, date, officer, description, resolution) => {
    return {
-      type: CASE_ACTIONS.ADD_TO_CASE,
-      id,
-      status,
-      licenseNumber,
-      type,
-      ownerFullName,
-      clientId,
-      createdAd,
-      updatedAd,
-      color,
-      date,
-      officer,
-      description,
-      resolution,
+      type: CAS_ACTIONS.ADD_TO_CAS,
+      payload: {
+         id,
+         status,
+         licenseNumber,
+         type,
+         ownerFullName,
+         clientId,
+         createdAd,
+         updatedAd,
+         color,
+         date,
+         officer,
+         description,
+         resolution,
+      }
    }
 }
 
-export const removeFromCase = (id, status, licenseNumber, type, ownerFullName, clientId, createdAd, updatedAd, color, date, officer, description, resolution) => {
+export const removeFromCas = (id, status, licenseNumber, type, ownerFullName, clientId, createdAd, updatedAd, color, date, officer, description, resolution, checkedDelet) => {
    return {
-      type: CASE_ACTIONS.REMOVE_FROM_CASE,
-      id,
-      status,
-      licenseNumber,
-      type,
-      ownerFullName,
-      clientId,
-      createdAd,
-      updatedAd,
-      color,
-      date,
-      officer,
-      description,
-      resolution,
+      type: CAS_ACTIONS.REMOVE_FROM_CAS,
+      payload: {
+         id,
+         status,
+         licenseNumber,
+         type,
+         ownerFullName,
+         clientId,
+         createdAd,
+         updatedAd,
+         color,
+         date,
+         officer,
+         description,
+         resolution,
+         checkedDelet,
+
+      }
    }
 }
 
-export const addToCheckedDeleteCase = (id) => {
+export const removeFromCheckedDeletCas = (id) => {
    return {
-      type: CASE_ACTIONS.ADD_TO_CHECKED_DELETE_CASE,
-      id,
-   }
-}
-
-export const removeFromCheckedDeleteCase = (id) => {
-   return {
-      type: CASE_ACTIONS.REMOVE_FROM_CHECKED_DELETE_CASE,
+      type: CAS_ACTIONS.REMOVE_FROM_CHECKED_DELET_CAS,
       id,
    }
 }

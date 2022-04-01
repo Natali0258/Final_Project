@@ -6,10 +6,14 @@ const DropDown = (props) => {
    return (
       <div className={css.wrap}>
          <label className={css.label} htmlFor={id}> {title}</label>
-         <select className={css.select} value={value} id={id} onChange={e => e.target.value}>
+         <select className={css.select} id={id}
+            type={type}
+            name={name}
+            value={value.name}
+            onChange={e => e.target.value}>
             {
-               options.map((item, index) => {
-                  <option className={css.option} value={index}>{item}</option>
+               options.map((option, index) => {
+                  return <option className={css.option} key={index} value={index}>{option}</option>
                })
             }
          </select>

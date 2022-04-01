@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import Button from '../formElements/button/Button';
-import Input from '../formElements/input';
+import { fatchAuthOfficerStarted, fatchAuthOfficerSuccess, fatchAuthOfficerError, } from '../../storage/actions/officerActions';
+import Loader from '../loader/Loader';
 import AuthorizationResult from '../authorizationResult';
+import AuthorizationForm from '../authorizationForm/AuthorizationForm';
 import css from './Authorization.module.css';
 
 const Authorization = (props) => {
-   const { isResult, setResultat } = props;
-   const [isFormOpen, setFormOpen] = useState(true);
-   console.log('isResult in Aut=', isResult);
+   const { isLogged, setLogged, isResult, setResult, isFormAuthorization, setFormAuthorization } = props;
+   const [isFormError, setFormError] = useState(false);
+
+   const dispatch = useDispatch();
+   const isLoading = useSelector(state => state.isLoading);
 
    const [values, setValues] = useState({
       email: '',
@@ -23,61 +26,80 @@ const Authorization = (props) => {
    }
 
 
-   const handleSubmit = (event) => {
+   const handleSubmit = async (event) => {
       //отправляем запрос с паролем и ждем данные о пользователе
       event.preventDefault(); //чтобы страница не перезагружалась
 
-      // let userData = this.state.newUser;
+      const officer = {
+         email: values.email,
+         password: values.password,
+         clientId: 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
+      };
 
-      // fetch('//example.com', {
-      //    method: "POST",
-      //    body: JSON.stringify(userData),
-      //    headers: {
-      //       'Accept': 'application/json',
-      //       'Content-Type': 'application/json'
-      //    },
-      // }).then(response => {
-      //    response.json().then(data => {
-      //       console.log("Successful" + data);
-      //    })
-      // })
+      const options = {
+         method: 'POST',
+         body: JSON.stringify({
+            "email": `${officer.email}`,
+            "password": `${officer.password}`,
+            "clientId": 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
+         }),
+         headers: { "content-type": "application/json" }
+      }
 
-      console.log('isResult1=', isResult);
-      setResultat(!isResult);
-      console.log('isResult2=', isResult);
+      dispatch(fatchAuthOfficerStarted())
+      console.log('Запрос авторизации сотрудника')
+
+      await fetch('https://sf-final-project.herokuapp.com/api/auth/sign_in', options)
+         .then((response) => {
+            if (response.status !== 200) {
+               return Promise.reject(new Error(response.statusText))
+            }
+            return Promise.resolve(response)
+         })
+         .then((response) => response.json())
+         .then(data => {
+            console.log(data);
+            localStorage.setItem('token', data.data.token);
+            localStorage.setItem('firstName', data.data.user.firstName);
+            // localStorage.getItem('token');
+            console.log(localStorage.getItem('firstName'));
+            console.log(localStorage.getItem('token'));
+            //const firstName = localStorage.getItem('firstName');
+            dispatch(fatchAuthOfficerSuccess());
+            console.log('Авторизации завершена успешно');
+
+            setLogged(!isLogged);
+            console.log('isLoggedAuthorization=', isLogged)
+         })
+         .catch(error => {
+            setFormError(!isFormError);
+            // const messageError = error.message;
+            // setMessage(isMessage => ({ isMessage: messageError }));
+            //console.log('ERROR', error)
+            dispatch(fatchAuthOfficerError(error));
+         })
+
+      //setResultat(!isResult);
    }
-
-
-   // useEffect(() => {
-   //    if
-   // })
 
    return (
       <>
-         {isResult ?
-            (<AuthorizationResult />) :
-            (<form className={css.form} onSubmit={handleSubmit}>
-               <div className={css.container}>
-                  <Input title={'Введите e-mail:'} id={'emailAuthorization'}
-                     type={'email'}
-                     name={'email'}
-                     value={values.email}
-                     required={'required'}
-                     placeholder={'IvanovIvan@mail.ru'}
-                     onChange={email => setValues({ ...values, email })} />
-                  <Input title={'Введите пароль:'} id={'passwordAuthorization'}
-                     type={'password'}
-                     name={'password'}
-                     value={values.password}
-                     required={'required'}
-                     placeholder={'********'}
-                     minlength={'8'}
-                     onChange={password => setValues({ ...values, password })} />
-                  <div className={css.btn}>
-                     <Button type={'submit'} name={'Авторизация'} />
-                  </div>
-               </div>
-            </form>)}
+         {((isLogged || isFormError) && !isLoading) ?
+            (<AuthorizationResult
+               isLogged={isLogged} isFormError={isFormError}
+               isResult={isResult} setResult={setResult}
+               isFormAuthorization={isFormAuthorization}
+               setFormAuthorization={setFormAuthorization} />) :
+            (<AuthorizationForm
+               values={values} setValues={setValues}
+               handleSubmit={handleSubmit}
+               handleChange={handleChange} />)}
+         {isLoading &&
+            (<>
+               <Loader />
+               <p>{'Авторизация...'}</p>
+            </>)
+         }
       </>
    )
 }

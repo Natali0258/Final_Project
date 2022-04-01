@@ -6,15 +6,25 @@ import Button from '../formElements/button/Button';
 import css from './Cases.module.css';
 
 const Cases = (props) => {
-   const [checked, setChecked] = useState(false);
+   const [checkedDelet, setCheckedDelet] = useState(false);
    const dispatch = useDispatch();
    const cases = useSelector(state => state.cases);
-
+   const { id, status, licenseNumber, type, ownerFullName, clientId, createdAd, updatedAd, color, date, officer, description, resolution } = cases;
    const changeCheckbox = () => {
-      setChecked(checked => {
-         return !checked
+      setCheckedDelet(checkedDelet => {
+         return !checkedDelet
       });
    }
+
+   //Запрос для получения всех сообщений о краже (доступен только авторизованным пользователям)
+   // const getCases = async (url) => {
+   //    const response = await fetch(url);
+   //    if (response.status !== 'OK') {
+   //       throw new Error(`Ошибка! Код ошибки ${response.errCode}, описание ошибки: ${response.message} `)
+   //    }
+   //    return await response.json()
+   // }
+   // getCases('https://sf-final-project.herokuapp.com/api/cases/').then((data) => console.lof(data))
 
    return (
       <div className={css.cases}>
@@ -33,7 +43,7 @@ const Cases = (props) => {
                   <th>Статус сообщения</th>
                   <th>Удалить сообщение</th>
                </tr>
-               {cases.map(cas => {
+               {cases.length && cases.map(cas => {
                   return (
                      <tr key={cas.id}>
                         <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.ownerFullName}</Link></td>
@@ -42,9 +52,9 @@ const Cases = (props) => {
                         <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.licenseNumber}</Link></td>
                         <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.type}</Link></td>
                         <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.color}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.officer}</Link></td>
+                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.pofficer}</Link></td>
                         <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.status}</Link></td>
-                        <td className={css.delCheck}><input key={cas.id} type='checkbox' name={cas.id} checked={checked} onChange={changeCheckbox} /></td>
+                        <td className={css.delCheck}><input key={cas.id} type='checkbox' name={cas.id} checked={checkedDelet} onChange={changeCheckbox/*() => dispatch(removeFromCheckedDeletCas(id))*/} /></td>
                      </tr>
                   )
                })

@@ -1,7 +1,10 @@
+import { CAS_ACTIONS } from '../actions/casesActions';
 import { OFFICER_ACTIONS } from '../actions/officerActions';
 
 const initialState = {
-   officers: []
+   officers: [],
+   isLoading: false,
+   error: null,
 }
 const officersReducer = (state = initialState, action) => {
    switch (action.type) {
@@ -10,23 +13,121 @@ const officersReducer = (state = initialState, action) => {
             ...state,
             officers: [...state.officers,
             {
-               id: action.id,
-               email: action.email,
-               password: action.password,
-               firstName: action.firstName,
-               lastName: action.lastName,
-               clientId: action.clientId,
-               approved: action.approved,
+               id: action.payload.id,
+               email: action.payload.email,
+               password: action.payload.password,
+               firstName: action.payload.firstName,
+               lastName: action.payload.lastName,
+               clientId: action.payload.clientId,
+               approved: action.payload.approved,
             }]
-         }
+         };
       case OFFICER_ACTIONS.REMOVE_FROM_OFFICER:
+         return state.officers.filter(officer =>
+            officer.id !== action.officer.id
+         );
+      //Запрос авторизации сотрудника
+      case OFFICER_ACTIONS.FATCH_AUTH_OFFICER_STARTED:
          return {
             ...state,
-            officers: state.officers.filter(officer =>
-               officer.id !== action.officer.id
-            )
+            isLoading: true,
+            error: null,
          }
-      default: return state
+      case OFFICER_ACTIONS.FATCH_AUTH_OFFICER_SUCCESS:
+         return {
+            ...state,
+            isLoading: false,
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_AUTH_OFFICER_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
+
+      //Запрос для проверки валидности токена
+      case OFFICER_ACTIONS.FATCH_TOKEN_VALIDITY_STARTED:
+         return {
+            ...state,
+            isLoading: true,
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_TOKEN_VALIDITY_SUCCESS:
+         return {
+            ...state,
+            isLoading: false,
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_TOKEN_VALIDITY_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
+      //отправка данных о сотруднике на сервер
+      case OFFICER_ACTIONS.FATCH_OFFICER_SEND_STARTED:
+         return {
+            ...state,
+            isLoading: true,
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_OFFICER_SEND_SUCCESS:
+         return {
+            ...state,
+            isLoading: false,
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_OFFICER_SEND_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
+      //получение данных о сотрудниках и загрузка в Redux
+      case OFFICER_ACTIONS.FATCH_OFFICERS_GET_STARTED:
+         return {
+            ...state,
+            isLoading: true,
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_OFFICERS_GET_SUCCESS:
+         return {
+            ...state,
+            isLoading: false,
+            officers: action.officers,
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_OFFICERS_GET_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
+
+      //получение данных об одном сотруднике и загрузка в Redux
+      case OFFICER_ACTIONS.FATCH_OFFICER_GET_STARTED:
+         return {
+            ...state,
+            isLoading: true,
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_OFFICER_GET_SUCCESS:
+         const index = state.officers.indexOf(data._id)
+         return {
+            ...state,
+            isLoading: false,
+            officers: [...state.officers.slice(0, index), action.data, ...state.officers.slice((index + 1), state.officers.length)],
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_OFFICER_GET_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
+
+      default: return state;
    }
 }
 export default officersReducer;
