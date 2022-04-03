@@ -21,6 +21,10 @@ export const OFFICER_ACTIONS = {
    FATCH_OFFICER_GET_STARTED: 'FATCH_OFFICER_GET_STARTED',
    FATCH_OFFICER_GET_SUCCESS: 'FATCH_OFFICER_GET_SUCCESS',
    FATCH_OFFICER_GET_ERROR: 'FATCH_OFFICER_GET_ERROR',
+   // Запрос для редактирования данных о сотруднике
+   FATCH_OFFICER_EDIT_STARTED: 'FATCH_OFFICER_EDIT_STARTED',
+   FATCH_OFFICER_EDIT_SUCCESS: 'FATCH_OFFICER_EDIT_SUCCESS',
+   FATCH_OFFICER_EDIT_ERROR: 'FATCH_OFFICER_EDIT_ERROR',
    //пометить сотрудника на удаление
    ADD_TO_CHECKED_DELETE_OFFICER: 'ADD_TO_CHECKED_DELETE_OFFICER',
    //снять отметку с сотрудника на удаление
@@ -143,6 +147,26 @@ export const fatchOfficerGetSuccess = (data) => {
 export const fatchOfficerGetError = (error) => {
    return {
       type: OFFICER_ACTIONS.FATCH_OFFICER_GET_ERROR,
+      error,
+   }
+}
+
+// Запрос для редактирования данных о сотруднике
+export const fatchOfficerEditStarted = () => {
+   return {
+      type: OFFICER_ACTIONS.FATCH_OFFICER_EDIT_STARTED,
+
+   }
+}
+export const fatchOfficerEditSuccess = (data) => {
+   return {
+      type: OFFICER_ACTIONS.FATCH_OFFICER_EDIT_SUCCESS,
+      data,
+   }
+}
+export const fatchOfficerEditError = (error) => {
+   return {
+      type: OFFICER_ACTIONS.FATCH_OFFICER_EDIT_ERROR,
       error,
    }
 }

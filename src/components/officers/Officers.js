@@ -7,8 +7,7 @@ import OfficersTable from '../officersTable/OfficersTable';
 import Loader from '../loader/Loader';
 import css from './Officers.module.css';
 
-const Officers = (props) => {
-   const { setOfficers, addNewOfficer } = props;
+const Officers = () => {
    const [checked, setChecked] = useState(false);
 
    const dispatch = useDispatch();

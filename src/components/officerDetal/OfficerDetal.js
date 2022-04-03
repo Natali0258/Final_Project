@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fatchOfficerGetStarted, fatchOfficerGetSuccess, fatchOfficerGetError, fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidityError } from '../../storage/actions/officerActions';
+import { fatchOfficerGetStarted, fatchOfficerGetSuccess, fatchOfficerGetError } from '../../storage/actions/officerActions';
+import { fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidityError } from '../../storage/actions/officerActions';
+import { fatchOfficerEditStarted, fatchOfficerEditSuccess, fatchOfficerEditError } from '../../storage/actions/officerActions';
 import Button from '../formElements/button/Button';
 import Input from '../formElements/input/Input';
 import css from './OfficerDetal.module.css';
 
 const OfficerDetal = () => {
-   const [isEdit, setEdit] = useState(false);
+   //const [isEdit, setEdit] = useState(false);
    const params = useParams();
    const { officerId } = params;
 
@@ -16,7 +18,7 @@ const OfficerDetal = () => {
    const isLoading = useSelector(state => state.isLoading);
 
    console.log('officerId=', officerId);
-   // console.log('officer._id=', officer._id);
+   console.log('state.officers=', officers);
    useEffect(async () => {
       const token = localStorage.getItem('token');
       console.log('token=', token);
@@ -52,7 +54,7 @@ const OfficerDetal = () => {
             .then((response) => { return response.json(); })
             .then((data) => {
                console.log("data=", data);
-               dispatch(fatchOfficerGetSuccess(data))
+               dispatch(fatchOfficerGetSuccess(data));
             })
             .catch(error => {
                console.log('error', error)
@@ -64,39 +66,23 @@ const OfficerDetal = () => {
       }
    }, [dispatch])
 
+   const [value, setValue] = useState('1');
+
+   const handleChecked = (e) => {
+      setValue(e.target.checked);
+   }
+
    console.log('officers=', officers);
    const officer = officers.officers.find(officer => officerId == officer._id)
    console.log('officer._id=', officer._id);
 
    const [values, setValues] = useState(
       {
-         lastName: '',
-         firstName: '',
-      })
-
-   const handleEdit = (e) => {
-      e.preventDefault();
-      setEdit(!isEdit);
-   }
-
-   const handleChange = (e) => {
-      const newOfficer = {
-         id: officer.id,
-         lastName: values.lastName,
-         firstName: values.firstName,
-         email: officer.email,
+         lastName: officer.lastName,
+         firstName: officer.firstName,
          password: officer.password,
-         approved: e.target.checked,
-      };
-      const index = officers.indexOf(officer)
-      //setOfficers([...officers.slice(0, index), newOfficer, ...officers.slice((index + 1), officers.length)])
-   }
-
-   const [value, setValue] = useState('1');
-
-   const handleChecked = (e) => {
-      setValue(e.target.checked);
-   }
+         approved: officer.approved,
+      })
 
    const handleSubmit = async (e) => {
       const token = localStorage.getItem('token');
@@ -124,17 +110,17 @@ const OfficerDetal = () => {
          const options = {
             method: 'PUT',
             body: JSON.stringify({
-               "id": `${officer._id}`,
+               // "id": `${officer._id}`,
                "lastName": `${officer.lastName}`,
                "firstName": `${officer.firstName}`,
-               "email": `${officer.email}`,
+               // "email": `${officer.email}`,
                "password": `${officer.password}`,
                //"clientId": 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
                "approved": `${officer.approved}`,
             }),
             headers: { "Authorization": `Bearer ${token}` }
          }
-         dispatch(fatchOfficerGetStarted());
+         dispatch(fatchOfficerEditStarted());
          await fetch(`https://sf-final-project.herokuapp.com/api/officers/${officerId}`, options)
             .then((response) => {
                console.log(response);
@@ -146,11 +132,11 @@ const OfficerDetal = () => {
             .then((response) => { return response.json(); })
             .then((data) => {
                console.log("data=", data);
-               dispatch(fatchOfficerGetSuccess(data.data))
+               dispatch(fatchOfficerEditSuccess(data.data))
             })
             .catch(error => {
                console.log('error', error)
-               dispatch(fatchOfficerGetError(error))
+               dispatch(fatchOfficerEditError(error))
             })
 
       } else {
@@ -164,29 +150,28 @@ const OfficerDetal = () => {
             <div className={css.imgOfficer}></div>
             <div className={css.form}>
                <p className={css.title}>Детальная страница сотрудника</p>
-               <form className={css.container} onClick={handleSubmit}>
-                  {!isEdit && (
-                     <div>
-                        <h3 className={css.label}>{'Фамилия сотрудника:'}</h3>
-                        <p className={css.input}>{officer.lastName || 'Фамилия не указана'}</p>
-                        <h3 className={css.label}>{'Имя сотрудника:'}</h3>
-                        <p className={css.input}>{officer.firstName || 'Имя не указано'}</p>
-                     </div>
-                  )}
-                  {isEdit && (<>
-                     <Input title={'Фамилия сотрудника:'}
-                        id={'lastNameDetalOfficer'}
-                        type={'text'}
-                        name={'lastName'}
-                        value={values.lastName}
-                        onChange={lastName => setValues({ ...values, lastName })} />
-                     <Input title={'Имя сотрудника:'}
-                        id={'firstNameDetalOfficer'}
-                        type={'text'}
-                        name={'firstName'}
-                        value={values.firstName}
-                        onChange={firstName => setValues({ ...values, firstName })} />
-                  </>)}
+               <form className={css.container} onSubmit={handleSubmit}>
+                  <Input title={'Фамилия сотрудника:'}
+                     id={'lastNameDetalOfficer'}
+                     type={'text'}
+                     name={'lastName'}
+                     value={values.lastName}
+                     onChange={lastName => setValues({ ...values, lastName })} />
+                  <Input title={'Имя сотрудника:'}
+                     id={'firstNameDetalOfficer'}
+                     type={'text'}
+                     name={'firstName'}
+                     value={values.firstName}
+                     onChange={firstName => setValues({ ...values, firstName })} />
+                  <Input title={'Пароль: *'}
+                     id={'passwordDetalOfficer'}
+                     type={'password'}
+                     name={'password'}
+                     value={values.password}
+                     placeholder={'********'}
+                     minlength={'8'} //минимальное кол-во знаков
+                     required={'required'}
+                     onChange={password => setValues({ ...values, password })} />
                   <h3 className={css.label}>E-mail адрес сотрудника:</h3>
                   <p className={css.input}>{officer.email}</p>
                   <h3 className={css.label}>clientId:</h3>
@@ -201,10 +186,7 @@ const OfficerDetal = () => {
                      </div>
                   </div>
                   <div className={css.btn}>
-                     {!isEdit && (
-                        <Button name={'Редактировать'} onClick={handleEdit} />)}
-                     {isEdit && (
-                        <Button name={'Сохранить'} />)}
+                     <Button name={'Сохранить'} type={'submit'} onSubmit={handleSubmit} />
                   </div>
                </form>
             </div>

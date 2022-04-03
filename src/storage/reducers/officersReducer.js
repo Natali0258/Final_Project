@@ -113,14 +113,41 @@ const officersReducer = (state = initialState, action) => {
             error: null,
          }
       case OFFICER_ACTIONS.FATCH_OFFICER_GET_SUCCESS:
-         const index = state.officers.indexOf(data._id)
+         const index = state.officers.findIndex(officer => officer._id === action.data.data._id)
+         console.log('state.officers=', state.officers)
+         console.log('action.data.data=', action.data.data)
+         console.log('index=', index)
          return {
             ...state,
             isLoading: false,
-            officers: [...state.officers.slice(0, index), action.data, ...state.officers.slice((index + 1), state.officers.length)],
+            officers: [...state.officers.slice(0, index), action.data.data, ...state.officers.slice((index + 1), state.officers.length)],
             error: null,
          }
       case OFFICER_ACTIONS.FATCH_OFFICER_GET_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
+      // Запрос для редактирования данных о сотруднике
+      case OFFICER_ACTIONS.FATCH_OFFICER_EDIT_STARTED:
+         return {
+            ...state,
+            isLoading: true,
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_OFFICER_EDIT_SUCCESS:
+         const indexOfficer = state.officers.findIndex(officer => officer._id === action.data.data._id)
+         console.log('state.officers=', state.officers)
+         console.log('action.data.data=', action.data.data)
+         console.log('index=', indexOfficer)
+         return {
+            ...state,
+            isLoading: false,
+            officers: [...state.officers.slice(0, indexOfficer), action.data.data, ...state.officers.slice((indexOfficer + 1), state.officers.length)],
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_OFFICER_EDIT_ERROR:
          return {
             ...state,
             isLoading: false,
