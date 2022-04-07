@@ -10,7 +10,7 @@ const Input = (props) => {
             id={id}
             type={type}
             name={name}
-            value={value.name}
+            value={value}
             required={required}
             placeholder={placeholder}
             minlength={minlength}

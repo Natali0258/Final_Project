@@ -9,7 +9,7 @@ import Input from '../formElements/input/Input';
 import css from './OfficerDetal.module.css';
 
 const OfficerDetal = () => {
-   //const [isEdit, setEdit] = useState(false);
+   // const [isEdit, setEdit] = useState(true);
    const params = useParams();
    const { officerId } = params;
 
@@ -66,10 +66,16 @@ const OfficerDetal = () => {
       }
    }, [dispatch])
 
+   // const handleClick = (e) => {
+   //    e.preventDefault();
+   //    setEdit(!isEdit);
+   //    console.log('isEdit=', isEdit)
+   // }
+
    const [value, setValue] = useState('1');
 
    const handleChecked = (e) => {
-      setValue(e.target.checked);
+      setValue(e.target.value);
    }
 
    console.log('officers=', officers);
@@ -85,12 +91,14 @@ const OfficerDetal = () => {
       })
 
    const handleSubmit = async (e) => {
+      e.preventDefault();
       const token = localStorage.getItem('token');
       console.log('token=', token);
       if (token) {
          //Запрос для проверки валидности токена.
          dispatch(fatchTokenValidityStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/auth/', { headers: { "Authorization": `Bearer ${token}` } })
+         await fetch('https://sf-final-project.herokuapp.com/api/auth/',
+            { headers: { "Authorization": `Bearer ${token}` } })
             .then((response) => {
                if (response.status !== 200) {
                   return Promise.reject(new Error(response.status))
@@ -110,17 +118,18 @@ const OfficerDetal = () => {
          const options = {
             method: 'PUT',
             body: JSON.stringify({
-               // "id": `${officer._id}`,
-               "lastName": `${officer.lastName}`,
-               "firstName": `${officer.firstName}`,
+               //"id": `${officer._id}`,
+               "lastName": `${values.lastName}`,
+               "firstName": `${values.firstName}`,
                // "email": `${officer.email}`,
-               "password": `${officer.password}`,
+               "password": `${values.password}`,
                //"clientId": 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
-               "approved": `${officer.approved}`,
+               "approved": `${values.approved}`,
             }),
             headers: { "Authorization": `Bearer ${token}` }
          }
          dispatch(fatchOfficerEditStarted());
+         console.log('!!!', officer._id, officerId)
          await fetch(`https://sf-final-project.herokuapp.com/api/officers/${officerId}`, options)
             .then((response) => {
                console.log(response);
@@ -162,16 +171,15 @@ const OfficerDetal = () => {
                      type={'text'}
                      name={'firstName'}
                      value={values.firstName}
-                     onChange={firstName => setValues({ ...values, firstName })} />
-                  <Input title={'Пароль: *'}
-                     id={'passwordDetalOfficer'}
-                     type={'password'}
-                     name={'password'}
-                     value={values.password}
-                     placeholder={'********'}
-                     minlength={'8'} //минимальное кол-во знаков
-                     required={'required'}
-                     onChange={password => setValues({ ...values, password })} />
+                     onChange={firstName => setValues({ ...values, firstName })} /><Input title={'Пароль: *'}
+                        id={'passwordDetalOfficer'}
+                        type={'password'}
+                        name={'password'}
+                        value={values.password}
+                        placeholder={'********'}
+                        minlength={'8'} //минимальное кол-во знаков
+                        required={'required'}
+                        onChange={password => setValues({ ...values, password })} />
                   <h3 className={css.label}>E-mail адрес сотрудника:</h3>
                   <p className={css.input}>{officer.email}</p>
                   <h3 className={css.label}>clientId:</h3>
@@ -186,7 +194,7 @@ const OfficerDetal = () => {
                      </div>
                   </div>
                   <div className={css.btn}>
-                     <Button name={'Сохранить'} type={'submit'} onSubmit={handleSubmit} />
+                     <Button name={'Сохранить'} type={'submit'} />
                   </div>
                </form>
             </div>
