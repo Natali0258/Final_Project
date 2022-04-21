@@ -1,7 +1,9 @@
 import { CAS_ACTIONS } from "../actions/casesActions";
 
 const initialState = {
-   cases: []
+   cases: [],
+   isLoading: false,
+   error: null,
 }
 const casesReducer = (state = initialState, action) => {
    switch (action.type) {
@@ -28,18 +30,40 @@ const casesReducer = (state = initialState, action) => {
             ]
          };
 
-      //переключение состояния cas (случай)
-      case CAS_ACTIONS.REMOVE_FROM_CHECKED_DELET_CAS:
-         return state.map(cas => {
-            if (cas.id === action.payload.id)
-               return { ...cas, checkedDelet: !cas.checkedDelet }
-            return cas;
-         });
+      //Запрос для создания нового сообщения о краже 
+      case CAS_ACTIONS.FATCH_CASE_SEND_STARTED:
+         return {
+            ...state,
+            isLoading: true,
+            error: null,
+         }
+      case CAS_ACTIONS.FATCH_CASE_SEND_SUCCESS:
+         return {
+            ...state,
+            cases: [...state.cases,
+            action.date],
+            isLoading: false,
+            error: null,
+         }
+      case CAS_ACTIONS.FATCH_CASE_SEND_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
 
-      case CAS_ACTIONS.REMOVE_FROM_CAS:
-         return state.cases.filter(cas =>
-            cas.id !== action.cas.payload.id
-         );
+      //переключение состояния cas(случай)
+      // case CAS_ACTIONS.REMOVE_FROM_CHECKED_DELET_CAS:
+      //    return state.map(cas => {
+      //       if (cas.id === action.payload.id)
+      //          return { ...cas, checkedDelet: !cas.checkedDelet }
+      //       return cas;
+      //    });
+
+      // case CAS_ACTIONS.REMOVE_FROM_CAS:
+      //    return state.cases.filter(cas =>
+      //       cas.id !== action.cas.payload.id
+      //    );
       default: return state;
    }
 }

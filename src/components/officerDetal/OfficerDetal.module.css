@@ -8,7 +8,7 @@
 }
 .wrapper {
    display: flex;
-   justify-content: space-between;
+   justify-content: start;
    min-width: 1235px;
    margin: 0 auto;
    position: relative;
@@ -27,12 +27,12 @@
    display: flex;
    flex-direction: column;
    width: 500px;
-   height: 580px;
+   height: 600px;
    border: 2px solid rgb(58, 58, 240);
    background: rgb(212, 212, 243);
    border-radius: 20px;
    margin-top: 70px;
-   margin-left: 200px;
+   margin-left: 100px;
    z-index: 1;
 }
 .title {
@@ -44,6 +44,7 @@
    font-weight: 700;
    margin-top: 10px;
 }
+
 .container {
    display: flex;
    flex-direction: column;
@@ -78,14 +79,30 @@
    margin-left: 10px;
    margin-top: 16px;
 }
-.radio {
+/* .radio {
    font-size: 18px;
    font-weight: 400;
    padding-left: 10px;
-}
+} */
 .radioButton {
    margin-bottom: 10px;
 }
 .btn {
    margin-top: 5px;
+}
+.message {
+   display: flex;
+   flex-direction: column;
+   width: 300px;
+   height: 120px;
+   border: 2px solid rgb(58, 58, 240);
+   background: rgb(212, 212, 243);
+   border-radius: 20px;
+   margin-top: 250px;
+   margin-left: 10px;
+   z-index: 1;
+}
+.save {
+   text-align: center;
+   margin-top: 30px;
 }

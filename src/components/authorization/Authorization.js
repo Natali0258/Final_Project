@@ -25,10 +25,9 @@ const Authorization = (props) => {
       console.log('value2=', values);
    }
 
-
    const handleSubmit = async (event) => {
-      //отправляем запрос с паролем и ждем данные о пользователе
-      event.preventDefault(); //чтобы страница не перезагружалась
+      //POST Запрос авторизации сотрудника
+      event.preventDefault();
 
       const officer = {
          email: values.email,
@@ -88,8 +87,8 @@ const Authorization = (props) => {
             (<AuthorizationResult
                isLogged={isLogged} isFormError={isFormError}
                isResult={isResult} setResult={setResult}
-               isFormAuthorization={isFormAuthorization}
-               setFormAuthorization={setFormAuthorization} />) :
+               isForm={isFormAuthorization}
+               setForm={setFormAuthorization} />) :
             (<AuthorizationForm
                values={values} setValues={setValues}
                handleSubmit={handleSubmit}

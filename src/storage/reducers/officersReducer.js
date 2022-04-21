@@ -65,7 +65,7 @@ const officersReducer = (state = initialState, action) => {
             isLoading: false,
             error: action.error,
          }
-      //отправка данных о сотруднике на сервер
+      //Запрос для создания новой учетной записи
       case OFFICER_ACTIONS.FATCH_OFFICER_SEND_STARTED:
          return {
             ...state,
@@ -148,6 +148,31 @@ const officersReducer = (state = initialState, action) => {
             error: null,
          }
       case OFFICER_ACTIONS.FATCH_OFFICER_EDIT_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
+
+      // Запрос для даления данных о сотруднике
+      case OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_STARTED:
+         return {
+            ...state,
+            isLoading: true,
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_SUCCESS:
+         const idxOfficer = state.officers.findIndex(officer => officer._id === action.id)
+         //console.log('state.officers=', state.officers)
+         //console.log('action.data.data=', action.data.data)
+         //console.log('idx=', idxOfficer)
+         return {
+            ...state,
+            isLoading: false,
+            officers: [...state.officers.slice(0, idxOfficer), ...state.officers.slice((idxOfficer + 1), state.officers.length)],
+            error: null,
+         }
+      case OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_ERROR:
          return {
             ...state,
             isLoading: false,

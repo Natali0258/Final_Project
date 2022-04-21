@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { fatchOfficersGetStarted, fatchOfficersGetSuccess, fatchOfficersGetError, fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidityError } from '../../storage/actions/officerActions';
+import { fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidityError } from '../../storage/actions/officerActions';
+import { fatchOfficersGetStarted, fatchOfficersGetSuccess, fatchOfficersGetError } from '../../storage/actions/officerActions';
+import { fatchCaseSendStarted, fatchCaseSendSuccess, fatchCaseSendError } from '../../storage/actions/casesActions';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToCas } from '../../storage/actions/casesActions';
 import Input from '../formElements/input/Input';
@@ -16,14 +18,22 @@ const CaseForm = () => {
    const officers = useSelector(state => state.officers);
    const isLoading = useSelector(state => state.isLoading);
 
+   // const handleChange = (e) => {
+   //    const fieldName = e.target.name;
+   //    setValues({ ...values, [fieldName]: e.target.value });
+   // }
+
    //этот useEffect скопирован из компонента Officer
    useEffect(async () => {
+
       const token = localStorage.getItem('token');
       console.log('token=', token);
+
       if (token) {
-         //Запрос для проверки валидности токена.
+         //GET Запрос для проверки валидности токена.
          dispatch(fatchTokenValidityStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/auth/', { headers: { "Authorization": `Bearer ${token}` } })
+         await fetch('https://sf-final-project.herokuapp.com/api/auth/',
+            { headers: { "Authorization": `Bearer ${token}` } })
             .then((response) => {
                if (response.status !== 200) {
                   return Promise.reject(new Error(response.status))
@@ -39,9 +49,10 @@ const CaseForm = () => {
                console.log('error', error)
                dispatch(fatchTokenValidityError(error))
             })
-         // Запрос для получения списка всех сотрудников (доступен только авторизованным пользователям):
+         //GET Запрос для получения списка всех сотрудников (доступен только авторизованным пользователям):
          dispatch(fatchOfficersGetStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/officers/', { headers: { "Authorization": `Bearer ${token}` } })
+         await fetch('https://sf-final-project.herokuapp.com/api/officers/',
+            { headers: { "Authorization": `Bearer ${token}` } })
             .then((response) => {
                console.log(response);
                if (response.status !== 200) {
@@ -64,7 +75,6 @@ const CaseForm = () => {
       }
    }, [dispatch])
 
-
    const [values, setValues] = useState(
       {
          id: '',
@@ -83,101 +93,112 @@ const CaseForm = () => {
          checkedDelet: '',
       })
 
-   console.log('officersName=', officers);
+   //console.log('officers=', officers);
    const bikeType = ['general', 'sport'];
-   const officersName = officers.officers.map(officer => {
-      return `${officer.lastName} ${officer.firstName}`
+   const approvedOfficers = officers.officers.map(officer => {
+      if (officer.approved) {
+         return officer;
+      }
    })
-   console.log('officersName=', officersName);
+   console.log('approvedOfficers=', approvedOfficers);
+   const filterOfficers = approvedOfficers.filter(officer => {
+      return officer;
+   })
+   console.log('filterOfficers=', filterOfficers);
+   const officersName = filterOfficers.map(officer => {
+      return `${officer.lastName} ${officer.firstName}`;
+   })
+   console.log('officersName=', officersName, 'bikeType=', bikeType);
 
-   // const handleChange = (e) => {
-   //    const fieldName = e.target.name;
-   //    setValues({ ...values, [fieldName]: e.target.value });
-   // }
-   let today = new Date();
-   //today.setFullYear(year, [month], [date]);
-   const handleSubmitCaseForm = (e) => {
+   const handleSubmitCaseForm = async (e) => {
       e.preventDefault();
-      console.log('!')
-      const cas = {
+      console.log('officersName=', officersName, 'bikeType=', bikeType);
+      const caseObj = {
          id: uniqid(),
-         status: 'nev',
+         licenseNumber: values.licenseNumber,
          type: values.type,
          ownerFullName: values.ownerFullName,
-         clientId: 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
-         createdAd: today.setFullYear(),
-         updatedAd: today.setFullYear(),
+         //clientId: 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
          color: values.color,
          date: values.date,
          officer: values.officer,
          description: values.description,
-         resolution: '',
+      };
+      console.log('caseObj=', caseObj);
+      const arrName = caseObj.officer.split(' ');
+      console.log('arrName=', arrName);
+      const findOfficer = officers.officers.find(officer => (officer.lastName === arrName[0] &&
+         officer.firstName === arrName[1]))
+      console.log('findOfficer=', findOfficer, 'caseObj.type=', caseObj.type);
+      //const findType=bikeType.find(type=>{})
+
+      const token = localStorage.getItem('token');
+      console.log('token=', token);
+
+      if (token) {
+         //Запрос для проверки валидности токена.
+         dispatch(fatchTokenValidityStarted());
+         await fetch('https://sf-final-project.herokuapp.com/api/auth/',
+            { headers: { "Authorization": `Bearer ${token}` } })
+            .then((response) => {
+               if (response.status !== 200) {
+                  return Promise.reject(new Error(response.status))
+               }
+               return Promise.resolve(response)
+            })
+            .then((response) => { return response.json(); })
+            .then((data) => {
+               console.log("data=", data);
+               dispatch(fatchTokenValiditySuccess(data))
+            })
+            .catch(error => {
+               console.log('error', error)
+               dispatch(fatchTokenValidityError(error))
+            })
+
+         console.log('findOfficer._id=', findOfficer._id, 'token=', token)
+         // Запрос для создания нового сообщения о краже (доступен только авторизованным пользователям)
+         dispatch(fatchCaseSendStarted());
+         await fetch('https://sf-final-project.herokuapp.com/api/cases/',
+            {
+               method: 'POST',
+               body: JSON.stringify({
+                  "id": `${caseObj.id}`,
+                  "licenseNumber": `${caseObj.licenseNumber}`,
+                  "type": `${caseObj.type}`,
+                  "ownerFullName": `${caseObj.ownerFullName}`,
+                  //clientId: 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
+                  "color": `${caseObj.color}`,
+                  "date": `${caseObj.date}`,
+                  "officer": `${findOfficer._id}`,
+                  "description": `${caseObj.description}`,
+               }),
+               headers: {
+                  "Content-type": "application/json",
+                  "Authorization": `Bearer ${token}`
+               }
+            })
+            .then((response) => {
+               console.log(response);
+               if (response.status !== 200) {
+                  return Promise.reject(new Error(response.status))
+               }
+               return Promise.resolve(response)
+            })
+            .then((response) => { return response.json(); })
+            .then((data) => {
+               console.log("data=", data);
+               dispatch(fatchCaseSendSuccess(data));
+            })
+            .catch(error => {
+               console.log('error', error)
+               dispatch(fatchCaseSendError(error))
+            })
+
+      } else {
+         console.log('token нет в localStorage, авторизуйтесь')
       }
-      console.log('cases1=', cases, cases.langth)
-      dispatch(addToCas(cas.id, cas.status, cas.licenseNumber, cas.type, cas.ownerFullName, cas.clientId, cas.createdAd, cas.updatedAd, cas.color, cas.date, cas.officer, cas.description, cas.resolution));
-      console.log('cases2=', cases, cases.langth)
-      setValues(
-         {
-            id: '',
-            status: '',
-            licenseNumber: '',
-            type: '',
-            ownerFullName: '',
-            clientId: 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
-            createdAd: '',
-            updatedAd: '',
-            color: '',
-            date: '',
-            officer: '',
-            description: '',
-            resolution: '',
-         }
-      )
-      console.log('cases3=', cases, cases.langth)
    }
-
-   //https://www.youtube.com/watch?v=uM3RycN_k3c
-   // const sendData = async (url, data) => {
-   //    const response = await fetch(url, {
-   //       method: 'POST',
-   //       body: JSON.stringify(data),
-   //    })
-   //    if (response.status !== 'OK') {
-   //       throw new Error(`Ошибка! Код ошибки ${response.errCode}, описание ошибки: ${response.message} `)
-   //    }
-   //    return await response.json()
-   // }
-
-   // const sendCase = () => {
-   //    const caseForm = document.querySelector('.form');
-   //    const data = {
-   //       id: uniqid(),
-   //       status: 'nev',
-   //       type: values.type,
-   //       ownerFullName: values.ownerFullName,
-   //       clientId: '995544',
-   //       createdAd: today.setFullYear(),
-   //       updatedAd: today.setFullYear(),
-   //       color: values.color,
-   //       date: values.date,
-   //       officer: values.officer,
-   //       description: values.description,
-   //       resolution: '',
-   //    };
-   //    caseForm.addEventListener('submit', e => {
-   //       today.preventDefault();
-   //       const formData = new FormData(caseForm);
-   //       formData.set('order', JSON.stringify(data));
-
-   //       sendData('https://sf-final-project.herokuapp.com/api/public/report', formData)
-   //          .then(() => {
-   //             caseForm.reset() //очистить форму
-   //          })
-   //          .catch((err) => {
-   //             console.log(Error)
-   //          })
-   //    });
-   // }
 
    return (
       <div className={css.caseForm}>
@@ -203,9 +224,9 @@ const CaseForm = () => {
                         placeholder={'Иванов Иван Иванович'}
                         onChange={ownerFullName => setValues({ ...values, ownerFullName })} />
                      <DropDovn title={'Tип велосипеда: *'}
-                        id={'typeBikeCaseForm'}
+                        id={'bikeTypeCaseForm'}
                         type={'text'}
-                        name={'typeBike'}
+                        name={'bikeType'}
                         options={bikeType}
                         value={values.type}
                         onChange={type => setValues({ ...values, type })} />
@@ -235,8 +256,8 @@ const CaseForm = () => {
                         type={'text'}
                         name={'officersName'}
                         options={officersName}
-                        value={values.type}
-                        onChange={type => setValues({ ...values, type })} />
+                        value={values.officer}
+                        onChange={officer => setValues({ ...values, officer })} />
                   </div>
                </div>
                <div className={css.button}>

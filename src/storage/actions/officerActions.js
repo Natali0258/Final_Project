@@ -9,7 +9,7 @@ export const OFFICER_ACTIONS = {
    FATCH_TOKEN_VALIDITY_STARTED: 'FATCH_TOKEN_VALIDITY_STARTED',
    FATCH_TOKEN_VALIDITY_SUCCESS: 'FATCH_TOKEN_VALIDITY_SUCCESS',
    FATCH_TOKEN_VALIDITY_ERROR: 'FATCH_TOKEN_VALIDITY_ERROR',
-   //отправка данных о сотруднике на сервер
+   //Запрос для создания новой учетной записи
    FATCH_OFFICER_SEND_STARTED: 'FATCH_OFFICER_SEND_STARTED',
    FATCH_OFFICER_SEND_SUCCESS: 'FATCH_OFFICER_SEND_SUCCESS',
    FATCH_OFFICER_SEND_ERROR: 'FATCH_OFFICER_SEND_ERROR',
@@ -25,10 +25,10 @@ export const OFFICER_ACTIONS = {
    FATCH_OFFICER_EDIT_STARTED: 'FATCH_OFFICER_EDIT_STARTED',
    FATCH_OFFICER_EDIT_SUCCESS: 'FATCH_OFFICER_EDIT_SUCCESS',
    FATCH_OFFICER_EDIT_ERROR: 'FATCH_OFFICER_EDIT_ERROR',
-   //пометить сотрудника на удаление
-   ADD_TO_CHECKED_DELETE_OFFICER: 'ADD_TO_CHECKED_DELETE_OFFICER',
-   //снять отметку с сотрудника на удаление
-   REMOVE_FROM_CHECKED_DELETE_OFFICER: 'REMOVE_FROM_CHECKED_DELETE_OFFICER',
+   // Запрос для удаления данных сотрудника
+   FATCH_OFFICER_REMOVE_STARTED: 'FATCH_OFFICER_REMOVE_STARTED',
+   FATCH_OFFICER_REMOVE_SUCCESS: 'FATCH_OFFICER_REMOVE_SUCCESS',
+   FATCH_OFFICER_REMOVE_ERROR: 'FATCH_OFFICER_REMOVE_ERROR',
    //изменить статус сотрудника на "одобрен"
    ADD_TO_APPROVED_OFFICER: 'ADD_TO_APPROVED_OFFICER',
    REMOVE_FROM_APPROVED_OFFICER: 'REMOVE_FROM_APPROVED_OFFICER',
@@ -92,7 +92,7 @@ export const fatchTokenValidityError = (error) => {
       error,
    }
 }
-//отправка данных о сотруднике на сервер
+//Запрос для создания новой учетной записи
 export const fatchOfficerSendStarted = () => {
    return {
       type: OFFICER_ACTIONS.FATCH_OFFICER_SEND_STARTED,
@@ -171,19 +171,25 @@ export const fatchOfficerEditError = (error) => {
    }
 }
 
-export const addToCheckedDeleteOfficer = (id) => {
+// Запрос для удаления данных сотрудника 
+export const fatchOfficerRemoveStarted = () => {
    return {
-      type: OFFICER_ACTIONS.ADD_TO_CHECKED_DELETE_OFFICER,
+      type: OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_STARTED,
+   }
+}
+export const fatchOfficerRemoveSuccess = (id) => {
+   return {
+      type: OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_SUCCESS,
       id,
+   }
+}
+export const fatchOfficerRemoveError = (error) => {
+   return {
+      type: OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_ERROR,
+      error,
    }
 }
 
-export const removeFromCheckedDeleteOfficer = (id) => {
-   return {
-      type: OFFICER_ACTIONS.REMOVE_FROM_CHECKED_DELETE_OFFICER,
-      id,
-   }
-}
 export const addToApprovedOfficer = (id, approved) => {
    return {
       type: OFFICER_ACTIONS.ADD_TO_APPROVED_OFFICER,

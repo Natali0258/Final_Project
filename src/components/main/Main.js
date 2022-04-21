@@ -5,9 +5,8 @@ import { useLocation, Redirect } from 'react-router-dom';
 import MainPage from '../mainPage/MainPage';
 import CaseForm from '../caseForm/CaseForm';
 import Cases from '../cases/Cases';
-import DetalCase from '../detalCase/DetalCase';
+import CaseDetal from '../caseDetal/CaseDetal';
 import Officers from '../officers/Officers';
-import DetalOfficer from '../detalOfficer/DetalOfficer';
 import OfficerDetal from '../officerDetal/OfficerDetal';
 import css from './Main.module.css';
 
@@ -18,10 +17,9 @@ const Main = () => {
             <Route exact path="/" element={<MainPage />} />
             <Route path="/caseform" element={<CaseForm />} />
             <Route exact path="/cases" element={<Cases />} />
-            <Route path="/cases/:caseId" element={<DetalCase />} />
+            <Route path="/cases/:caseId" element={<CaseDetal />} />
             <Route exact path="/officers" element={<Officers />} />
             <Route path="/officers/:officerId" element={<OfficerDetal />} />
-            {/* <Route path="/officers/:officerId" element={<DetalOfficer />} /> */}
             {/* <Redirect to="/" /> */}
             {/* <Route path="*" element={<Error />} /> */}
          </Routes>

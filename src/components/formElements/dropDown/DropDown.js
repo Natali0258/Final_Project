@@ -2,7 +2,7 @@ import React from 'react';
 import css from './DropDown.module.css';
 
 const DropDown = (props) => {
-   const { title, id, type, name, options, value } = props;
+   const { title, id, type, name, options, value, onChange } = props;
    return (
       <div className={css.wrap}>
          <label className={css.label} htmlFor={id}> {title}</label>
@@ -10,10 +10,12 @@ const DropDown = (props) => {
             type={type}
             name={name}
             value={value.name}
-            onChange={e => e.target.value}>
+            onChange={e => onChange(e.target.value)}>
             {
                options.map((option, index) => {
-                  return <option className={css.option} key={index} value={index}>{option}</option>
+                  return <option className={css.option}
+                     key={index} value={option}>
+                     {option}</option>
                })
             }
          </select>

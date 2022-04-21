@@ -3,16 +3,16 @@ import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import Button from '../formElements/button/Button';
 import Input from '../formElements/input/Input';
-import css from './DetalCase.module.css';
+import css from './CaseDetal.module.css';
 
-const DetalCase = (props) => {
+const CaseDetal = (props) => {
    const { cases } = props;
    const params = useParams();
    const { caseId } = params;
 
-   const cas = cases.find(cas => caseId === cas.id)
+   const caseObj = cases.find(cas => caseId === caseObj.id)
 
-   const [value, setValue] = useState(cas);
+   const [value, setValue] = useState(caseObj);
    const [isEdit, setEdit] = useState(true);
 
    const handleChange = (e) => {
@@ -34,88 +34,88 @@ const DetalCase = (props) => {
                               id={'licenseNumberDetalCase'}
                               type={'text'}
                               name={'licenseNumber'}
-                              value={cas.licenseNumber}
+                              value={caseObj.licenseNumber}
                               onChange={handleChange} />
                            <Input title={'ФИО пользователя:'}
                               id={'ownerFullNameDetalCase'}
                               type={'text'}
                               name={'ownerFullName'}
-                              value={cas.ownerFullName}
+                              value={caseObj.ownerFullName}
                               onChange={handleChange} />
                            <Input title={'Тип велосипеда:'}
                               id={'typeDetalCase'}
                               type={'text'}
                               name={'type'}
-                              value={cas.type}
+                              value={caseObj.type}
                               onChange={handleChange} />
                            <Input title={'Цвет велосипеда:'}
                               id={'colorDetalCase'}
                               type={'text'}
                               name={'type'}
-                              value={cas.type}
+                              value={caseObj.type}
                               onChange={handleChange} />
                            <Input title={'Дата кражи:'}
                               id={'dateDetalCase'}
                               type={'text'}
                               name={'date'}
-                              value={cas.date}
+                              value={caseObj.date}
                               onChange={handleChange} />
                            <Input title={'Статус сообщения:'}
                               id={'statusDetalCase'}
                               type={'text'}
                               name={'status'}
-                              value={cas.status}
+                              value={caseObj.status}
                               onChange={handleChange} />
                         </>) : (<>
                            <p className={css.label}>Номер лицензии:</p>
-                           <p className={css.input}>{cas.licenseNumber}</p>
+                           <p className={css.input}>{caseObj.licenseNumber}</p>
                            <p className={css.label}>ФИО пользователя:</p>
-                           <p className={css.input}>{cas.ownerFullName}</p>
+                           <p className={css.input}>{caseObj.ownerFullName}</p>
                            <p className={css.label}>Тип велосипеда:</p>
-                           <p className={css.input}>{cas.type}</p>
+                           <p className={css.input}>{caseObj.type}</p>
                            <p className={css.label}>Цвет велосипеда:</p>
-                           <p className={css.input}>{cas.color}</p>
+                           <p className={css.input}>{caseObj.color}</p>
                            <p className={css.label}>Дата кражи:</p>
-                           <p className={css.input}>{cas.date}</p>
+                           <p className={css.input}>{caseObj.date}</p>
                            <p className={css.label}>Статус сообщения:</p>
-                           <p className={css.input}>{cas.status}</p>
+                           <p className={css.input}>{caseObj.status}</p>
                         </>)}
                   </div>
 
                   <div className={css.formRight}>
 
                      <p className={css.label}>Дата создания сообщения:</p>
-                     <p className={css.input}>{cas.createdAd}</p>
+                     <p className={css.input}>{caseObj.createdAd}</p>
                      <p className={css.label}>Дата последнего обновления сообщения:</p>
-                     <p className={css.input}>{cas.updatedAd}</p>
+                     <p className={css.input}>{caseObj.updatedAd}</p>
                      <p className={css.label}>clientId, уникальный для каждого студента:</p>
-                     <p className={css.input}>{cas.clientId}</p>
+                     <p className={css.input}>{caseObj.clientId}</p>
                      {isEdit ?
                         (<>
                            <Input title={'Ответственный сотрудник:'}
                               id={'officerDetalCase'}
                               type={'text'}
                               name={'officer'}
-                              value={cas.officer}
+                              value={caseObj.officer}
                               onChange={handleChange} />
                            <Input title={'Дополнительный комментарий:'}
                               id={'descriptionDetalCase'}
                               type={'text'}
                               name={'description'}
-                              value={cas.description}
+                              value={caseObj.description}
                               onChange={handleChange} />
                            <Input title={'Завершающий комментарий:'}
                               id={'resolutionDetalCase'}
                               type={'tresolution'}
-                              value={cas.resolution}
+                              value={caseObj.resolution}
                               onChange={handleChange} />
                         </>) : (<>
                            <p className={css.label}>Ответственный сотрудник:</p>
-                           <p className={css.input}>{cas.officer}</p>
+                           <p className={css.input}>{caseObj.officer}</p>
                            <p className={css.label}>Дополнительный комментарий:</p>
-                           <p className={css.input}>{cas.description}</p>
+                           <p className={css.input}>{caseObj.description}</p>
                            <p className={css.label}>Завершающий комментарий:</p>
-                           <p className={css.input}>{cas.resolution}</p>
+                           <p className={css.input}>{caseObj.resolution}</p>
                         </>)}
                   </div>
                </form>
@@ -127,4 +127,4 @@ const DetalCase = (props) => {
       </div>
    )
 }
-export default DetalCase;
+export default CaseDetal;

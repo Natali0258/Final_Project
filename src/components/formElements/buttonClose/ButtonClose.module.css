@@ -1,0 +1,23 @@
+.cross {
+   display: flex;
+   justify-content: end;
+   margin: 10px 10px 10px 0;
+   position: relative;
+}
+.line1 {
+   width: 0px;
+   height: 33px;
+   right: 17px;
+   border: 1px solid #000000;
+   transform: rotate(45deg);
+   position: absolute;
+}
+.line2 {
+   width: 33px;
+   height: 0px;
+   top: 17px;
+   right: 0px;
+   border: 1px solid #000000;
+   transform: rotate(45deg);
+   position: absolute;
+}

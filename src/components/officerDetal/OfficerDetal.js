@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { fatchOfficerGetStarted, fatchOfficerGetSuccess, fatchOfficerGetError } from '../../storage/actions/officerActions';
 import { fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidityError } from '../../storage/actions/officerActions';
 import { fatchOfficerEditStarted, fatchOfficerEditSuccess, fatchOfficerEditError } from '../../storage/actions/officerActions';
 import Button from '../formElements/button/Button';
+import ButtonClose from '../formElements/buttonClose';
 import Input from '../formElements/input/Input';
+import RadioButton from '../formElements/radioButton';
 import css from './OfficerDetal.module.css';
 
 const OfficerDetal = () => {
-   // const [isEdit, setEdit] = useState(true);
+   const [isEdit, setEdit] = useState(true);
+   const [isMessage, setMessage] = useState(false);
+   const [checked, setChecked] = useState('true');
+   const ref = useRef();
    const params = useParams();
    const { officerId } = params;
 
@@ -66,16 +71,10 @@ const OfficerDetal = () => {
       }
    }, [dispatch])
 
-   // const handleClick = (e) => {
-   //    e.preventDefault();
-   //    setEdit(!isEdit);
-   //    console.log('isEdit=', isEdit)
-   // }
-
-   const [value, setValue] = useState('1');
-
-   const handleChecked = (e) => {
-      setValue(e.target.value);
+   const handleClick = (e) => {
+      e.preventDefault();
+      setEdit(!isEdit);
+      console.log('isEdit=', isEdit)
    }
 
    console.log('officers=', officers);
@@ -86,7 +85,7 @@ const OfficerDetal = () => {
       {
          lastName: officer.lastName,
          firstName: officer.firstName,
-         password: officer.password,
+         password: '',
          approved: officer.approved,
       })
 
@@ -108,25 +107,36 @@ const OfficerDetal = () => {
             .then((response) => { return response.json(); })
             .then((data) => {
                console.log("data=", data);
-               dispatch(fatchTokenValiditySuccess(data))
+               dispatch(fatchTokenValiditySuccess(data.data));
             })
             .catch(error => {
                console.log('error', error)
                dispatch(fatchTokenValidityError(error))
             })
          // Запрос для редактирования данных о сотруднике (доступен только авторизованным пользователям):
-         const options = {
-            method: 'PUT',
-            body: JSON.stringify({
-               //"id": `${officer._id}`,
+         let data;
+         if (`${values.password}`) {
+            data = {
                "lastName": `${values.lastName}`,
                "firstName": `${values.firstName}`,
-               // "email": `${officer.email}`,
                "password": `${values.password}`,
-               //"clientId": 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
-               "approved": `${values.approved}`,
-            }),
-            headers: { "Authorization": `Bearer ${token}` }
+               "approved": `${checked}`,
+            }
+         } else {
+            data = {
+               "lastName": `${values.lastName}`,
+               "firstName": `${values.firstName}`,
+               "approved": `${checked}`,
+            }
+         }
+         console.log('values.approved=', values.approved);
+         const options = {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+               "Content-Type": "application/json; charset=utf-8",
+               "Authorization": `Bearer ${token}`
+            }
          }
          dispatch(fatchOfficerEditStarted());
          console.log('!!!', officer._id, officerId)
@@ -141,7 +151,10 @@ const OfficerDetal = () => {
             .then((response) => { return response.json(); })
             .then((data) => {
                console.log("data=", data);
-               dispatch(fatchOfficerEditSuccess(data.data))
+               console.log('isMessage1.1=', isMessage)
+               dispatch(fatchOfficerEditSuccess(data));
+               setMessage(true);
+               console.log('isMessage1.2=', isMessage)
             })
             .catch(error => {
                console.log('error', error)
@@ -153,11 +166,19 @@ const OfficerDetal = () => {
       }
    }
 
+   const handleClose = () => {
+      console.log('isMessage2=', isMessage)
+      setMessage(!isMessage)
+   }
+
    return (
       <div className={css.detalOfficer}>
          <div className={css.wrapper}>
             <div className={css.imgOfficer}></div>
             <div className={css.form}>
+               <Link to='/officers'>
+                  <ButtonClose />
+               </Link>
                <p className={css.title}>Детальная страница сотрудника</p>
                <form className={css.container} onSubmit={handleSubmit}>
                   <Input title={'Фамилия сотрудника:'}
@@ -171,7 +192,10 @@ const OfficerDetal = () => {
                      type={'text'}
                      name={'firstName'}
                      value={values.firstName}
-                     onChange={firstName => setValues({ ...values, firstName })} /><Input title={'Пароль: *'}
+                     onChange={firstName => setValues({ ...values, firstName })} />
+
+                  {!isEdit &&
+                     (<Input title={'Пароль: *'}
                         id={'passwordDetalOfficer'}
                         type={'password'}
                         name={'password'}
@@ -180,6 +204,14 @@ const OfficerDetal = () => {
                         minlength={'8'} //минимальное кол-во знаков
                         required={'required'}
                         onChange={password => setValues({ ...values, password })} />
+                     )}
+                  {isEdit &&
+                     <>
+                        <h3 className={css.label}>Пароль: *</h3>
+                        <div className={css.btn}>
+                           <Button name={'Изменить пароль'} type={'button'} ref={ref} onClick={handleClick} />
+                        </div>
+                     </>}
                   <h3 className={css.label}>E-mail адрес сотрудника:</h3>
                   <p className={css.input}>{officer.email}</p>
                   <h3 className={css.label}>clientId:</h3>
@@ -187,17 +219,35 @@ const OfficerDetal = () => {
                   <div className={css.statOfficer}>
                      <p className={css.titleStatus}>Статус сотрудника:</p>
                      <div className={css.checkbox}>
-                        <span className={css.radioButton}><input id='status1' type='radio' name='status' value='1' checked={value === '1' ? true : false} onChange={handleChecked}></input>
-                           <label for='status1' className={css.radio}>одобрить сотрудника</label></span>
-                        <span className={css.radioButton}><input id='status2' type='radio' name='status' value='2' checked={value === '2' ? true : false} onChange={handleChecked}></input>
-                           <label for='status1' className={css.radio}>снять одобрение</label></span>
+                        <RadioButton title={'одобрить'}
+                           id={'approve'}
+                           type={'radio'}
+                           name={'radio'}
+                           value={'true'}
+                           checked={checked === 'true' ? true : false}
+                           onChange={(e) => setChecked(e.target.value)} />
+                        <RadioButton title={'снять одобрение'}
+                           id={'dispprove'}
+                           type={'radio'}
+                           name={'radio'}
+                           value={'false'}
+                           checked={checked === 'false' ? true : false}
+                           onChange={(e) => setChecked(e.target.value)} />
                      </div>
                   </div>
                   <div className={css.btn}>
                      <Button name={'Сохранить'} type={'submit'} />
                   </div>
                </form>
-            </div>
+            </div >
+            {isMessage &&
+               (<>
+                  <div className={css.message}>
+                     <ButtonClose onClick={handleClose} />
+                     <h2 className={css.save}>Данные сохранены</h2>
+                  </div>
+               </>)
+            }
          </div >
       </div >
    )

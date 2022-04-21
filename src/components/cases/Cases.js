@@ -16,16 +16,6 @@ const Cases = (props) => {
       });
    }
 
-   //Запрос для получения всех сообщений о краже (доступен только авторизованным пользователям)
-   // const getCases = async (url) => {
-   //    const response = await fetch(url);
-   //    if (response.status !== 'OK') {
-   //       throw new Error(`Ошибка! Код ошибки ${response.errCode}, описание ошибки: ${response.message} `)
-   //    }
-   //    return await response.json()
-   // }
-   // getCases('https://sf-final-project.herokuapp.com/api/cases/').then((data) => console.lof(data))
-
    return (
       <div className={css.cases}>
          <div className={css.wrapper}>
@@ -43,18 +33,18 @@ const Cases = (props) => {
                   <th>Статус сообщения</th>
                   <th>Удалить сообщение</th>
                </tr>
-               {cases.length && cases.map(cas => {
+               {cases.length && cases.map(caseObj => {
                   return (
-                     <tr key={cas.id}>
-                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.ownerFullName}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.createdAd}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.date}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.licenseNumber}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.type}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.color}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.pofficer}</Link></td>
-                        <td><Link to={`/cases/${cas.id}`} className={css.link}>{cas.status}</Link></td>
-                        <td className={css.delCheck}><input key={cas.id} type='checkbox' name={cas.id} checked={checkedDelet} onChange={changeCheckbox/*() => dispatch(removeFromCheckedDeletCas(id))*/} /></td>
+                     <tr key={caseObj.id}>
+                        <td><Link to={`/cases/${caseObj.id}`} className={css.link}>{caseObj.ownerFullName}</Link></td>
+                        <td><Link to={`/cases/${caseObj.id}`} className={css.link}>{caseObj.createdAd}</Link></td>
+                        <td><Link to={`/cases/${caseObj.id}`} className={css.link}>{caseObj.date}</Link></td>
+                        <td><Link to={`/cases/${caseObj.id}`} className={css.link}>{caseObj.licenseNumber}</Link></td>
+                        <td><Link to={`/cases/${caseObj.id}`} className={css.link}>{caseObj.type}</Link></td>
+                        <td><Link to={`/cases/${caseObj.id}`} className={css.link}>{caseObj.color}</Link></td>
+                        <td><Link to={`/cases/${caseObj.id}`} className={css.link}>{caseObj.pofficer}</Link></td>
+                        <td><Link to={`/cases/${caseObj.id}`} className={css.link}>{caseObj.status}</Link></td>
+                        <td className={css.delCheck}><input key={caseObj.id} type='checkbox' name={caseObj.id} checked={checkedDelet} onChange={changeCheckbox/*() => dispatch(removeFromCheckedDeletCas(id))*/} /></td>
                      </tr>
                   )
                })

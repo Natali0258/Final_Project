@@ -4,14 +4,13 @@
    overflow-y: scroll;
 }
 .tbody {
-   height: 400px;
+   height: 430px;
 }
 .th,
 .tr {
    display: grid;
-   grid-template-columns: 15fr 12fr 20fr 10fr 10fr;
+   grid-template-columns: 15fr 12fr 20fr 10fr 15fr;
    text-align: center;
-   /* vertical-align: bottom; */
    width: center;
 }
 .th {
@@ -20,14 +19,19 @@
 }
 .tr {
    margin: 0 20px 0;
-   grid-auto-rows: 33px;
+   grid-auto-rows: 40px;
 }
 .lastName,
 .firstName,
 .email,
-.approved,
+.approved {
+   border: 1px solid #000000;
+}
 .del {
    border: 1px solid #000000;
+   display: flex;
+   align-items: center;
+   padding-left: 12px;
 }
 .delCheck {
    font-size: 24px;
