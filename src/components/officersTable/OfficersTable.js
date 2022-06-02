@@ -95,7 +95,7 @@ const OfficersTable = (props) => {
                   <td className={css.del}>
                      <Button type={'button'}
                         name={'удалить'}
-                        style={{ fontSize: "18px", padding: "4px", lineHeight: "100%" }}
+                        style={{ fontSize: "18px", padding: "3px 8px 4px", lineHeight: "100%" }}
                         onClick={() => handleDelete(officer)} />
                   </td>
                </tr>

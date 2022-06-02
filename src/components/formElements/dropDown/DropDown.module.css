@@ -5,26 +5,31 @@
    position: relative;
 }
 .label {
-   height: 26px;
+   height: 27px;
    width: 350px;
    color: black;
    font-size: 18px;
    font-weight: 400;
 }
 .select {
+   font-family: "Inter", sans-serif;
+   font-style: italic;
    display: flex;
 }
 .select,
 .option {
-   height: 26px;
-   width: 350px;
+   height: 30px;
+   width: 394px;
    color: black;
    font-size: 16px;
    font-weight: 400;
+   margin-top: 10px;
+   padding-left: 10px;
+   border: 2px solid rgb(212, 212, 243);
 }
-.options {
+/* .option {
    display: flex;
    flex-direction: column;
    width: 350px;
    height: 52px;
-}
+} */

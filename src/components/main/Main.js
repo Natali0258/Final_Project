@@ -8,6 +8,7 @@ import Cases from '../cases/Cases';
 import CaseDetal from '../caseDetal/CaseDetal';
 import Officers from '../officers/Officers';
 import OfficerDetal from '../officerDetal/OfficerDetal';
+import Error from '../Error/Error';
 import css from './Main.module.css';
 
 const Main = () => {
@@ -21,7 +22,7 @@ const Main = () => {
             <Route exact path="/officers" element={<Officers />} />
             <Route path="/officers/:officerId" element={<OfficerDetal />} />
             {/* <Redirect to="/" /> */}
-            {/* <Route path="*" element={<Error />} /> */}
+            <Route path="*" element={<Error />} />
          </Routes>
       </main >
    )

@@ -114,9 +114,9 @@ const officersReducer = (state = initialState, action) => {
          }
       case OFFICER_ACTIONS.FATCH_OFFICER_GET_SUCCESS:
          const index = state.officers.findIndex(officer => officer._id === action.data.data._id)
-         console.log('state.officers=', state.officers)
-         console.log('action.data.data=', action.data.data)
-         console.log('index=', index)
+         // console.log('state.officers=', state.officers)
+         // console.log('action.data.data=', action.data.data)
+         // console.log('index=', index)
          return {
             ...state,
             isLoading: false,

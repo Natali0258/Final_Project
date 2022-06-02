@@ -35,7 +35,7 @@ const Header = (props) => {
       console.log('Header3', 'isFormAuthorization=', isFormAuthorization);
       console.log('Header3', 'isLogged=', isLogged);
    }
-   //приклике по кнопки формы ВЫХОД происходит выход из учетной записи,
+   //при клике по кнопке формы ВЫХОД происходит выход из учетной записи,
    //в меню отключаются ссылки "Сообщения о краже" и "Ответственные сотрудники"
    const handleClickOutput = () => {
       setLogged(false);

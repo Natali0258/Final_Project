@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "imagemin-cli": "^7.0.0",
     "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "react": "^17.0.2",
@@ -21,7 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "minImages": "imagemin src/images/* --out-dir=dist/images"
   },
   "eslintConfig": {
     "extends": [

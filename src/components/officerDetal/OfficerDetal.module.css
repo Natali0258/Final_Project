@@ -26,8 +26,8 @@
 .form {
    display: flex;
    flex-direction: column;
-   width: 500px;
-   height: 600px;
+   width: 540px;
+   height: 560px;
    border: 2px solid rgb(58, 58, 240);
    background: rgb(212, 212, 243);
    border-radius: 20px;
@@ -60,10 +60,12 @@
    margin-top: 10px;
 }
 .input {
+   font-family: "Inter", sans-serif;
+   font-style: italic;
    background: white;
    color: black;
-   width: 350px;
-   font-size: 18px;
+   width: 380px;
+   font-size: 16px;
    font-weight: 400;
    margin-top: 10px;
    padding-left: 5px;
@@ -89,20 +91,4 @@
 }
 .btn {
    margin-top: 5px;
-}
-.message {
-   display: flex;
-   flex-direction: column;
-   width: 300px;
-   height: 120px;
-   border: 2px solid rgb(58, 58, 240);
-   background: rgb(212, 212, 243);
-   border-radius: 20px;
-   margin-top: 250px;
-   margin-left: 10px;
-   z-index: 1;
-}
-.save {
-   text-align: center;
-   margin-top: 30px;
 }

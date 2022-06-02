@@ -46,7 +46,7 @@ const Authorization = (props) => {
       }
 
       dispatch(fatchAuthOfficerStarted())
-      console.log('Запрос авторизации сотрудника')
+      console.log('Запрос авторизации сотрудника');
 
       await fetch('https://sf-final-project.herokuapp.com/api/auth/sign_in', options)
          .then((response) => {
@@ -93,12 +93,14 @@ const Authorization = (props) => {
                values={values} setValues={setValues}
                handleSubmit={handleSubmit}
                handleChange={handleChange} />)}
-         {isLoading &&
+         {/* {isLoading &&
             (<>
                <Loader />
-               <p>{'Авторизация...'}</p>
+               <div className={css.wrapper}>
+                  <p className={css.auth}>{'Авторизация...'}</p>
+               </div>
             </>)
-         }
+         } */}
       </>
    )
 }

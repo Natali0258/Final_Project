@@ -9,13 +9,16 @@
    font-weight: 400;
 }
 .textarea {
+   font-family: "Inter", sans-serif;
+   font-style: italic;
    background: white;
    color: black;
-   width: 350px;
+   width: 380px;
    height: 95px;
    font-size: 18px;
    font-weight: 400;
    margin-top: 7px;
    padding-left: 10px;
    border: 2px solid rgb(212, 212, 243);
+   overflow: auto;
 }

@@ -1,13 +1,15 @@
-import { CAS_ACTIONS } from "../actions/casesActions";
+import { CASE_ACTIONS } from "../actions/casesActions";
 
 const initialState = {
+   bikeType: ['', 'general', 'sport'],
+   caseStatus: ['', 'new', 'in_progress', 'done'],
    cases: [],
    isLoading: false,
    error: null,
 }
 const casesReducer = (state = initialState, action) => {
    switch (action.type) {
-      case CAS_ACTIONS.ADD_TO_CAS:
+      case CASE_ACTIONS.ADD_TO_CASE:
          return {
             ...state,
             cases: [...state.cases,
@@ -25,45 +27,120 @@ const casesReducer = (state = initialState, action) => {
                officer: action.payload.officer,
                description: action.payload.description,
                resolution: action.payload.resolution,
-               checkedDelet: action.payload.checkedDelet,
-            }
-            ]
+            }]
          };
 
       //Запрос для создания нового сообщения о краже 
-      case CAS_ACTIONS.FATCH_CASE_SEND_STARTED:
+      case CASE_ACTIONS.FATCH_CASE_SEND_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case CAS_ACTIONS.FATCH_CASE_SEND_SUCCESS:
+      case CASE_ACTIONS.FATCH_CASE_SEND_SUCCESS:
          return {
             ...state,
-            cases: [...state.cases,
-            action.date],
             isLoading: false,
             error: null,
          }
-      case CAS_ACTIONS.FATCH_CASE_SEND_ERROR:
+      case CASE_ACTIONS.FATCH_CASE_SEND_ERROR:
          return {
             ...state,
             isLoading: false,
             error: action.error,
          }
 
-      //переключение состояния cas(случай)
-      // case CAS_ACTIONS.REMOVE_FROM_CHECKED_DELET_CAS:
-      //    return state.map(cas => {
-      //       if (cas.id === action.payload.id)
-      //          return { ...cas, checkedDelet: !cas.checkedDelet }
-      //       return cas;
-      //    });
+      //Запрос для получения всех сообщений о краже
+      case CASE_ACTIONS.FATCH_CASES_GET_STARTED:
+         return {
+            ...state,
+            isLoading: true,
+            error: null,
+         }
+      case CASE_ACTIONS.FATCH_CASES_GET_SUCCESS:
+         return {
+            ...state,
+            cases: action.data,
+            isLoading: false,
+            error: null,
+         }
+      case CASE_ACTIONS.FATCH_CASES_GET_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
 
-      // case CAS_ACTIONS.REMOVE_FROM_CAS:
-      //    return state.cases.filter(cas =>
-      //       cas.id !== action.cas.payload.id
-      //    );
+      //DEL Запрос для удаления сообщения о краже
+      case CASE_ACTIONS.FATCH_CASE_REMOVE_STARTED:
+         return {
+            ...state,
+            isLoading: true,
+            error: null,
+         }
+      case CASE_ACTIONS.FATCH_CASE_REMOVE_SUCCESS:
+         return {
+            ...state,
+            cases: state.cases.filter(caseObj => caseObj._id !== action.id),
+            isLoading: false,
+            error: null,
+         }
+      case CASE_ACTIONS.FATCH_CASE_REMOVE_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
+
+      //GET Запрос для получения данных одного сообщения о краже
+      case CASE_ACTIONS.FATCH_CASE_GET_STARTED:
+         return {
+            ...state,
+            isLoading: true,
+            error: null,
+         }
+      case CASE_ACTIONS.FATCH_CASE_GET_SUCCESS:
+         const index = state.cases.findIndex(caseObj => caseObj._id === action.data.data._id)
+         // console.log('state.officers=', state.officers)
+         // console.log('action.data.data=', action.data.data)
+         // console.log('index=', index)
+         return {
+            ...state,
+            isLoading: false,
+            cases: [...state.cases.slice(0, index), action.data.data, ...state.cases.slice((index + 1), state.cases.length)],
+            error: null,
+         }
+      case CASE_ACTIONS.FATCH_CASE_GET_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
+      //PUT Запрос для редактирования сообщения о краже
+      case CASE_ACTIONS.FATCH_CASE_EDIT_STARTED:
+         return {
+            ...state,
+            isLoading: true,
+            error: null,
+         }
+      case CASE_ACTIONS.FATCH_CASE_EDIT_SUCCESS:
+         const indexCase = state.cases.findIndex(caseObj => caseObj._id === action.data.data._id)
+         console.log('state.cases=', state.cases)
+         console.log('action.data.data=', action.data.data)
+         console.log('index=', indexCase)
+         return {
+            ...state,
+            isLoading: false,
+            officers: [...state.cases.slice(0, indexCase), action.data.data, ...state.cases.slice((indexCase + 1), state.cases.length)],
+            error: null,
+         }
+      case CASE_ACTIONS.FATCH_CASE_EDIT_ERROR:
+         return {
+            ...state,
+            isLoading: false,
+            error: action.error,
+         }
+
       default: return state;
    }
 }

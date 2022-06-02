@@ -6,6 +6,7 @@ import { fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidit
 import { fatchOfficerEditStarted, fatchOfficerEditSuccess, fatchOfficerEditError } from '../../storage/actions/officerActions';
 import Button from '../formElements/button/Button';
 import ButtonClose from '../formElements/buttonClose';
+import MessageDataSaved from '../messageDataSaved/MessageDataSaved';
 import Input from '../formElements/input/Input';
 import RadioButton from '../formElements/radioButton';
 import css from './OfficerDetal.module.css';
@@ -166,11 +167,6 @@ const OfficerDetal = () => {
       }
    }
 
-   const handleClose = () => {
-      console.log('isMessage2=', isMessage)
-      setMessage(!isMessage)
-   }
-
    return (
       <div className={css.detalOfficer}>
          <div className={css.wrapper}>
@@ -241,12 +237,10 @@ const OfficerDetal = () => {
                </form>
             </div >
             {isMessage &&
-               (<>
-                  <div className={css.message}>
-                     <ButtonClose onClick={handleClose} />
-                     <h2 className={css.save}>Данные сохранены</h2>
-                  </div>
-               </>)
+               <MessageDataSaved
+                  isMessage={isMessage}
+                  setMessage={setMessage}
+                  title={'Данные сохранены'} />
             }
          </div >
       </div >

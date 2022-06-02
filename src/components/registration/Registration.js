@@ -54,7 +54,7 @@ const Registration = (props) => {
             "password": `${officer.password}`,
             "clientId": 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
          }),
-         headers: { "ontent-type": "application/json" }
+         headers: { "Content-type": "application/json" }
       }
 
       dispatch(fatchOfficerSendStarted())

@@ -1,0 +1,17 @@
+.message {
+   display: flex;
+   flex-direction: column;
+   width: 300px;
+   height: 120px;
+   border: 2px solid rgb(58, 58, 240);
+   background: rgb(212, 212, 243);
+   border-radius: 20px;
+   margin-top: 250px;
+   margin-left: 450px;
+   z-index: 2;
+   position: absolute;
+}
+.save {
+   text-align: center;
+   margin-top: 30px;
+}
