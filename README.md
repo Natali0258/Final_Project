@@ -1,4 +1,9 @@
 # Getting Started with Create React App
+Hello!
+This is my final project: a bicycle theft reporting app. The application is intended for employees of a bicycle rental company and for ordinary users.
+Only a limited part of the functionality is available to the average user: the main page and the page with the ability to report a new case of theft.
+For company employees, a page with a list of all known cases of theft is available (designed in the form of a table). It is also possible to view detailed information about each case and edit fields.
+![Коллаж](https://user-images.githubusercontent.com/83341999/185465189-4dd1be6a-b6fa-41b9-bf41-ab691439bd10.png)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
