@@ -92,3 +92,34 @@
 .btn {
    margin-top: 5px;
 }
+.wrap{
+   display: flex;
+   flex-direction: column;
+   width: 300px;
+   height: 120px;
+   border: 2px solid rgb(58, 58, 240);
+   background: rgb(212, 212, 243);
+   border-radius: 20px;
+   margin-top: 480px;
+   margin-left: -250px;
+   z-index: 3;
+   position: absolute;
+}
+.auth{
+   text-align: center;
+   margin: 50px 0 0 50px;
+   font-size:24px;
+   color:rgb(58, 58, 240);
+   z-index: 4;
+   position: absolute;
+}
+.loading{
+   display: flex;
+   flex-direction: column;
+   width: 300px;
+   height: 120px;
+   margin-top: 300px;
+   margin-left: 550px;
+   z-index: 6;
+   position: absolute;
+}

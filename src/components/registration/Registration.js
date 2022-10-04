@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addToOfficer, fatchOfficerSendStarted, fatchOfficerSendSuccess, fatchOfficerSendError } from '../../storage/actions/officerActions';
+import { createRequest } from '../../fetch/createRequest';
 import Input from '../formElements/input/Input';
 import Button from '../formElements/button/Button';
 import uniqid from 'uniqid';
@@ -14,6 +15,7 @@ const Registration = (props) => {
    const [isFormOpen, setFormOpen] = useState(true);
    const [isFormError, setFormError] = useState(false);
    const dispatch = useDispatch();
+   const user = useSelector(state => state.user)
    const officers = useSelector(state => state.officers);
    const isLoading = useSelector(state => state.isLoading);
 
@@ -29,6 +31,9 @@ const Registration = (props) => {
          isLoading: false,
       }
    )
+
+
+   //console.log('isAuth=', user, officers, officers.isLoading)
 
    const handleSubmitRegistration = (e) => {
       e.preventDefault();
@@ -61,6 +66,15 @@ const Registration = (props) => {
 
       //Запрос для создания новой учетной записи:
       fetch('https://sf-final-project.herokuapp.com/api/auth/sign_up', options)
+         // createRequest('sign_up', 'POST',
+         //    {
+         //       "id": `${officer.id}`,
+         //       "lastName": `${officer.lastName}`,
+         //       "firstName": `${officer.firstName}`,
+         //       "email": `${officer.email}`,
+         //       "password": `${officer.password}`,
+         //       "clientId": 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
+         //    })
          .then((response) => {
             if (response.status !== 200) {
                return Promise.reject(new Error(response.message))

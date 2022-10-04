@@ -11,7 +11,7 @@ const Authorization = (props) => {
    const [isFormError, setFormError] = useState(false);
 
    const dispatch = useDispatch();
-   const isLoading = useSelector(state => state.isLoading);
+   const officers = useSelector(state => state.officers)
 
    const [values, setValues] = useState({
       email: '',
@@ -83,7 +83,7 @@ const Authorization = (props) => {
 
    return (
       <>
-         {((isLogged || isFormError) && !isLoading) ?
+         {((isLogged || isFormError) && !officers.isLoading) ?
             (<AuthorizationResult
                isLogged={isLogged} isFormError={isFormError}
                isResult={isResult} setResult={setResult}
@@ -93,14 +93,17 @@ const Authorization = (props) => {
                values={values} setValues={setValues}
                handleSubmit={handleSubmit}
                handleChange={handleChange} />)}
-         {/* {isLoading &&
+         {officers.isLoading &&
             (<>
-               <Loader />
-               <div className={css.wrapper}>
+               {/* <div className={css.wrapper}>
                   <p className={css.auth}>{'Авторизация...'}</p>
+               </div> */}
+               <div className={css.wrap}>
+                  <Loader />
                </div>
+
             </>)
-         } */}
+         }
       </>
    )
 }

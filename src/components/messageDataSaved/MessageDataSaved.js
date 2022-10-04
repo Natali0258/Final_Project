@@ -6,7 +6,6 @@ const MessageDataSaved = (props) => {
    const { isMessage, setMessage, title } = props;
 
    const handleClose = () => {
-      console.log('isMessage2=', isMessage)
       setMessage(!isMessage)
    }
 

@@ -8,6 +8,7 @@ import Input from '../formElements/input/Input';
 import Textarea from '../formElements/textarea/Textarea';
 import DropDovn from '../formElements/dropDown/DropDown';
 import Button from '../formElements/button/Button';
+import Loader from '../loader/Loader';
 import MessageDataSaved from '../messageDataSaved/MessageDataSaved';
 import css from './CaseForm.module.css';
 import uniqid from 'uniqid';
@@ -16,65 +17,67 @@ const CaseForm = () => {
    const dispatch = useDispatch();
    const cases = useSelector(state => state.cases);
    const officers = useSelector(state => state.officers);
-   const isLoading = useSelector(state => state.isLoading);
    const bikeType = useSelector(state => state.bikeType);
    const [isMessage, setMessage] = useState(false);
 
    //этот useEffect скопирован из компонента Officer
-   useEffect(async () => {
+   useEffect(() => {
+      async function fetchData() {
 
-      const token = localStorage.getItem('token');
-      console.log('token=', token);
+         const token = localStorage.getItem('token');
+         console.log('token=', token);
 
-      if (token) {
-         //GET Запрос для проверки валидности токена.
-         dispatch(fatchTokenValidityStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/auth/',
-            { headers: { "Authorization": `Bearer ${token}` } })
-            .then((response) => {
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchTokenValiditySuccess(data))
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchTokenValidityError(error))
-            })
-         //GET Запрос для получения списка всех сотрудников (доступен только авторизованным пользователям):
-         dispatch(fatchOfficersGetStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/officers/',
-            {
-               headers: {
-                  "Content-type": "application/json",
-                  "Authorization": `Bearer ${token}`
-               }
-            })
-            .then((response) => {
-               console.log(response);
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchOfficersGetSuccess(data.officers))
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchOfficersGetError(error))
-            })
+         if (token) {
+            //GET Запрос для проверки валидности токена.
+            dispatch(fatchTokenValidityStarted());
+            await fetch('https://sf-final-project.herokuapp.com/api/auth/',
+               { headers: { "Authorization": `Bearer ${token}` } })
+               .then((response) => {
+                  if (response.status !== 200) {
+                     return Promise.reject(new Error(response.status))
+                  }
+                  return Promise.resolve(response)
+               })
+               .then((response) => { return response.json(); })
+               .then((data) => {
+                  console.log("data=", data);
+                  dispatch(fatchTokenValiditySuccess(data))
+               })
+               .catch(error => {
+                  console.log('error', error)
+                  dispatch(fatchTokenValidityError(error))
+               })
+            //GET Запрос для получения списка всех сотрудников (доступен только авторизованным пользователям):
+            dispatch(fatchOfficersGetStarted());
+            await fetch('https://sf-final-project.herokuapp.com/api/officers/',
+               {
+                  headers: {
+                     "Content-type": "application/json",
+                     "Authorization": `Bearer ${token}`
+                  }
+               })
+               .then((response) => {
+                  console.log(response);
+                  if (response.status !== 200) {
+                     return Promise.reject(new Error(response.status))
+                  }
+                  return Promise.resolve(response)
+               })
+               .then((response) => { return response.json(); })
+               .then((data) => {
+                  console.log("data=", data);
+                  dispatch(fatchOfficersGetSuccess(data.officers))
+               })
+               .catch(error => {
+                  console.log('error', error)
+                  dispatch(fatchOfficersGetError(error))
+               })
 
-      } else {
-         console.log('token нет в localStorage, авторизуйтесь')
+         } else {
+            console.log('token нет в localStorage, авторизуйтесь')
+         }
       }
+      fetchData();
    }, [dispatch])
 
    const [values, setValues] = useState(
@@ -267,6 +270,11 @@ const CaseForm = () => {
       <div className={css.caseForm}>
          <div className={css.wrapper}>
             <div className={css.formBike}></div>
+            {officers.isLoading &&
+               <div className={css.loading}>
+                  <Loader />
+               </div>
+            }
             <form className={css.form} onSubmit={handleSubmitCaseForm}>
                <h2 className={css.title}>Информация о краже</h2>
                <p className={css.comment}>* Обязательные поля</p>
