@@ -1,23 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToOfficer, fatchOfficerSendStarted, fatchOfficerSendSuccess, fatchOfficerSendError } from '../../storage/actions/officerActions';
-import { createRequest } from '../../fetch/createRequest';
+import { fetchOfficerSendStarted, fetchOfficerSendSuccess, fetchOfficerSendError } from '../../storage/actions/officerActions';
 import Input from '../formElements/input/Input';
 import Button from '../formElements/button/Button';
 import uniqid from 'uniqid';
 import Loader from '../loader/Loader';
 import css from './Registration.module.css';
 import RegistrationResult from '../registrationResult/RegistrationResult';
+import { fetchRequest } from '../../fetch/fetchRequest';
 
 const Registration = (props) => {
-   const { isResult, setResult, addNewOfficer, isFormRegistration, setFormRegistration } = props;
+   const { isFormRegistration, setFormRegistration } = props;
    const [isFormOpen, setFormOpen] = useState(true);
    const [isFormError, setFormError] = useState(false);
+   //const [isFormRegistration, setFormRegistration] = useState(true);
    const dispatch = useDispatch();
-   const user = useSelector(state => state.user)
    const officers = useSelector(state => state.officers);
-   const isLoading = useSelector(state => state.isLoading);
 
    const [values, setValues] = useState(
       {
@@ -32,10 +31,7 @@ const Registration = (props) => {
       }
    )
 
-
-   //console.log('isAuth=', user, officers, officers.isLoading)
-
-   const handleSubmitRegistration = (e) => {
+   const handleSubmitRegistration = async (e) => {
       e.preventDefault();
 
       const officer = {
@@ -46,85 +42,52 @@ const Registration = (props) => {
          password: values.password,
          clientId: 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
          approved: `${officers.length !== 1 ? 'false' : 'true'}`,
-         //isLoading: false,
       };
 
-      const options = {
-         method: 'POST',
-         body: JSON.stringify({
+      //Запрос для создания новой учетной записи:
+      dispatch(fetchOfficerSendStarted())
+      await fetchRequest('auth/sign_up', 'POST',
+         {
             "id": `${officer.id}`,
             "lastName": `${officer.lastName}`,
             "firstName": `${officer.firstName}`,
             "email": `${officer.email}`,
             "password": `${officer.password}`,
             "clientId": 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
-         }),
-         headers: { "Content-type": "application/json" }
-      }
+         }, false, dispatch, fetchOfficerSendSuccess, fetchOfficerSendError, setFormOpen, setFormError, isFormError)
 
-      dispatch(fatchOfficerSendStarted())
-
-      //Запрос для создания новой учетной записи:
-      fetch('https://sf-final-project.herokuapp.com/api/auth/sign_up', options)
-         // createRequest('sign_up', 'POST',
-         //    {
-         //       "id": `${officer.id}`,
-         //       "lastName": `${officer.lastName}`,
-         //       "firstName": `${officer.firstName}`,
-         //       "email": `${officer.email}`,
-         //       "password": `${officer.password}`,
-         //       "clientId": 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
-         //    })
-         .then((response) => {
-            if (response.status !== 200) {
-               return Promise.reject(new Error(response.message))
-            }
-            return Promise.resolve(response)
-         })
-         .then((response) => response.json())
-         .then(data => {
-            dispatch(fatchOfficerSendSuccess(officer.id))
-            console.log('dataRegistration=', data);
-            dispatch(addToOfficer(officer.id, officer.email, officer.password, officer.firstName, officer.lastName, officer.clientId, officer.approved));
-            setFormOpen(!isFormOpen);
-            console.log('isFormOpen=', isFormOpen);
-         })
-         .catch((error) => {
-            dispatch(fatchOfficerSendError(officer.id))
-            localStorage.setItem('message', error);
-            console.log(localStorage.getItem('message'))
-            setFormError(!isFormError);
-            console.log('isFormError=', isFormError);
-         })
-
-      console.log('id=', officer.id, 'email=', officer.email, 'password=', officer.password, 'firstName=', officer.firstName, 'lastName=', officer.lastName, 'clientId=', officer.clientId, 'approved=', officer.approved);
    }
 
    return (
       <>
+         {officers.isLoading &&
+            (<div className={css.wrap}>
+               <Loader />
+            </div>)
+         }
          <div className={css.form} id="entry">
 
-            {isLoading &&
-               <Loader />
-            }
-
-            {isFormOpen && !isFormError && !isLoading ?
+            {isFormOpen && !isFormError
+               //  && !officers.isLoading
+               ?
                (<form form onSubmit={handleSubmitRegistration}>
                   <div className={css.container}>
                      <p className={css.comment}>* Обязательные поля</p>
-                     <Input title={'Фамилия:'}
+                     <Input title={'Фамилия: *'}
                         id={'lastNameRegistration'}
                         type={'text'}
                         name={'lastName'}
                         value={values.lastName}
+                        required={'required'}
                         placeholder='Иванов'
                         onChange={lastName => setValues({ ...values, lastName })} />
-                     <Input title={'Имя:   '}
+                     <Input title={'Имя:  *'}
                         id={'firstNameRegistration'}
                         type={'text'}
                         name={'firstName'}
                         value={values.firstName}
                         placeholder='Иван'
+                        required={'required'}
                         onChange={firstName => setValues({ ...values, firstName })} />
                      <Input title={'E - mail: *'}
                         id={'emailRegistration'}
@@ -156,8 +119,6 @@ const Registration = (props) => {
                      setFormRegistration={setFormRegistration} />
                )}
          </div >
-
-
       </>
    )
 }

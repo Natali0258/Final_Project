@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
-import { fatchOfficerGetStarted, fatchOfficerGetSuccess, fatchOfficerGetError } from '../../storage/actions/officerActions';
-import { fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidityError } from '../../storage/actions/officerActions';
-import { fatchOfficerEditStarted, fatchOfficerEditSuccess, fatchOfficerEditError } from '../../storage/actions/officerActions';
+import { createRequest } from '../../fetch/createRequest';
+import { fetchRequest } from '../../fetch/fetchRequest';
+import { fetchOfficerGetStarted, fetchOfficerGetSuccess, fetchOfficerGetError } from '../../storage/actions/officerActions';
+import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
+import { fetchOfficerEditStarted, fetchOfficerEditSuccess, fetchOfficerEditError } from '../../storage/actions/officerActions';
 import Button from '../formElements/button/Button';
 import ButtonClose from '../formElements/buttonClose';
 import MessageDataSaved from '../messageDataSaved/MessageDataSaved';
@@ -16,7 +18,7 @@ const OfficerDetal = () => {
    const [isEdit, setEdit] = useState(true);
    const [isMessage, setMessage] = useState(false);
    const [checked, setChecked] = useState('true');
-   const ref = useRef();
+   //const ref = useRef();
    const params = useParams();
    const { officerId } = params;
 
@@ -31,42 +33,12 @@ const OfficerDetal = () => {
          console.log('token=', token);
          if (token) {
             //Запрос для проверки валидности токена.
-            dispatch(fatchTokenValidityStarted());
-            await fetch('https://sf-final-project.herokuapp.com/api/auth/', { headers: { "Authorization": `Bearer ${token}` } })
-               .then((response) => {
-                  if (response.status !== 200) {
-                     return Promise.reject(new Error(response.status))
-                  }
-                  return Promise.resolve(response)
-               })
-               .then((response) => { return response.json(); })
-               .then((data) => {
-                  console.log("data=", data);
-                  dispatch(fatchTokenValiditySuccess(data))
-               })
-               .catch(error => {
-                  console.log('error', error)
-                  dispatch(fatchTokenValidityError(error))
-               })
+            dispatch(fetchTokenValidityStarted());
+            await createRequest('auth/', 'GET', true, dispatch, fetchTokenValiditySuccess, fetchTokenValidityError)
+
             // Запрос для получения данных об одном сотруднике (доступен только авторизованным пользователям):
-            dispatch(fatchOfficerGetStarted());
-            await fetch(`https://sf-final-project.herokuapp.com/api/officers/${officerId}`, { headers: { "Authorization": `Bearer ${token}` } })
-               .then((response) => {
-                  console.log(response);
-                  if (response.status !== 200) {
-                     return Promise.reject(new Error(response.status))
-                  }
-                  return Promise.resolve(response)
-               })
-               .then((response) => { return response.json(); })
-               .then((data) => {
-                  console.log("data=", data);
-                  dispatch(fatchOfficerGetSuccess(data));
-               })
-               .catch(error => {
-                  console.log('error', error)
-                  dispatch(fatchOfficerGetError(error))
-               })
+            dispatch(fetchOfficerGetStarted());
+            await createRequest(`officers/${officerId}`, 'GET', true, dispatch, fetchOfficerGetSuccess, fetchOfficerGetError)
 
          } else {
             console.log('token нет в localStorage, авторизуйтесь')
@@ -99,24 +71,9 @@ const OfficerDetal = () => {
       console.log('token=', token);
       if (token) {
          //Запрос для проверки валидности токена.
-         dispatch(fatchTokenValidityStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/auth/',
-            { headers: { "Authorization": `Bearer ${token}` } })
-            .then((response) => {
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchTokenValiditySuccess(data.data));
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchTokenValidityError(error))
-            })
+         dispatch(fetchTokenValidityStarted());
+         await createRequest('auth/', 'GET', true, dispatch, fetchTokenValiditySuccess, fetchTokenValidityError)
+
          // Запрос для редактирования данных о сотруднике (доступен только авторизованным пользователям):
          let data;
          if (`${values.password}`) {
@@ -133,37 +90,9 @@ const OfficerDetal = () => {
                "approved": `${checked}`,
             }
          }
-         console.log('values.approved=', values.approved);
-         const options = {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers: {
-               "Content-Type": "application/json; charset=utf-8",
-               "Authorization": `Bearer ${token}`
-            }
-         }
-         dispatch(fatchOfficerEditStarted());
-         console.log('!!!', officer._id, officerId)
-         await fetch(`https://sf-final-project.herokuapp.com/api/officers/${officerId}`, options)
-            .then((response) => {
-               console.log(response);
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               console.log('isMessage1.1=', isMessage)
-               dispatch(fatchOfficerEditSuccess(data));
-               setMessage(true);
-               console.log('isMessage1.2=', isMessage)
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchOfficerEditError(error))
-            })
+
+         dispatch(fetchOfficerEditStarted());
+         await fetchRequest(`officers/${officerId}`, 'PUT', data, true, dispatch, fetchOfficerEditSuccess, fetchOfficerEditError)
 
       } else {
          console.log('token нет в localStorage, авторизуйтесь')
@@ -208,7 +137,9 @@ const OfficerDetal = () => {
                      <>
                         <h3 className={css.label}>Пароль: *</h3>
                         <div className={css.btn}>
-                           <Button name={'Изменить пароль'} type={'button'} ref={ref} onClick={handleClick} />
+                           <Button name={'Изменить пароль'} type={'button'}
+                              // ref={ref} 
+                              onClick={handleClick} />
                         </div>
                      </>}
                   <h3 className={css.label}>E-mail адрес сотрудника:</h3>

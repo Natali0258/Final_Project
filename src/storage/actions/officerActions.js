@@ -1,54 +1,58 @@
 export const OFFICER_ACTIONS = {
-   ADD_TO_OFFICER: 'ADD_TO_OFFICER',
+   // ADD_TO_OFFICER: 'ADD_TO_OFFICER',
    REMOVE_FROM_OFFICER: 'REMOVE_FROM_OFFICER',
-   //Запрос авторизации сотрудника
-   FATCH_AUTH_OFFICER_STARTED: 'FATCH_AUTH_OFFICER_STARTED',
-   FATCH_AUTH_OFFICER_SUCCESS: 'FATCH_AUTH_OFFICER_SUCCESS',
-   FATCH_AUTH_OFFICER_ERROR: 'FATCH_AUTH_OFFICER_ERROR',
+   //Вызов модального окна
+   GET_MODAL: 'GET_MODAL',
+   //Закрытие модального окна
+   CLOSE_MODAL: 'CLOSE_MODAL',
+   //Вызов окна регистрации
+   GET_REGISTRATION: 'GET_REGISTRATION',
+   //Закрытие окна регистрации
+   CLOSE_REGISTRATION: 'CLOSE_REGISTRATION',
    //проверка валидности токена
-   FATCH_TOKEN_VALIDITY_STARTED: 'FATCH_TOKEN_VALIDITY_STARTED',
-   FATCH_TOKEN_VALIDITY_SUCCESS: 'FATCH_TOKEN_VALIDITY_SUCCESS',
-   FATCH_TOKEN_VALIDITY_ERROR: 'FATCH_TOKEN_VALIDITY_ERROR',
+   FETCH_TOKEN_VALIDITY_STARTED: 'FETCH_TOKEN_VALIDITY_STARTED',
+   FETCH_TOKEN_VALIDITY_SUCCESS: 'FETCH_TOKEN_VALIDITY_SUCCESS',
+   FETCH_TOKEN_VALIDITY_ERROR: 'FETCH_TOKEN_VALIDITY_ERROR',
    //Запрос для создания новой учетной записи
-   FATCH_OFFICER_SEND_STARTED: 'FATCH_OFFICER_SEND_STARTED',
-   FATCH_OFFICER_SEND_SUCCESS: 'FATCH_OFFICER_SEND_SUCCESS',
-   FATCH_OFFICER_SEND_ERROR: 'FATCH_OFFICER_SEND_ERROR',
+   FETCH_OFFICER_SEND_STARTED: 'FETCH_OFFICER_SEND_STARTED',
+   FETCH_OFFICER_SEND_SUCCESS: 'FETCH_OFFICER_SEND_SUCCESS',
+   FETCH_OFFICER_SEND_ERROR: 'FETCH_OFFICER_SEND_ERROR',
    //получение данных о сотрудниках и загрузка в таблицу
-   FATCH_OFFICERS_GET_STARTED: 'FATCH_OFFICERS_GET_STARTED',
-   FATCH_OFFICERS_GET_SUCCESS: 'FATCH_OFFICERS_GET_SUCCESS',
-   FATCH_OFFICERS_GET_ERROR: 'FATCH_OFFICERS_GET_ERROR',
+   FETCH_OFFICERS_GET_STARTED: 'FETCH_OFFICERS_GET_STARTED',
+   FETCH_OFFICERS_GET_SUCCESS: 'FETCH_OFFICERS_GET_SUCCESS',
+   FETCH_OFFICERS_GET_ERROR: 'FETCH_OFFICERS_GET_ERROR',
    //получение данных об одном сотруднике и загрузка в таблицу
-   FATCH_OFFICER_GET_STARTED: 'FATCH_OFFICER_GET_STARTED',
-   FATCH_OFFICER_GET_SUCCESS: 'FATCH_OFFICER_GET_SUCCESS',
-   FATCH_OFFICER_GET_ERROR: 'FATCH_OFFICER_GET_ERROR',
+   FETCH_OFFICER_GET_STARTED: 'FETCH_OFFICER_GET_STARTED',
+   FETCH_OFFICER_GET_SUCCESS: 'FETCH_OFFICER_GET_SUCCESS',
+   FETCH_OFFICER_GET_ERROR: 'FETCH_OFFICER_GET_ERROR',
    // Запрос для редактирования данных о сотруднике
-   FATCH_OFFICER_EDIT_STARTED: 'FATCH_OFFICER_EDIT_STARTED',
-   FATCH_OFFICER_EDIT_SUCCESS: 'FATCH_OFFICER_EDIT_SUCCESS',
-   FATCH_OFFICER_EDIT_ERROR: 'FATCH_OFFICER_EDIT_ERROR',
+   FETCH_OFFICER_EDIT_STARTED: 'FETCH_OFFICER_EDIT_STARTED',
+   FETCH_OFFICER_EDIT_SUCCESS: 'FETCH_OFFICER_EDIT_SUCCESS',
+   FETCH_OFFICER_EDIT_ERROR: 'FETCH_OFFICER_EDIT_ERROR',
    // Запрос для удаления данных сотрудника
-   FATCH_OFFICER_REMOVE_STARTED: 'FATCH_OFFICER_REMOVE_STARTED',
-   FATCH_OFFICER_REMOVE_SUCCESS: 'FATCH_OFFICER_REMOVE_SUCCESS',
-   FATCH_OFFICER_REMOVE_ERROR: 'FATCH_OFFICER_REMOVE_ERROR',
+   FETCH_OFFICER_REMOVE_STARTED: 'FETCH_OFFICER_REMOVE_STARTED',
+   FETCH_OFFICER_REMOVE_SUCCESS: 'FETCH_OFFICER_REMOVE_SUCCESS',
+   FETCH_OFFICER_REMOVE_ERROR: 'FETCH_OFFICER_REMOVE_ERROR',
    //изменить статус сотрудника на "одобрен"
    ADD_TO_APPROVED_OFFICER: 'ADD_TO_APPROVED_OFFICER',
    REMOVE_FROM_APPROVED_OFFICER: 'REMOVE_FROM_APPROVED_OFFICER',
 }
 
-export const addToOfficer = (id, email, password, firstName, lastName, clientId, approved) => {
-   return {
-      type: OFFICER_ACTIONS.ADD_TO_OFFICER,
-      payload:
-      {
-         id,
-         email,
-         password,
-         firstName,
-         lastName,
-         clientId,
-         approved,
-      }
-   }
-}
+// export const addToOfficer = (id, email, password, firstName, lastName, clientId, approved) => {
+//    return {
+//       type: OFFICER_ACTIONS.ADD_TO_OFFICER,
+//       payload:
+//       {
+//          id,
+//          email,
+//          password,
+//          firstName,
+//          lastName,
+//          clientId,
+//          approved,
+//       }
+//    }
+// }
 export const removeFromOfficer = (id) => {
    return {
       type: OFFICER_ACTIONS.REMOVE_FROM_OFFICER,
@@ -56,136 +60,144 @@ export const removeFromOfficer = (id) => {
    }
 }
 
-//Запрос авторизации сотрудника
-export const fatchAuthOfficerStarted = () => {
+//Вызов модального окна
+export const getModal = () => {
    return {
-      type: OFFICER_ACTIONS.FATCH_AUTH_OFFICER_STARTED,
+      type: OFFICER_ACTIONS.GET_MODAL
    }
 }
-export const fatchAuthOfficerSuccess = () => {
+//Закрытие модального окна
+export const closeModal = () => {
    return {
-      type: OFFICER_ACTIONS.FATCH_AUTH_OFFICER_SUCCESS,
+      type: OFFICER_ACTIONS.CLOSE_MODAL
    }
 }
-export const fatchAuthOfficerError = (error) => {
+
+//Вызов окна регистрации
+export const getRegistration = () => {
    return {
-      type: OFFICER_ACTIONS.FATCH_AUTH_OFFICER_ERROR,
-      error,
+      type: OFFICER_ACTIONS.GET_REGISTRATION
+   }
+}
+
+//Закрытие окна регистрации
+export const closeRegistration = () => {
+   return {
+      type: OFFICER_ACTIONS.CLOSE_REGISTRATION
    }
 }
 
 //Запрос для проверки валидности токена
-export const fatchTokenValidityStarted = () => {
+export const fetchTokenValidityStarted = () => {
    return {
-      type: OFFICER_ACTIONS.FATCH_TOKEN_VALIDITY_STARTED,
+      type: OFFICER_ACTIONS.FETCH_TOKEN_VALIDITY_STARTED,
    }
 }
-export const fatchTokenValiditySuccess = (officers) => {
+export const fetchTokenValiditySuccess = (officers) => {
    return {
-      type: OFFICER_ACTIONS.FATCH_TOKEN_VALIDITY_SUCCESS,
+      type: OFFICER_ACTIONS.FETCH_TOKEN_VALIDITY_SUCCESS,
       officers,
    }
 }
-export const fatchTokenValidityError = (error) => {
+export const fetchTokenValidityError = (error) => {
    return {
-      type: OFFICER_ACTIONS.FATCH_TOKEN_VALIDITY_ERROR,
+      type: OFFICER_ACTIONS.FETCH_TOKEN_VALIDITY_ERROR,
       error,
    }
 }
 //Запрос для создания новой учетной записи
-export const fatchOfficerSendStarted = () => {
+export const fetchOfficerSendStarted = () => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_SEND_STARTED,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_SEND_STARTED,
 
    }
 }
-export const fatchOfficerSendSuccess = (id) => {
+export const fetchOfficerSendSuccess = () => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_SEND_SUCCESS,
-      id,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_SEND_SUCCESS,
    }
 }
-export const fatchOfficerSendError = (id) => {
+export const fetchOfficerSendError = (Error) => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_SEND_ERROR,
-      id,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_SEND_ERROR,
+      Error,
    }
 }
 //получение данных о сотрудниках и загрузка в Redux
-export const fatchOfficersGetStarted = () => {
+export const fetchOfficersGetStarted = () => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICERS_GET_STARTED,
+      type: OFFICER_ACTIONS.FETCH_OFFICERS_GET_STARTED,
 
    }
 }
-export const fatchOfficersGetSuccess = (officers) => {
+export const fetchOfficersGetSuccess = (officers) => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICERS_GET_SUCCESS,
+      type: OFFICER_ACTIONS.FETCH_OFFICERS_GET_SUCCESS,
       officers,
    }
 }
-export const fatchOfficersGetError = (error) => {
+export const fetchOfficersGetError = (error) => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICERS_GET_ERROR,
+      type: OFFICER_ACTIONS.FETCH_OFFICERS_GET_ERROR,
       error,
    }
 }
 
 //получение данных об одном сотруднике и загрузка в Redux
-export const fatchOfficerGetStarted = () => {
+export const fetchOfficerGetStarted = () => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_GET_STARTED,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_GET_STARTED,
 
    }
 }
-export const fatchOfficerGetSuccess = (data) => {
+export const fetchOfficerGetSuccess = (data) => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_GET_SUCCESS,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_GET_SUCCESS,
       data,
    }
 }
-export const fatchOfficerGetError = (error) => {
+export const fetchOfficerGetError = (error) => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_GET_ERROR,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_GET_ERROR,
       error,
    }
 }
 
 // Запрос для редактирования данных о сотруднике
-export const fatchOfficerEditStarted = () => {
+export const fetchOfficerEditStarted = () => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_EDIT_STARTED,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_EDIT_STARTED,
 
    }
 }
-export const fatchOfficerEditSuccess = (data) => {
+export const fetchOfficerEditSuccess = (data) => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_EDIT_SUCCESS,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_EDIT_SUCCESS,
       data,
    }
 }
-export const fatchOfficerEditError = (error) => {
+export const fetchOfficerEditError = (error) => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_EDIT_ERROR,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_EDIT_ERROR,
       error,
    }
 }
 
 // Запрос для удаления данных сотрудника 
-export const fatchOfficerRemoveStarted = () => {
+export const fetchOfficerRemoveStarted = () => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_STARTED,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_REMOVE_STARTED,
    }
 }
-export const fatchOfficerRemoveSuccess = (id) => {
+export const fetchOfficerRemoveSuccess = (id) => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_SUCCESS,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_REMOVE_SUCCESS,
       id,
    }
 }
-export const fatchOfficerRemoveError = (error) => {
+export const fetchOfficerRemoveError = (error) => {
    return {
-      type: OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_ERROR,
+      type: OFFICER_ACTIONS.FETCH_OFFICER_REMOVE_ERROR,
       error,
    }
 }

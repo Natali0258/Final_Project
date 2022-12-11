@@ -35,34 +35,75 @@ input:focus {
    margin-top: 5px;
    opacity: 0;
 }
-/*.hint {
-   height: 22px;
-   width: 480px;
-   font-size: 16px;
-   background: red;
-   border: 1px solid red;
-   color: white;
-   padding-top: 8px;
-   margin-top: -8px;
-   position: absolute;
-   margin-top: 10px;
-   margin-left: 10px;
-   opacity: 0;
-}
-.hint::before {
-   content: "";
-   width: 0;
-   height: 0;
-   border-top: 10px solid transparent;
-   border-bottom: 10px solid transparent;
-   border-right: 10px solid red;
-   position: absolute;
-   margin-left: -10px;
-   margin-top: -4px;
-}*/
 .input:invalid + .hint {
    opacity: 1;
 }
 .none {
    height: 2px;
+}
+/* @media  screen and (max-width: 1439px)  and (min-width: 1024px) {
+   .wrapper {
+   width: 400px;
+   margin-top: 10px;
+}
+.label {
+   height: 26px;
+   width: 340px;
+   font-size: 18px;
+   font-weight: 400;
+}
+.input {
+   height: 26px;
+   width: 380px;
+   font-size: 16px;
+   font-weight: 400;
+   margin-top: 10px;
+   padding-left: 10px;
+}
+.hint {
+   height: 30px;
+   width: 350px;
+   font-size: 14px;
+   line-height: 1em;
+   margin-top: 5px;
+}
+.none {
+   height: 2px;
+}
+} */
+   
+@media  screen and (max-width: 1023px)  and (min-width: 640px){
+   .wrapper {
+      width: 400px;
+      margin-top: 10px;
+   }
+   .label, .input {
+      height: 30px;
+      font-size: 22px;
+   }
+   .hint {
+      height: 60px;
+      font-size: 20px;
+   }
+}
+
+@media  screen and (max-width: 639px){
+   .wrapper {
+      width: 80vw;
+   }
+   .label {
+      height: 26px;
+      width: 80vw;
+      font-size: 22px;
+   }
+   .input {
+      height: 26px;
+      width: 70vw;
+      font-size: 22px;
+   }
+   .hint {
+      height: 70px;
+      width: 70vw;
+      font-size: 20px;
+   }
 }

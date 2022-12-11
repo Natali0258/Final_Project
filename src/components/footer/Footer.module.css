@@ -3,7 +3,6 @@
    justify-content: center;
    height: 100px;
    width: 100%;
-   bottom: 0;
    background-color: black;
    position: relative;
    z-index: 3;
@@ -15,8 +14,7 @@
    justify-content: space-between;
    align-items: center;
    height: 100px;
-   width: 1235px;
-   margin: 0 auto;
+   flex-basis: 1235px;
    color: #ffa500;
    font-weight: 700;
    font-size: 20px;
@@ -27,13 +25,14 @@
    display: flex;
    flex-direction: column;
    color: #ffa500;
-   line-height: 0%;
+   line-height: 50%;
 }
 .logo {
    margin-top: 0px;
    height: 70px;
 }
 .text {
+   font-size: 24px;
    line-height: 50%;
    margin-top: 10px;
    font-family: "Nunito Sans", serif;
@@ -50,7 +49,7 @@
    margin-bottom: 10px;
 }
 .link {
-   margin: 0 20px;
+   margin: 0 18px;
    color: #ffa500;
    text-decoration: none;
 }
@@ -76,4 +75,66 @@ a:hover {
 .instagram {
    height: 35px;
    color: #ffa500;
+}
+@media  screen and (max-width: 1439px) and (min-width: 1024px){
+   .footer, .wrapper {
+      max-width: 1439px;
+      margin: 0 auto;
+   }
+}
+@media  screen and (max-width: 1023px)  and (min-width: 640px) {
+   .footer, .wrapper {
+      max-width: 1023px;
+      margin: 0 auto;
+   }
+   .nav, .link {
+      display: none;
+   }
+   .contacts {
+      display: flex;
+      flex-direction: column;
+   }
+   .facebook,
+   .twitter,
+   .instagram {
+      margin-top: 15px;
+   }
+   .logo{
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 150%;
+      margin-top: 0px;
+      height: 70px;
+   }
+   .text {
+      font-size: 26px;
+   }
+}
+@media  screen and (max-width: 639px){
+   .footer, .wrapper {
+      max-width: 639px;
+      margin: 0 auto;
+   }
+   .nav, .link {
+      display: none;
+   }
+   .contacts {
+      display: flex;
+      flex-direction: column;
+   }
+   .facebook,
+   .twitter,
+   .instagram {
+      margin-top: 15px;
+   }
+   .logo{
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 150%;
+      margin-top: 0px;
+      height: 70px;
+   }
+   .text {
+      font-size: 24px;
+   }
 }

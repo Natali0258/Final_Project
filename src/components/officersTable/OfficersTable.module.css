@@ -24,14 +24,9 @@
 .lastName,
 .firstName,
 .email,
-.approved {
-   border: 1px solid #000000;
-}
+.approved,
 .del {
    border: 1px solid #000000;
-   display: flex;
-   align-items: center;
-   padding-left: 12px;
 }
 .delCheck {
    font-size: 24px;

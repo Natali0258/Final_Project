@@ -3,6 +3,7 @@ import css from './Input.module.css';
 
 const Input = (props) => {
    const { title, id, type, name, value, required, placeholder, minlength, onChange } = props;
+
    return (
       <div className={css.wrapper}>
          <label className={css.label} htmlFor={id}>{title}</label>

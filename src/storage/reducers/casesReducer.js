@@ -20,8 +20,8 @@ const casesReducer = (state = initialState, action) => {
                type: action.payload.type,
                ownerFullName: action.payload.ownerFullName,
                clientId: action.payload.clientId,
-               createdAd: action.payload.createdAd,
-               updatedAd: action.payload.updatedAd,
+               createdAt: action.payload.createdAt,
+               updatedAt: action.payload.updatedAt,
                color: action.payload.color,
                date: action.payload.date,
                officer: action.payload.officer,
@@ -31,19 +31,19 @@ const casesReducer = (state = initialState, action) => {
          };
 
       //Запрос для создания нового сообщения о краже 
-      case CASE_ACTIONS.FATCH_CASE_SEND_STARTED:
+      case CASE_ACTIONS.FETCH_CASE_SEND_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case CASE_ACTIONS.FATCH_CASE_SEND_SUCCESS:
+      case CASE_ACTIONS.FETCH_CASE_SEND_SUCCESS:
          return {
             ...state,
             isLoading: false,
             error: null,
          }
-      case CASE_ACTIONS.FATCH_CASE_SEND_ERROR:
+      case CASE_ACTIONS.FETCH_CASE_SEND_ERROR:
          return {
             ...state,
             isLoading: false,
@@ -51,20 +51,20 @@ const casesReducer = (state = initialState, action) => {
          }
 
       //Запрос для получения всех сообщений о краже
-      case CASE_ACTIONS.FATCH_CASES_GET_STARTED:
+      case CASE_ACTIONS.FETCH_CASES_GET_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case CASE_ACTIONS.FATCH_CASES_GET_SUCCESS:
+      case CASE_ACTIONS.FETCH_CASES_GET_SUCCESS:
          return {
             ...state,
-            cases: action.data,
+            cases: action.data.data,
             isLoading: false,
             error: null,
          }
-      case CASE_ACTIONS.FATCH_CASES_GET_ERROR:
+      case CASE_ACTIONS.FETCH_CASES_GET_ERROR:
          return {
             ...state,
             isLoading: false,
@@ -72,20 +72,20 @@ const casesReducer = (state = initialState, action) => {
          }
 
       //DEL Запрос для удаления сообщения о краже
-      case CASE_ACTIONS.FATCH_CASE_REMOVE_STARTED:
+      case CASE_ACTIONS.FETCH_CASE_REMOVE_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case CASE_ACTIONS.FATCH_CASE_REMOVE_SUCCESS:
+      case CASE_ACTIONS.FETCH_CASE_REMOVE_SUCCESS:
          return {
             ...state,
             cases: state.cases.filter(caseObj => caseObj._id !== action.id),
             isLoading: false,
             error: null,
          }
-      case CASE_ACTIONS.FATCH_CASE_REMOVE_ERROR:
+      case CASE_ACTIONS.FETCH_CASE_REMOVE_ERROR:
          return {
             ...state,
             isLoading: false,
@@ -93,13 +93,13 @@ const casesReducer = (state = initialState, action) => {
          }
 
       //GET Запрос для получения данных одного сообщения о краже
-      case CASE_ACTIONS.FATCH_CASE_GET_STARTED:
+      case CASE_ACTIONS.FETCH_CASE_GET_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case CASE_ACTIONS.FATCH_CASE_GET_SUCCESS:
+      case CASE_ACTIONS.FETCH_CASE_GET_SUCCESS:
          const index = state.cases.findIndex(caseObj => caseObj._id === action.data.data._id)
          // console.log('state.officers=', state.officers)
          // console.log('action.data.data=', action.data.data)
@@ -110,20 +110,20 @@ const casesReducer = (state = initialState, action) => {
             cases: [...state.cases.slice(0, index), action.data.data, ...state.cases.slice((index + 1), state.cases.length)],
             error: null,
          }
-      case CASE_ACTIONS.FATCH_CASE_GET_ERROR:
+      case CASE_ACTIONS.FETCH_CASE_GET_ERROR:
          return {
             ...state,
             isLoading: false,
             error: action.error,
          }
       //PUT Запрос для редактирования сообщения о краже
-      case CASE_ACTIONS.FATCH_CASE_EDIT_STARTED:
+      case CASE_ACTIONS.FETCH_CASE_EDIT_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case CASE_ACTIONS.FATCH_CASE_EDIT_SUCCESS:
+      case CASE_ACTIONS.FETCH_CASE_EDIT_SUCCESS:
          const indexCase = state.cases.findIndex(caseObj => caseObj._id === action.data.data._id)
          console.log('state.cases=', state.cases)
          console.log('action.data.data=', action.data.data)
@@ -134,7 +134,7 @@ const casesReducer = (state = initialState, action) => {
             officers: [...state.cases.slice(0, indexCase), action.data.data, ...state.cases.slice((indexCase + 1), state.cases.length)],
             error: null,
          }
-      case CASE_ACTIONS.FATCH_CASE_EDIT_ERROR:
+      case CASE_ACTIONS.FETCH_CASE_EDIT_ERROR:
          return {
             ...state,
             isLoading: false,

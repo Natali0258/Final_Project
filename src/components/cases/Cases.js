@@ -1,184 +1,68 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidityError } from '../../storage/actions/officerActions';
-import { fatchCasesGetStarted, fatchCasesGetSuccess, fatchCasesGetError } from '../../storage/actions/casesActions';
-import { fatchCaseRemoveStarted, fatchCaseRemoveSuccess, fatchCaseRemoveError } from '../../storage/actions/casesActions';
-import { fatchOfficersGetStarted, fatchOfficersGetSuccess, fatchOfficersGetError } from '../../storage/actions/officerActions';
+// import { useState } from 'react';
+import { createRequest } from '../../fetch/createRequest';
+import { fetchRequest } from '../../fetch/fetchRequest';
+import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
+import { fetchCasesGetStarted, fetchCasesGetSuccess, fetchCasesGetError } from '../../storage/actions/casesActions';
+import { fetchCaseRemoveStarted, fetchCaseRemoveSuccess, fetchCaseRemoveError } from '../../storage/actions/casesActions';
+import { fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
+import { getOfficersName } from '../getOfficersName';
 import Button from '../formElements/button/Button';
 import css from './Cases.module.css';
 
 const Cases = (props) => {
-   const [checkedDelet, setCheckedDelet] = useState(false);
+   // const [checkedDelet, setCheckedDelet] = useState(false);
    const dispatch = useDispatch();
    const cases = useSelector(state => state.cases);
    const officers = useSelector(state => state.officers);
-   const { id, status, licenseNumber, type, ownerFullName, clientId, createdAd, updatedAd, color, date, officer, description, resolution } = cases;
+   // const { id, status, licenseNumber, type, ownerFullName, clientId, createdAd, updatedAd, color, date, officer, description, resolution } = cases;
 
-   useEffect(async () => {
+   useEffect(() => {
+      async function fetchData() {
 
-      const token = localStorage.getItem('token');
-      console.log('token=', token);
+         const token = localStorage.getItem('token');
+         console.log('token=', token);
 
-      if (token) {
-         //GET Запрос для проверки валидности токена.
-         dispatch(fatchTokenValidityStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/auth/',
-            { headers: { "Authorization": `Bearer ${token}` } })
-            .then((response) => {
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchTokenValiditySuccess(data))
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchTokenValidityError(error))
-            })
+         if (token) {
+            //GET Запрос для проверки валидности токена.
+            dispatch(fetchTokenValidityStarted());
+            await createRequest('auth/', 'GET', true, dispatch, fetchTokenValiditySuccess, fetchTokenValidityError)
 
-         //Запрос для получения всех сообщений о краже   
-         dispatch(fatchCasesGetStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/cases/',
-            {
-               headers: {
-                  "Content-type": "application/json",
-                  "Authorization": `Bearer ${token}`
-               }
-            })
-            .then((response) => {
-               console.log(response);
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchCasesGetSuccess(data.data))
-               console.log('cases=', cases);
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchCasesGetError(error))
-            })
+            //Запрос для получения всех сообщений о краже   
+            dispatch(fetchCasesGetStarted());
+            console.log('запрос всех сообщений о краже')
+            await createRequest('cases/', 'GET', true, dispatch, fetchCasesGetSuccess, fetchCasesGetError)
 
-         console.log('cases=', cases);
+            //GET Запрос для получения списка всех сотрудников (доступен только авторизованным пользователям):
+            dispatch(fetchOfficersGetStarted());
+            console.log('запрос списка всех сотрудников')
+            await createRequest('officers/', 'GET', true, dispatch, fetchOfficersGetSuccess, fetchOfficersGetError)
 
-         //GET Запрос для получения списка всех сотрудников (доступен только авторизованным пользователям):
-         dispatch(fatchOfficersGetStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/officers/',
-            {
-               headers: {
-                  "Content-type": "application/json",
-                  "Authorization": `Bearer ${token}`
-               }
-            })
-            .then((response) => {
-               console.log(response);
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchOfficersGetSuccess(data.officers))
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchOfficersGetError(error))
-            })
-
-      } else {
-         console.log('token нет в localStorage, авторизуйтесь')
+         } else {
+            console.log('token нет в localStorage, авторизуйтесь')
+         }
       }
+      fetchData();
    }, [dispatch])
 
-   function getOfficersName(officers) {
-      const approvedOfficers = officers.officers.map(officer => {
-         if (officer.approved) {
-            return officer;
-         }
-      })
-      console.log('approvedOfficers=', approvedOfficers);
-
-      const filterOfficers = approvedOfficers.filter(officer => {
-         return officer;
-      })
-      console.log('filterOfficers=', filterOfficers);
-
-      let officersName = {};
-      filterOfficers.map(officer => {
-         return officersName[`${officer._id}`] = `${officer.lastName} ${officer.firstName}`;
-      })
-      console.log('officersName=', officersName);
-      return officersName;
-   }
+   //Получим список сотрудников со статусом "одобрен":
    const officersName = getOfficersName(officers);
-   console.log('officersName1=', officersName);
 
    const handleDelete = async (caseObj) => {
-      console.log('caseObj=', caseObj, caseObj._id)
       const token = localStorage.getItem('token');
-      console.log('token=', token);
 
       if (token) {
          //GET Запрос для проверки валидности токена.
-         dispatch(fatchTokenValidityStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/auth/',
-            { headers: { "Authorization": `Bearer ${token}` } })
-            .then((response) => {
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchTokenValiditySuccess(data))
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchTokenValidityError(error))
-            })
-         //DEL Запрос для удаления сообщения о краже (доступен только авторизованным пользователям):
-         const options = {
-            method: 'DELETE',
-            headers: {
-               "Content-Type": "application/json; charset=utf-8",
-               "Authorization": `Bearer ${token}`
-            }
-         }
+         dispatch(fetchTokenValidityStarted());
+         await createRequest('auth/', 'GET', true, dispatch, fetchTokenValiditySuccess, fetchTokenValidityError)
+
          const caseId = caseObj._id;
-         //console.log('caseId=', caseId);
-         dispatch(fatchCaseRemoveStarted());
-         await fetch(`https://sf-final-project.herokuapp.com/api/cases/${caseId}`, options)
-            .then((response) => {
-               console.log(response);
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchCaseRemoveSuccess(caseObj._id))
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchCaseRemoveError(error))
-            })
-         console.log('cases=', cases);
+
+         dispatch(fetchCaseRemoveStarted());
+         await fetchRequest(`cases/${caseId}`, 'DELETE', true, dispatch, fetchCaseRemoveSuccess, fetchCaseRemoveError, caseObj._id)
+
       } else {
          console.log('token нет в localStorage, авторизуйтесь')
       }
@@ -209,7 +93,7 @@ const Cases = (props) => {
                         return (
                            <tr key={caseObj._id}>
                               <td><Link to={`/cases/${caseObj._id}`} className={css.link}>{caseObj.ownerFullName}</Link></td>
-                              <td><Link to={`/cases/${caseObj._id}`} className={css.link}>{caseObj.createdAd}</Link></td>
+                              <td><Link to={`/cases/${caseObj._id}`} className={css.link}>{caseObj.createdAt}</Link></td>
                               <td><Link to={`/cases/${caseObj._id}`} className={css.link}>{caseObj.date}</Link></td>
                               <td><Link to={`/cases/${caseObj._id}`} className={css.link}>{caseObj.licenseNumber}</Link></td>
                               <td><Link to={`/cases/${caseObj._id}`} className={css.link}>{caseObj.type}</Link></td>
@@ -232,5 +116,3 @@ const Cases = (props) => {
    )
 }
 export default Cases;
-
-// сonst officer= officers.find(officer=>officer._id===caseObj.officer) {`${officer.lastName} ${officer.firstName} `}

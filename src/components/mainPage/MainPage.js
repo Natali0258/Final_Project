@@ -13,10 +13,7 @@ const MainPage = () => {
                </p>
             </div>
             <div className={css.right}></div>
-
          </div>
-
-
       </div>
    )
 }

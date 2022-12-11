@@ -1,104 +1,119 @@
-import { CAS_ACTIONS } from '../actions/casesActions';
 import { OFFICER_ACTIONS } from '../actions/officerActions';
 
 const initialState = {
    officers: [],
    isLoading: false,
    error: null,
+   isModalActive: false,
+   isRegistration: false,
+   isFormRegistration: false,
 }
 const officersReducer = (state = initialState, action) => {
    switch (action.type) {
-      case OFFICER_ACTIONS.ADD_TO_OFFICER:
-         return {
-            ...state,
-            officers: [...state.officers,
-            {
-               id: action.payload.id,
-               email: action.payload.email,
-               password: action.payload.password,
-               firstName: action.payload.firstName,
-               lastName: action.payload.lastName,
-               clientId: action.payload.clientId,
-               approved: action.payload.approved,
-            }]
-         };
+      // case OFFICER_ACTIONS.ADD_TO_OFFICER:
+      //    return {
+      //       ...state,
+      //       officers: [...state.officers,
+      //       {
+      //          id: action.payload.id,
+      //          email: action.payload.email,
+      //          password: action.payload.password,
+      //          firstName: action.payload.firstName,
+      //          lastName: action.payload.lastName,
+      //          clientId: action.payload.clientId,
+      //          approved: action.payload.approved,
+      //       }]
+      //    };
       case OFFICER_ACTIONS.REMOVE_FROM_OFFICER:
          return state.officers.filter(officer =>
             officer.id !== action.officer.id
          );
-      //Запрос авторизации сотрудника
-      case OFFICER_ACTIONS.FATCH_AUTH_OFFICER_STARTED:
+
+      //Вызов модального окна
+      case OFFICER_ACTIONS.GET_MODAL:
          return {
             ...state,
-            isLoading: true,
+            isModalActive: true,
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_AUTH_OFFICER_SUCCESS:
+      //Закрытие модального окна
+      case OFFICER_ACTIONS.CLOSE_MODAL:
          return {
             ...state,
-            isLoading: false,
+            isModalActive: false,
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_AUTH_OFFICER_ERROR:
+
+      //Вызов окна регистрации:
+      case OFFICER_ACTIONS.GET_REGISTRATION:
          return {
             ...state,
-            isLoading: false,
-            error: action.error,
+            isRegistration: true,
+            error: null,
+         }
+
+      //Закрытие окна регистрации:
+      case OFFICER_ACTIONS.CLOSE_REGISTRATION:
+         return {
+            ...state,
+            isRegistration: false,
+            error: null,
          }
 
       //Запрос для проверки валидности токена
-      case OFFICER_ACTIONS.FATCH_TOKEN_VALIDITY_STARTED:
+      case OFFICER_ACTIONS.FETCH_TOKEN_VALIDITY_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_TOKEN_VALIDITY_SUCCESS:
+      case OFFICER_ACTIONS.FETCH_TOKEN_VALIDITY_SUCCESS:
          return {
             ...state,
             isLoading: false,
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_TOKEN_VALIDITY_ERROR:
+      case OFFICER_ACTIONS.FETCH_TOKEN_VALIDITY_ERROR:
          return {
             ...state,
             isLoading: false,
             error: action.error,
          }
       //Запрос для создания новой учетной записи
-      case OFFICER_ACTIONS.FATCH_OFFICER_SEND_STARTED:
+      case OFFICER_ACTIONS.FETCH_OFFICER_SEND_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_OFFICER_SEND_SUCCESS:
+      case OFFICER_ACTIONS.FETCH_OFFICER_SEND_SUCCESS:
          return {
             ...state,
+            isRegistration: true,
             isLoading: false,
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_OFFICER_SEND_ERROR:
+      case OFFICER_ACTIONS.FETCH_OFFICER_SEND_ERROR:
          return {
             ...state,
             isLoading: false,
-            error: action.error,
+            error: action.Error,
          }
       //получение данных о сотрудниках и загрузка в Redux
-      case OFFICER_ACTIONS.FATCH_OFFICERS_GET_STARTED:
+      case OFFICER_ACTIONS.FETCH_OFFICERS_GET_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_OFFICERS_GET_SUCCESS:
+      case OFFICER_ACTIONS.FETCH_OFFICERS_GET_SUCCESS:
          return {
             ...state,
             isLoading: false,
-            officers: action.officers,
+            officers: action.officers.officers,
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_OFFICERS_GET_ERROR:
+      case OFFICER_ACTIONS.FETCH_OFFICERS_GET_ERROR:
          return {
             ...state,
             isLoading: false,
@@ -106,13 +121,13 @@ const officersReducer = (state = initialState, action) => {
          }
 
       //получение данных об одном сотруднике и загрузка в Redux
-      case OFFICER_ACTIONS.FATCH_OFFICER_GET_STARTED:
+      case OFFICER_ACTIONS.FETCH_OFFICER_GET_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_OFFICER_GET_SUCCESS:
+      case OFFICER_ACTIONS.FETCH_OFFICER_GET_SUCCESS:
          const index = state.officers.findIndex(officer => officer._id === action.data.data._id)
          // console.log('state.officers=', state.officers)
          // console.log('action.data.data=', action.data.data)
@@ -123,20 +138,20 @@ const officersReducer = (state = initialState, action) => {
             officers: [...state.officers.slice(0, index), action.data.data, ...state.officers.slice((index + 1), state.officers.length)],
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_OFFICER_GET_ERROR:
+      case OFFICER_ACTIONS.FETCH_OFFICER_GET_ERROR:
          return {
             ...state,
             isLoading: false,
             error: action.error,
          }
       // Запрос для редактирования данных о сотруднике
-      case OFFICER_ACTIONS.FATCH_OFFICER_EDIT_STARTED:
+      case OFFICER_ACTIONS.FETCH_OFFICER_EDIT_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_OFFICER_EDIT_SUCCESS:
+      case OFFICER_ACTIONS.FETCH_OFFICER_EDIT_SUCCESS:
          const indexOfficer = state.officers.findIndex(officer => officer._id === action.data.data._id)
          console.log('state.officers=', state.officers)
          console.log('action.data.data=', action.data.data)
@@ -147,7 +162,7 @@ const officersReducer = (state = initialState, action) => {
             officers: [...state.officers.slice(0, indexOfficer), action.data.data, ...state.officers.slice((indexOfficer + 1), state.officers.length)],
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_OFFICER_EDIT_ERROR:
+      case OFFICER_ACTIONS.FETCH_OFFICER_EDIT_ERROR:
          return {
             ...state,
             isLoading: false,
@@ -155,13 +170,13 @@ const officersReducer = (state = initialState, action) => {
          }
 
       // Запрос для даления данных о сотруднике
-      case OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_STARTED:
+      case OFFICER_ACTIONS.FETCH_OFFICER_REMOVE_STARTED:
          return {
             ...state,
             isLoading: true,
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_SUCCESS:
+      case OFFICER_ACTIONS.FETCH_OFFICER_REMOVE_SUCCESS:
          const idxOfficer = state.officers.findIndex(officer => officer._id === action.id)
          //console.log('state.officers=', state.officers)
          //console.log('action.data.data=', action.data.data)
@@ -172,7 +187,7 @@ const officersReducer = (state = initialState, action) => {
             officers: [...state.officers.slice(0, idxOfficer), ...state.officers.slice((idxOfficer + 1), state.officers.length)],
             error: null,
          }
-      case OFFICER_ACTIONS.FATCH_OFFICER_REMOVE_ERROR:
+      case OFFICER_ACTIONS.FETCH_OFFICER_REMOVE_ERROR:
          return {
             ...state,
             isLoading: false,

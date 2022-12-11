@@ -2,12 +2,13 @@
    display: flex;
    flex-direction: column;
    width: 500px;
-   height: 160px;
+   /* min-height: 200px; */
+   padding: 10px 30px 30px 30px; 
    border: 2px solid rgb(58, 58, 240);
    background-color: rgb(212, 212, 243);
    border-radius: 20px;
-   margin-top: 150px;
-   margin-left: -800px;
+   margin-top: -80px;
+   margin-left: -250px;
    position: absolute;
    z-index: 1;
 }
@@ -16,6 +17,7 @@
 .helloLink {
    display: flex;
    flex-direction: column;
+   line-height: 1.5em;
    color: black;
    vertical-align: center;
    z-index: 2;
@@ -24,23 +26,15 @@
 .helloLink {
    font-size: 24px;
    font-weight: 700;
-
-   margin-left: 75px;
 }
-.hello {
-   margin-top: 50px;
-}
-.helloLink {
-   margin-top: 30px;
-   margin-bottom: 10px;
+.helloLink, .hello {
+   margin: 30px auto;
 }
 .link {
    display: inline;
    height: 50ph;
    font-size: 22px;
    font-weight: 700;
-   margin-left: 55px;
-   margin-top: 20px;
 }
 .linkEntery:hover {
    cursor: pointer;
@@ -68,4 +62,21 @@
    border: 1px solid #000000;
    transform: rotate(45deg);
    position: absolute;
+}
+@media  screen and (max-width: 639px){
+   .authorizationResult {
+      width: 80vw;
+      /* height: 50vh; */
+      padding: 10px 30px 30px 30px;
+      margin-top: -220px;
+      margin-left: -260px;
+   }
+}
+@media  screen and (max-width: 400px){
+   .authorizationResult {
+      width: 80vw;
+      padding: 10px 30px 30px 30px;
+      margin-top: -220px;
+      margin-left: -180px;
+   }
 }

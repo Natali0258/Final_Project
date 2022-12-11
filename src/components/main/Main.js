@@ -21,7 +21,7 @@ const Main = () => {
             <Route path="/cases/:caseId" element={<CaseDetal />} />
             <Route exact path="/officers" element={<Officers />} />
             <Route path="/officers/:officerId" element={<OfficerDetal />} />
-            {/* <Redirect to="/" /> */}
+            {/* <Route path='*' element={(<Navigate to='/' replace />)} />	 */}
             <Route path="*" element={<Error />} />
          </Routes>
       </main >

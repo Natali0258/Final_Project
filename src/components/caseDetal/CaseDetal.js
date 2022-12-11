@@ -2,11 +2,14 @@ import React, { useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidityError } from '../../storage/actions/officerActions';
-import { fatchCaseGetStarted, fatchCaseGetSuccess, fatchCaseGetError } from '../../storage/actions/casesActions';
-import { fatchCasesGetStarted, fatchCasesGetSuccess, fatchCasesGetError } from '../../storage/actions/casesActions';
-import { fatchCaseEditStarted, fatchCaseEditSuccess, fatchCaseEditError } from '../../storage/actions/casesActions';
-import { fatchOfficersGetStarted, fatchOfficersGetSuccess, fatchOfficersGetError } from '../../storage/actions/officerActions';
+import { createRequest } from '../../fetch/createRequest';
+import { fetchRequest } from '../../fetch/fetchRequest';
+import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
+import { fetchCaseGetStarted, fetchCaseGetSuccess, fetchCaseGetError } from '../../storage/actions/casesActions';
+import { fetchCaseEditStarted, fetchCaseEditSuccess, fetchCaseEditError } from '../../storage/actions/casesActions';
+import { fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
+import { getOfficersName } from '../getOfficersName';
+import { getArrayOfficersName } from '../getArrayOfficersName';
 import Button from '../formElements/button/Button';
 import ButtonClose from '../formElements/buttonClose/ButtonClose';
 import Input from '../formElements/input/Input';
@@ -21,6 +24,8 @@ const CaseDetal = (props) => {
    const [isEdit, setEdit] = useState(false);
    const [isMessage, setMessage] = useState(false);
    const ref = useRef(null);
+   const [isDisabled, setDisabled] = useState(true);
+   const [isRequired, setRequired] = useState(false)
    const params = useParams();
    const { caseId } = params;
 
@@ -30,9 +35,6 @@ const CaseDetal = (props) => {
    const caseStatus = useSelector(state => state.caseStatus);
    const officers = useSelector(state => state.officers);
 
-   // console.log('caseId=', caseId)
-   // console.log('caseStatus=', cases.caseStatus);
-
    useEffect(() => {
       async function fetchData() {
 
@@ -40,74 +42,17 @@ const CaseDetal = (props) => {
          console.log('token=', token);
          if (token) {
             //Запрос для проверки валидности токена.
-            dispatch(fatchTokenValidityStarted());
-            await fetch('https://sf-final-project.herokuapp.com/api/auth/',
-               { headers: { "Authorization": `Bearer ${token}` } })
-               .then((response) => {
-                  if (response.status !== 200) {
-                     return Promise.reject(new Error(response.status))
-                  }
-                  return Promise.resolve(response)
-               })
-               .then((response) => { return response.json(); })
-               .then((data) => {
-                  console.log("data=", data);
-                  dispatch(fatchTokenValiditySuccess(data))
-               })
-               .catch(error => {
-                  console.log('error', error)
-                  dispatch(fatchTokenValidityError(error))
-               })
+            dispatch(fetchTokenValidityStarted());
+            await createRequest('auth/', 'GET', true, dispatch, fetchTokenValiditySuccess, fetchTokenValidityError)
+
             //GET Запрос для получения данных одного сообщения о краже (доступен только авторизованным пользователям):
-            dispatch(fatchCaseGetStarted());
-            await fetch(`https://sf-final-project.herokuapp.com/api/cases/${caseId}`,
-               {
-                  headers: {
-                     "Content-type": "application/json",
-                     "Authorization": `Bearer ${token}`
-                  }
-               })
-               .then((response) => {
-                  console.log(response);
-                  if (response.status !== 200) {
-                     return Promise.reject(new Error(response.status))
-                  }
-                  return Promise.resolve(response)
-               })
-               .then((response) => { return response.json(); })
-               .then((data) => {
-                  console.log("data=", data);
-                  dispatch(fatchCaseGetSuccess(data));
-               })
-               .catch(error => {
-                  console.log('error', error)
-                  dispatch(fatchCaseGetError(error))
-               })
+            dispatch(fetchCaseGetStarted());
+            await createRequest(`cases/${caseId}`, 'GET', true, dispatch, fetchCaseGetSuccess, fetchCaseGetError)
+
             //GET Запрос для получения списка всех сотрудников (доступен только авторизованным пользователям):
-            dispatch(fatchOfficersGetStarted());
-            await fetch('https://sf-final-project.herokuapp.com/api/officers/',
-               {
-                  headers: {
-                     "Content-type": "application/json",
-                     "Authorization": `Bearer ${token}`
-                  }
-               })
-               .then((response) => {
-                  console.log(response);
-                  if (response.status !== 200) {
-                     return Promise.reject(new Error(response.status))
-                  }
-                  return Promise.resolve(response)
-               })
-               .then((response) => { return response.json(); })
-               .then((data) => {
-                  console.log("data=", data);
-                  dispatch(fatchOfficersGetSuccess(data.officers))
-               })
-               .catch(error => {
-                  console.log('error', error)
-                  dispatch(fatchOfficersGetError(error))
-               })
+            dispatch(fetchOfficersGetStarted());
+
+            await createRequest('officers/', 'GET', true, dispatch, fetchOfficersGetSuccess, fetchOfficersGetError)
 
          } else {
             console.log('token нет в localStorage, авторизуйтесь')
@@ -116,34 +61,12 @@ const CaseDetal = (props) => {
       fetchData();
    }, [dispatch])
 
-   //Формируем объект officersName с ключом - id и значением - имя, образованное из lastName и firstName
-   function getObjOfficersName(officers) {
-      const approvedOfficers = officers.officers.map(officer => {
-         if (officer.approved) {
-            return officer;
-         }
-      })
-      //console.log('approvedOfficers=', approvedOfficers);
-
-      const filterOfficers = approvedOfficers.filter(officer => {
-         return officer;
-      })
-      //console.log('filterOfficers=', filterOfficers);
-
-      let officersName = {};
-      filterOfficers.map(officer => {
-         return officersName[`${officer._id}`] = `${officer.lastName} ${officer.firstName}`;
-      })
-      //console.log('officersName=', officersName);
-      return officersName;
-   }
-   const officersName = getObjOfficersName(officers);
-   //console.log('officersName1=', officersName);
+   //Получим список сотрудников со статусом "одобрен":
+   const officersName = getOfficersName(officers);
 
    //Находим по id объект (случай кражи)
    const caseObj = cases.cases.find(caseObj => caseId === caseObj._id)
-   // console.log('cases=', cases);
-   //console.log('caseObj._id=', caseObj._id, caseObj);
+   console.log('caseObj=', caseObj)
    const [values, setValues] = useState(
       {
          licenseNumber: caseObj.licenseNumber,
@@ -155,33 +78,14 @@ const CaseDetal = (props) => {
          officer: officersName[caseObj.officer],
          description: caseObj.description,
          resolution: caseObj.resolution,
+         createdAt: caseObj.createdAt,
+         updatedAt: caseObj.updatedAt,
       }
    );
 
    //Формируем массив arrayOfficersName из имен ответственных сотрудников, 
    //которые образованны из свойств lastName и firstName
-   function getArrayOfficersName(officers) {
-      const approvedOfficers = officers.officers.map(officer => {
-         if (officer.approved) {
-            return officer;
-         }
-      })
-      //console.log('approvedOfficers=', approvedOfficers);
-
-      const filterOfficers = approvedOfficers.filter(officer => {
-         return officer;
-      })
-      //console.log('filterOfficers=', filterOfficers);
-
-      let arrayOfficersName = [' '];
-      filterOfficers.map(officer => {
-         return arrayOfficersName.push(`${officer.lastName} ${officer.firstName}`);
-      })
-      //console.log('arrayOfficersName=', arrayOfficersName);
-      return arrayOfficersName;
-   }
    const arrayOfficersName = getArrayOfficersName(officers);
-   //console.log('arrayOfficersName1=', arrayOfficersName);
 
    //находим у объекта officersName ключ (id), зная значение (name)
    function getOfficerId(officersName) {
@@ -192,33 +96,27 @@ const CaseDetal = (props) => {
       }
    }
    const officerId = getOfficerId(officersName);
-   //console.log('officerId=', officerId);
 
    const handleSubmit = async (e) => {
       e.preventDefault();
       const token = localStorage.getItem('token');
       if (token) {
          //Запрос для проверки валидности токена.
-         dispatch(fatchTokenValidityStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/auth/',
-            { headers: { "Authorization": `Bearer ${token}` } })
-            .then((response) => {
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchTokenValiditySuccess(data))
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchTokenValidityError(error))
-            })
+         dispatch(fetchTokenValidityStarted());
+         await createRequest('auth/', 'GET', false, dispatch, fetchTokenValiditySuccess, fetchTokenValidityError)
+
          //PUT Запрос для редактирования сообщения о краже 
          //(доступен только авторизованным пользователям):
+         let date = new Date();
+         let Year = date.getFullYear();
+         let Month = date.getMonth();
+         let Day = date.getDate();
+         let Hour = date.getHours();
+         let Minutes = date.getMinutes();
+         let Seconds = date.getSeconds();
+         let editDate = Day + '.' + Month + '.' + Year + ' ' + Hour + ':' + Minutes + ':' + Seconds
+         console.log('editDate=', editDate)
+
          const data = {
             "licenseNumber": `${values.licenseNumber}`,
             "ownerFullName": `${values.ownerFullName}`,
@@ -226,47 +124,36 @@ const CaseDetal = (props) => {
             "color": `${values.color}`,
             "date": `${values.date}`,
             "status": `${values.status}`,
-            "officer": "officerId",
+            "officer": officerId,
             "description": `${values.description}`,
             "resolution": `${values.resolution}`,
+            "updatedAt": `${editDate}`,
+            //"createdAt": `${values.createdAt}`,
          }
-         const options = {
-            method: 'PUT',
-            body: JSON.stringify(data),
-            headers: {
-               "Content-Type": "application/json; charset=utf-8",
-               "Authorization": `Bearer ${token}`
-            }
-         }
-         dispatch(fatchCaseEditStarted());
-         console.log('caseObj._id', caseObj._id, 'caseId', caseId, 'data=', data)
-         await fetch(`https://sf-final-project.herokuapp.com/api/cases/${caseId}`,
-            options)
-            .then((response) => {
-               console.log(response);
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchCaseEditSuccess(data));
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchCaseEditError(error))
-            })
+
+         dispatch(fetchCaseEditStarted());
+         console.log('caseObj._id', caseObj._id, 'caseId=', caseId, 'data=', data)
+         await fetchRequest(`cases/${caseId}`, 'PUT', data, true, dispatch, fetchCaseEditSuccess, fetchCaseEditError, setMessage)
 
       } else {
          console.log('token нет в localStorage, авторизуйтесь')
       }
    }
 
-   const handleClick = () => {
-      ref.current.submit();
-      console.log('1=')
+   const handleChange = (status) => {
+      if (status === 'done') {
+         setDisabled(false)
+         setRequired(true)
+         console.log('isDisabled1=', isDisabled)
+         console.log('isRequired1=', isRequired)
+         setValues({ ...values, status })
+      } else {
+         setDisabled(true)
+         setRequired(false)
+         console.log('isDisabled2=', isDisabled)
+         console.log('isRequired2=', isRequired)
+         setValues({ ...values, status })
+      }
    }
 
    return (
@@ -318,18 +205,16 @@ const CaseDetal = (props) => {
                            name={'status'}
                            options={cases.caseStatus}
                            value={values.status}
-                           onChange={status => setValues({ ...values, status })} />
+                           onChange={handleChange} />
                      </div>
 
                      <div className={css.formRight}>
                         <p className={css.label}>Дата создания сообщения:</p>
-                        <p className={css.input}>{caseObj.createdAd}</p>
+                        <p className={css.input}>{caseObj.createdAt}</p>
                         <p className={css.label}>Дата последнего обновления сообщения:</p>
-                        <p className={css.input}>{caseObj.updatedAd}</p>
+                        <p className={css.input}>{caseObj.updatedAt}</p>
                         <p className={css.label}>clientId, уникальный для каждого студента:</p>
                         <p className={css.input}>{caseObj.clientId}</p>
-                        {/* {isEdit ?
-                        (<> */}
                         <DropDown title={'Ответственный сотрудник:'}
                            id={'officerDetalCase'}
                            type={'text'}
@@ -342,14 +227,21 @@ const CaseDetal = (props) => {
                            type={'text'}
                            name={'description'}
                            style={{ height: "30px" }}
-                           value={values.description}
+                           value={values.description === "null" ? '' : values.description}
                            onChange={description => setValues({ ...values, description })} />
-                        <p className={css.label}>Завершающий комментарий:</p>
-                        <textarea className={css.textarea}>{caseObj.resolution}</textarea>
+                        <Textarea title={'Завершающий комментарий:'}
+                           id={'resolutionDetalCase'}
+                           type={'text'}
+                           name={'resolution'}
+                           isDisabled={isDisabled}
+                           isRequired={isRequired}
+                           style={{ height: "30px" }}
+                           value={values.resolution === "null" ? '' : values.resolution}
+                           onChange={resolution => setValues({ ...values, resolution })} />
                      </div>
                   </div>
                   <div className={css.btn}>
-                     <Button name={'Изменить'} type={'submit'} /*form='btn' ref={ref} onClick={handleClick}*/ />
+                     <Button name={'Изменить'} type={'submit'} />
                   </div>
                </form>
             </div>

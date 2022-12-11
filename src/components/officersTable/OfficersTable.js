@@ -1,73 +1,33 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+//import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { fatchTokenValidityStarted, fatchTokenValiditySuccess, fatchTokenValidityError } from '../../storage/actions/officerActions';
-import { fatchOfficerRemoveStarted, fatchOfficerRemoveSuccess, fatchOfficerRemoveError } from '../../storage/actions/officerActions';
+import { createRequest } from '../../fetch/createRequest';
+import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
+import { fetchOfficerRemoveStarted, fetchOfficerRemoveSuccess, fetchOfficerRemoveError } from '../../storage/actions/officerActions';
 import Button from '../formElements/button/Button';
 import css from './OfficersTable.module.css';
 
 const OfficersTable = (props) => {
-   const { checked, setChecked } = props;
-   const params = useParams();
+   //const { checked, setChecked } = props;
+   //const params = useParams();
    // const { officerId } = params;
    const dispatch = useDispatch();
    const officers = useSelector(state => state.officers);
-   const isLoading = useSelector(state => state.isLoading);
 
    const handleDelete = async (officer) => {
-      console.log('officer=', officer, officer._id)
       const token = localStorage.getItem('token');
-      console.log('token=', token);
 
       if (token) {
          //GET Запрос для проверки валидности токена.
-         dispatch(fatchTokenValidityStarted());
-         await fetch('https://sf-final-project.herokuapp.com/api/auth/',
-            { headers: { "Authorization": `Bearer ${token}` } })
-            .then((response) => {
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchTokenValiditySuccess(data))
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchTokenValidityError(error))
-            })
+         dispatch(fetchTokenValidityStarted());
+         await createRequest('auth/', 'GET', true, dispatch, fetchTokenValiditySuccess, fetchTokenValidityError)
+
          //DEL Запрос для удаления данных сотрудника (доступен только авторизованным пользователям):
-         const options = {
-            method: 'DELETE',
-            headers: {
-               "Content-Type": "application/json; charset=utf-8",
-               "Authorization": `Bearer ${token}`
-            }
-         }
-         dispatch(fatchOfficerRemoveStarted());
+         dispatch(fetchOfficerRemoveStarted());
          const officerId = officer._id;
-         console.log('officerId=', officerId)
-         await fetch(`https://sf-final-project.herokuapp.com/api/officers/${officerId}`, options)
-            .then((response) => {
-               console.log(response);
-               if (response.status !== 200) {
-                  return Promise.reject(new Error(response.status))
-               }
-               return Promise.resolve(response)
-            })
-            .then((response) => { return response.json(); })
-            .then((data) => {
-               console.log("data=", data);
-               dispatch(fatchOfficerRemoveSuccess(officer._id))
-            })
-            .catch(error => {
-               console.log('error', error)
-               dispatch(fatchOfficerRemoveError(error))
-            })
+
+         await createRequest(`officers/${officerId}`, 'DELETE', true, dispatch, fetchOfficerRemoveSuccess, fetchOfficerRemoveError, officerId)
 
       } else {
          console.log('token нет в localStorage, авторизуйтесь')

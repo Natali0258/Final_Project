@@ -1,4 +1,4 @@
-.wrapper{
+/* .wrapper{
    display: flex;
    flex-direction: column;
    width: 300px;
@@ -18,14 +18,40 @@
    color:rgb(58, 58, 240);
    z-index: 4;
    position: absolute;
-}
+} */
 .wrap{
    display: flex;
    flex-direction: column;
    width: 300px;
    height: 120px;
-   margin-top: 180px;
-   margin-left: -250px;
+   margin-top: -30px;
+   margin-left: -20px;
    z-index: 3;
    position: absolute;
 }
+/* @media  screen and (max-width: 1439px)  and (min-width: 1024px) {
+   .wrap{
+      width: 300px;
+      height: 120px;
+      margin-top: 180px;
+      margin-left: -250px;
+   }
+}
+   
+@media  screen and (max-width: 1023px)  and (min-width: 640px){
+   .wrap{
+      width: 300px;
+      height: 120px;
+      margin-top: 180px;
+      margin-left: -250px;
+   }
+}
+
+@media  screen and (max-width: 639px){
+   .wrap{
+      width: 300px;
+      height: 120px;
+      margin-top: 180px;
+      margin-left: -250px;
+   }
+} */

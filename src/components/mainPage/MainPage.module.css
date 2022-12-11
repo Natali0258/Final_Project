@@ -1,13 +1,13 @@
 .mainPage {
    display: flex;
    justify-content: center;
-   width: 100%;
+   width: 100vw;
    background-color: black;
-   height: 700px;
+   height: 100vh;
 }
 .wrapper {
    display: flex;
-   justify-content: space-between;
+   justify-content: center;
    width: 1235px;
    margin: 100px auto 0;
    position: relative;
@@ -17,17 +17,22 @@
    background-image: url(./main-page.jpg);
    position: absolute;
    background-position: center center;
-   min-width: 1235px;
-   height: 700px;
+   min-width: 100vw;
+   height: 100vh;
    margin: 0 auto;
    z-index: 1;
+   background-repeat: no-repeat;
 }
 .left {
+   display: flex;
    flex: 0 1 50%;
-   height: 245px;
-   margin-top: 280px;
+   height: auto;
+   /* margin-top: 280px; */
+   margin-top: auto;
    margin-left: 50px;
-   padding: 15px 10px 0 20px;
+   margin-bottom: 20px;
+   padding: 15px 10px 10px 20px;
+   overflow: visible;
    background-color: black;
    z-index: 2;
 }
@@ -43,4 +48,71 @@
 }
 .em {
    font-weight: 900;
+}
+@media  screen and (max-width: 1439px)  and (min-width: 1024px) {
+   .mainPage, .wrapper {
+      max-width: 1439px;
+      margin: 0 auto;
+      height: 100vh;
+   }
+   .mainImage {
+      background-size:cover;
+      margin: 0 auto;
+      max-width: 1439px;
+      min-width: 100vw;
+      height: 100vh;
+   }
+   .left {
+      height: auto;
+      margin: auto auto 50px 50px;
+      padding: 15px 10px 5px 20px;
+   }
+}
+@media  screen and (max-width: 1023px)  and (min-width: 640px){
+   .mainPage, .wrapper {
+      max-width: 1023px;
+      margin: 0 auto;
+      /* height: auto; */
+      height: 100vh;
+   }
+   .mainImage {
+      background-size:cover;
+      margin: 0 auto;
+      max-width: 1023px;
+      min-width: 100vw;
+      height: 100vh;
+   }
+   .left {
+      flex: 0 1 80%;
+      height: auto;
+      margin: auto auto 50px;
+      padding: 15px 10px 5px 20px;
+   }
+   .right {
+      display: none;
+   }
+}
+@media  screen and (max-width: 639px){
+   .mainPage, .wrapper {
+      max-width: 639px;
+      margin: 0 auto;
+      height: auto;
+      height: 100vh;
+   }
+   .mainImage {
+      background-size:cover;
+      margin: 0 auto;
+      min-width: 100vw;
+      max-width: 639px;
+      height: 100vh;
+   }
+   .left {
+      flex: 0 1 80%;
+      height: auto;
+      margin: auto auto 50px;
+      padding: 15px 10px 5px 20px;
+   }
+   .right {
+      display: none;
+   }
 }
