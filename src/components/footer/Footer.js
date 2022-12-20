@@ -1,25 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import css from './Footer.module.css';
-import logo from './bike-orang.png';
-import facebook from './icon-facebook.png';
-import twitter from './icon-twitter.png';
-import instagram from './icon-instagram.png';
+import Logo from '../formElements/logo/Logo';
+import facebook from '../../images/footer/icon-facebook.png';
+import twitter from '../../images/footer/icon-twitter.png';
+import instagram from '../../images/footer/icon-instagram.png';
 
-const Footer = (props) => {
+const Footer = () => {
    return (
       <footer className={css.footer}>
          <div className={css.wrapper}>
-            <div className={css.footerLogo}>
-               <img src={logo} className={css.logo} alt="logo" />
-               <p className={css.text}>С ВЕТЕРКОМ</p>
-            </div>
+            <Logo />
             <div className={css.container}>
                <nav className={css.nav}>
                   <Link to={'/'}><a href='#' className={css.link}>О нас</a></Link>
                   <Link to={'/caseform'}><a href='#' className={css.link}>Сообщить о краже</a></Link>
-                  <Link to={'/case'}><a href='#' className={css.link}>Сообщения о краже</a></Link>
-                  <Link to={'/officer'}><a href='#' className={css.link}>Ответственные сотрудники</a></Link>
+                  <Link to={'/cases'}><a href='#' className={css.link}>Сообщения о краже</a></Link>
+                  <Link to={'/officers'}><a href='#' className={css.link}>Ответственные сотрудники</a></Link>
                </nav>
                <div className={css.contacts}>
                   <p>+7(913)333-33-33</p>

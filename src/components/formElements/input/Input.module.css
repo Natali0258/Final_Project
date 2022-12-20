@@ -15,11 +15,11 @@
    font-style: italic;
    background: white;
    color: black;
-   height: 26px;
+   height: 24px;
    width: 380px;
    font-size: 16px;
    font-weight: 400;
-   margin-top: 10px;
+   margin-top: 8px;
    padding-left: 10px;
    border: 2px solid rgb(212, 212, 243);
 }
@@ -40,38 +40,7 @@ input:focus {
 }
 .none {
    height: 2px;
-}
-/* @media  screen and (max-width: 1439px)  and (min-width: 1024px) {
-   .wrapper {
-   width: 400px;
-   margin-top: 10px;
-}
-.label {
-   height: 26px;
-   width: 340px;
-   font-size: 18px;
-   font-weight: 400;
-}
-.input {
-   height: 26px;
-   width: 380px;
-   font-size: 16px;
-   font-weight: 400;
-   margin-top: 10px;
-   padding-left: 10px;
-}
-.hint {
-   height: 30px;
-   width: 350px;
-   font-size: 14px;
-   line-height: 1em;
-   margin-top: 5px;
-}
-.none {
-   height: 2px;
-}
-} */
-   
+}   
 @media  screen and (max-width: 1023px)  and (min-width: 640px){
    .wrapper {
       width: 400px;
@@ -89,21 +58,20 @@ input:focus {
 
 @media  screen and (max-width: 639px){
    .wrapper {
-      width: 80vw;
+      width: 60vw;
    }
    .label {
       height: 26px;
-      width: 80vw;
+      width: 60vw;
       font-size: 22px;
    }
    .input {
       height: 26px;
-      width: 70vw;
+      width: 60vw;
       font-size: 22px;
    }
    .hint {
-      height: 70px;
-      width: 70vw;
+      width: 60vw;
       font-size: 20px;
    }
 }

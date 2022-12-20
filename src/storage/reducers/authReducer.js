@@ -9,17 +9,12 @@ const initialState = {
    isLoading: false,
    isLogged: false, //флаг для сообщения приветствия пользователя
    isBurgerMenu: false,
+   isError: false,
+   isAuthResult: false,
    error: null,
 }
 const authReducer = (state = initialState, action) => {
    switch (action.type) {
-      // case AUTH_ACTIONS.SET_USER_DATA:
-      //    return {
-      //       ...state,
-      //       ...action.data,
-      //       isAuth: true,
-      //    };
-
       //Вызов окна авторизации
       case AUTH_ACTIONS.GET_AUTHORIZATION:
          return {
@@ -34,6 +29,20 @@ const authReducer = (state = initialState, action) => {
             isAuthorization: false,
          }
 
+      //Вывод сообщения о результате авторизации
+      case AUTH_ACTIONS.RESULT_AUTHORIZATION:
+         return {
+            ...state,
+            isAuthResult: true,
+         }
+
+      //Закрытие сообщения о результате авторизации
+      case AUTH_ACTIONS.CLOSE_RESULT_AUTHORIZATION:
+         return {
+            ...state,
+            isAuthResult: false,
+         }
+
       //Запрос авторизации сотрудника
       case AUTH_ACTIONS.FETCH_AUTH_STARTED:
          return {
@@ -46,8 +55,8 @@ const authReducer = (state = initialState, action) => {
             ...state,
             ...action.data,
             isAuth: true,
+            isAuthResult: true,
             isLoading: false,
-            // isLogged: true,
             error: null,
          }
       case AUTH_ACTIONS.FETCH_AUTH_ERROR:
@@ -71,12 +80,24 @@ const authReducer = (state = initialState, action) => {
          }
       //Выход
       case AUTH_ACTIONS.OUTPUT:
+         localStorage.removeItem('token');
          return {
             ...state,
             isAuth: false,
             isAuthorization: false,
+            isAuthResult: false,
             error: null,
          }
+      //Ошибка из-за прекращения времени действия токена
+      case AUTH_ACTIONS.TOKEN_ERROR:
+         return {
+            ...state,
+            isAuth: false,
+            isAuthorization: false,
+            isError: true,
+            error: null,
+         }
+
 
       default: return state;
    }

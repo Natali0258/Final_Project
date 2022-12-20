@@ -1,0 +1,184 @@
+.navbar{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   flex-basis: 1235px;
+   height: 100px;
+   color: #ffa500;
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 50%;
+   font-family: "Inter", sans-serif;
+}
+.navbarBurgerMenu{
+   display:flex;
+   flex-direction:column;
+   align-items: center;
+   flex-basis: 100vw;
+   min-height: 100vh;
+   color: #ffa500;
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 50%;
+   font-family: "Inter", sans-serif;
+}
+.nav {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
+.navBurgerMenu{
+   display:flex;
+   flex-direction:column;
+   align-items: center;
+   margin-top: 30px;
+}
+li {
+   list-style: none;
+   display: inline-block;
+}
+.link, .linkBurgerMenu {
+   margin: 0 10px;
+   line-height: 1.2em;
+   padding: 10px 0;
+   color: #ffa500;
+}
+a:link {
+   text-decoration: none;
+}
+.link:hover, .linkBurgerMenu:hover {
+   color: #ff0000;
+   text-decoration: underline;
+}
+.buttons {
+   display: flex;
+   flex-direction: row;
+   margin-top: 10px;
+}
+.buttonsBurgerMenu {
+   display: flex;
+   flex-direction: column;
+   margin-top: 30px;
+}
+.registration, .authorization{
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 140%;
+   color: #ffa500;
+   background: #ffffff;
+   border: 2px solid #ffa500;
+   border-radius: 20px;
+   padding: 5px 10px;
+}
+.registration{
+   margin-right: 10px;
+}
+.registration:hover {
+   background: #ffa500;
+   color: #000000;
+   cursor: pointer;
+}
+.authorization {
+   width: 95px;
+   background: #ffa500;
+   align-self: center;
+   color: white;
+}
+.authorization:hover {
+   color: #000000;
+   cursor: pointer;
+}
+@media  screen and (max-width: 1023px)  and (min-width: 640px){
+   .navbar{
+      max-width: 1023px;
+      margin: 0 auto;
+   }
+   .link {
+      display: none;
+   }
+   .regBurgerMenu {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 140%;
+      color: #ffa500;
+      background: #ffffff;
+      border: 2px solid #ffa500;
+      border-radius: 20px;
+      padding: 5px 10px;
+   }
+   .regBurgerMenu:hover {
+      background: #ffa500;
+      color: #000000;
+      cursor: pointer;
+   }
+   .authBurgerMenu {
+      width: 95px;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 140%;
+      background: #ffa500;
+      margin-top: 20px;
+      align-self: center;
+      color: white;
+      border: 2px solid #ffa500;
+      border-radius: 20px;
+      padding: 5px 10px;
+   }
+   .authBurgerMenu:hover {
+      color: #000000;
+      cursor: pointer;
+   }
+   .registration {
+      display: none;
+   }
+   .authorization {
+      display: none;
+   }
+}
+@media  screen and (max-width: 639px){
+   .navbar, .navbarBurgerMenu{
+      max-width: 639px;
+      margin: 0 auto;
+   }
+   .link {
+      display: none;
+   }
+   .regBurgerMenu {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 140%;
+      color: #ffa500;
+      background: #ffffff;
+      border: 2px solid #ffa500;
+      border-radius: 20px;
+      padding: 5px 10px;
+   }
+   .regBurgerMenu:hover {
+      background: #ffa500;
+      color: #000000;
+      cursor: pointer;
+   }
+   .authBurgerMenu {
+      width: 95px;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 140%;
+      background: #ffa500;
+      margin-top: 20px;
+      align-self: center;
+      color: white;
+      border: 2px solid #ffa500;
+      border-radius: 20px;
+      padding: 5px 10px;
+   }
+   .authBurgerMenu:hover {
+      color: #000000;
+      cursor: pointer;
+   }
+   .registration {
+      display: none;
+   }
+   .authorization {
+      display: none;
+   } 
+}

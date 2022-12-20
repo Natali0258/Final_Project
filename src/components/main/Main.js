@@ -1,7 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useLocation, Redirect } from 'react-router-dom';
-//import { PrivateRoute } from '../privateRoute/PrivateRoute';
 import MainPage from '../mainPage/MainPage';
 import CaseForm from '../caseForm/CaseForm';
 import Cases from '../cases/Cases';
@@ -21,7 +19,6 @@ const Main = () => {
             <Route path="/cases/:caseId" element={<CaseDetal />} />
             <Route exact path="/officers" element={<Officers />} />
             <Route path="/officers/:officerId" element={<OfficerDetal />} />
-            {/* <Route path='*' element={(<Navigate to='/' replace />)} />	 */}
             <Route path="*" element={<Error />} />
          </Routes>
       </main >

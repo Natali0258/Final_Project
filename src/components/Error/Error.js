@@ -5,7 +5,8 @@ const Error = () => {
       <div className={css.wrapper} >
          <div className={css.error} >
             <h1 className={css.title}>404</h1>
-            <p className={css.text}>Страница не существует</p>
+            <p className={css.text}>Страница не существует.</p>
+            <p className={css.text}>Кликните пункт меню "О нас".</p>
          </div>
       </div >
    )

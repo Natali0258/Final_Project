@@ -1,0 +1,123 @@
+.form {
+   display: flex;
+   flex-direction: column;
+   width: 500px;
+   padding: 10px;
+   margin-top: -250px;
+   margin-left: -235px;
+   border: 2px solid rgb(58, 58, 240);
+   background: rgb(212, 212, 243);
+   border-radius: 20px;
+   top:0;
+   left:0;
+   position: absolute;
+   z-index: 2;
+}
+.container {
+   display: flex;
+   flex-direction: column;
+   margin:7px 55px;
+   z-index: 3;
+}
+.comment {
+   font-size: 16px;
+   margin-bottom: 10px;
+   color: red;
+}
+.btn {
+   display: flex;
+   width: 150px;
+   margin: 15px 0 10px 100px;
+}
+.hint {
+   height: 20px;
+}
+@media  screen and (max-width: 1023px)  and (min-width: 640px){
+   .comment {
+      font-size: 20px;
+   } 
+   .btn {
+      margin: 15px auto 10px;
+   }
+}
+@media  screen and (max-width: 639px) and (min-width: 500px){
+   .form {
+      width: 80vw;
+      padding: 10px;
+      margin-top: -250px;
+      margin-left: -calc(60vw/2);
+      padding: 5px;
+   }
+   .container {
+      align-items: center;
+   }
+   .comment {
+      font-size: 20px;
+      margin: 10px auto 0;
+   } 
+   .blank{
+      height: 35px;
+   }
+   .hint {
+      width: 60vw;
+      height: 20px;
+      margin: 10px auto 10px;
+   }
+   .btn {
+      margin: 15px auto 10px;
+   }
+}
+@media  screen and (max-width: 499px) and (min-width: 399px){
+   .form {
+      width: 80vw;
+      padding: 10px;
+      margin-top: -350px;
+      margin-left: -200px;
+      padding: 5px;
+   }
+   .container {
+      align-items: center;
+   }
+   .comment {
+      font-size: 20px;
+      margin: 10px auto 0;
+   } 
+   .blank{
+      height: 35px;
+   }
+   .hint {
+      width: 60vw;
+      height: 20px;
+      margin: 10px auto 10px;
+   }
+   .btn {
+      margin: 15px auto 10px;
+   }
+}
+@media  screen and (max-width: 399px){
+   .form {
+      width: 80vw;
+      padding: 10px;
+      margin-top: -350px;
+      margin-left: -150px; 
+      padding: 5px;
+   }
+   .container {
+      align-items: center;
+   }
+   .comment {
+      font-size: 20px;
+      margin: 10px auto 0;
+   } 
+   .blank{
+      height: 60px;
+   }
+   .hint {
+      width: 60vw;
+      height: 20px;
+      margin: 10px auto 10px;
+   }
+   .btn {
+      margin: 15px auto 10px;
+   }
+}

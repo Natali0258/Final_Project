@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
-import { fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
+import { getModal, fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
 import { fetchCaseSendStarted, fetchCaseSendSuccess, fetchCaseSendError } from '../../storage/actions/casesActions';
+import { tokenError } from '../../storage/actions/authActions';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchRequest } from '../../fetch/fetchRequest';
@@ -22,12 +23,9 @@ const CaseForm = () => {
    const dispatch = useDispatch();
    const cases = useSelector(state => state.cases);
    const officers = useSelector(state => state.officers);
-   // const bikeType = useSelector(state => state.bikeType);
-   // const isAuth = useSelector(state => state.isAuth);
    const [isMessage, setMessage] = useState(false);
    const [isDropDown, setDropDown] = useState(false);
 
-   //этот useEffect скопирован из компонента Officer
    useEffect(() => {
       async function fetchData() {
 
@@ -46,7 +44,9 @@ const CaseForm = () => {
             await createRequest('officers/', 'GET', true, dispatch, fetchOfficersGetSuccess, fetchOfficersGetError)
 
          } else {
-            console.log('token нет в localStorage, авторизуйтесь')
+            //вывод сообщения "Token нет в localStorage, авторизуйтесь"
+            // dispatch(getModal())
+            // dispatch(tokenError())
          }
       }
       fetchData();
@@ -81,7 +81,7 @@ const CaseForm = () => {
    let Minutes = date.getMinutes();
    let Seconds = date.getSeconds();
    let editDate = Day + '.' + Month + '.' + Year + ' ' + Hour + ':' + Minutes + ':' + Seconds
-   console.log('editDate=', editDate)
+   //console.log('editDate=', editDate)
 
    const handleSubmitCaseForm = async (e) => {
       e.preventDefault();
@@ -156,7 +156,6 @@ const CaseForm = () => {
                resolution: '',
             }
          )
-         console.log("cases=", cases);
       } else {
          //POST Запрос для создания нового сообщения о краже (доступен без авторизации)
          dispatch(fetchCaseSendStarted());

@@ -1,6 +1,6 @@
+//функция для отправки fetch-запроса без тела (GET, DELETE)
 export const createRequest = (url, method, isAuth, dispatch, actionsSuccess, actionsError, id) => {
    return (
-      // fetch(`https://skillfactory-final-project.herokuapp.com/api/${url}`,
       fetch(`https://sf-final-project-be.herokuapp.com/api/${url}`,
          {
             method: method,
@@ -12,7 +12,6 @@ export const createRequest = (url, method, isAuth, dispatch, actionsSuccess, act
             }
          })
          .then((response) => {
-            console.log(response);
             if (response.status !== 200) {
                return Promise.reject(new Error(response.status))
             }
@@ -20,17 +19,13 @@ export const createRequest = (url, method, isAuth, dispatch, actionsSuccess, act
          })
          .then((response) => { return response.json(); })
          .then((data) => {
-            console.log("data=", data);
             if (method === 'POST' || method === 'GET') {
-               console.log("method === POST || GET");
                dispatch(actionsSuccess(data));
             } else {
-               console.log("method === DELETE");
                dispatch(actionsSuccess(id));
             }
          })
          .catch(error => {
-            console.log('error', error)
             dispatch(actionsError(error))
          })
    )

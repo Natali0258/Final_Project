@@ -3,12 +3,10 @@ import { closeModal, closeRegistration } from '../../storage/actions/officerActi
 import { closeAuthorization } from '../../storage/actions/authActions';
 import css from './Modal.module.css';
 
-const Modal = ({ active, setActiv, children }) => {
+const Modal = ({ active, children }) => {
    const dispatch = useDispatch();
    return (
       <div className={active ? css.modalactive : css.modal}
-         // onClick={() => setActiv(false)}>
-         // onRequestClose={!isModalActive}>
          onClick={() => {
             dispatch(closeModal());
             dispatch(closeRegistration());

@@ -3,6 +3,10 @@ export const AUTH_ACTIONS = {
    GET_AUTHORIZATION: 'GET_AUTHORIZATION',
    //Закрытие окна авторизации
    CLOSE_AUTHORIZATION: 'CLOSE_AUTHORIZATION',
+   //Вывод сообщения о результате авторизации
+   RESULT_AUTHORIZATION: 'RESULT_AUTHORIZATION',
+   //Закрытие сообщения о результате авторизации
+   CLOSE_RESULT_AUTHORIZATION: 'CLOSE_RESULT_AUTHORIZATION',
    //Запрос для создания новой учетной записи
    FETCH_AUTH_STARTED: 'FETCH_AUTH_STARTED',
    FETCH_AUTH_SUCCESS: 'FETCH_AUTH_SUCCESS',
@@ -13,6 +17,8 @@ export const AUTH_ACTIONS = {
    CLOSE_BURGERMENU: 'CLOSE_BURGERMENU',
    //Выход
    OUTPUT: 'OUTPUT',
+   //Ошибка из-за прекращения времени действия токена
+   TOKEN_ERROR: 'TOKEN_ERROR,'
 }
 
 //Вызов окна авторизации
@@ -26,6 +32,20 @@ export const getAuthorization = () => {
 export const closeAuthorization = () => {
    return {
       type: AUTH_ACTIONS.CLOSE_AUTHORIZATION
+   }
+}
+
+//Вывод сообщения о результате авторизации
+export const resultAuthorization = () => {
+   return {
+      type: AUTH_ACTIONS.RESULT_AUTHORIZATION
+   }
+}
+
+//Закрытие сообщения о результате авторизации
+export const closeResultAuthorization = () => {
+   return {
+      type: AUTH_ACTIONS.CLOSE_RESULT_AUTHORIZATION
    }
 }
 
@@ -69,5 +89,11 @@ export const closeBurgerMenu = () => {
 export const output = () => {
    return {
       type: AUTH_ACTIONS.OUTPUT
+   }
+}
+//Ошибка из-за прекращения времени действия токена
+export const tokenError = () => {
+   return {
+      type: AUTH_ACTIONS.TOKEN_ERROR
    }
 }

@@ -6,24 +6,12 @@ const initialState = {
    error: null,
    isModalActive: false,
    isRegistration: false,
+   isRegResult: false,  //флаг успешной регистрации
    isFormRegistration: false,
 }
 const officersReducer = (state = initialState, action) => {
    switch (action.type) {
-      // case OFFICER_ACTIONS.ADD_TO_OFFICER:
-      //    return {
-      //       ...state,
-      //       officers: [...state.officers,
-      //       {
-      //          id: action.payload.id,
-      //          email: action.payload.email,
-      //          password: action.payload.password,
-      //          firstName: action.payload.firstName,
-      //          lastName: action.payload.lastName,
-      //          clientId: action.payload.clientId,
-      //          approved: action.payload.approved,
-      //       }]
-      //    };
+      //Удаление данных о сотруднике
       case OFFICER_ACTIONS.REMOVE_FROM_OFFICER:
          return state.officers.filter(officer =>
             officer.id !== action.officer.id
@@ -59,6 +47,18 @@ const officersReducer = (state = initialState, action) => {
             isRegistration: false,
             error: null,
          }
+      //Вывод сообщения о результате регистрации
+      case OFFICER_ACTIONS.RESULT_REGISTRATION:
+         return {
+            ...state,
+            isRegResult: true,
+         }
+      //Закрыть сообщение о результате регистрации
+      case OFFICER_ACTIONS.CLOSE_RESULT_REGISTRATION:
+         return {
+            ...state,
+            isRegResult: false,
+         }
 
       //Запрос для проверки валидности токена
       case OFFICER_ACTIONS.FETCH_TOKEN_VALIDITY_STARTED:
@@ -90,6 +90,7 @@ const officersReducer = (state = initialState, action) => {
          return {
             ...state,
             isRegistration: true,
+            isRegResult: true,
             isLoading: false,
             error: null,
          }
@@ -129,9 +130,6 @@ const officersReducer = (state = initialState, action) => {
          }
       case OFFICER_ACTIONS.FETCH_OFFICER_GET_SUCCESS:
          const index = state.officers.findIndex(officer => officer._id === action.data.data._id)
-         // console.log('state.officers=', state.officers)
-         // console.log('action.data.data=', action.data.data)
-         // console.log('index=', index)
          return {
             ...state,
             isLoading: false,
@@ -153,9 +151,6 @@ const officersReducer = (state = initialState, action) => {
          }
       case OFFICER_ACTIONS.FETCH_OFFICER_EDIT_SUCCESS:
          const indexOfficer = state.officers.findIndex(officer => officer._id === action.data.data._id)
-         console.log('state.officers=', state.officers)
-         console.log('action.data.data=', action.data.data)
-         console.log('index=', indexOfficer)
          return {
             ...state,
             isLoading: false,
@@ -178,9 +173,6 @@ const officersReducer = (state = initialState, action) => {
          }
       case OFFICER_ACTIONS.FETCH_OFFICER_REMOVE_SUCCESS:
          const idxOfficer = state.officers.findIndex(officer => officer._id === action.id)
-         //console.log('state.officers=', state.officers)
-         //console.log('action.data.data=', action.data.data)
-         //console.log('idx=', idxOfficer)
          return {
             ...state,
             isLoading: false,

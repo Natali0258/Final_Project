@@ -1,23 +1,20 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import { useState } from 'react';
 import { createRequest } from '../../fetch/createRequest';
-import { fetchRequest } from '../../fetch/fetchRequest';
-import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
+import { getModal, fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
 import { fetchCasesGetStarted, fetchCasesGetSuccess, fetchCasesGetError } from '../../storage/actions/casesActions';
 import { fetchCaseRemoveStarted, fetchCaseRemoveSuccess, fetchCaseRemoveError } from '../../storage/actions/casesActions';
 import { fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
+import { tokenError } from '../../storage/actions/authActions';
 import { getOfficersName } from '../getOfficersName';
 import Button from '../formElements/button/Button';
 import css from './Cases.module.css';
 
-const Cases = (props) => {
-   // const [checkedDelet, setCheckedDelet] = useState(false);
+const Cases = () => {
    const dispatch = useDispatch();
    const cases = useSelector(state => state.cases);
    const officers = useSelector(state => state.officers);
-   // const { id, status, licenseNumber, type, ownerFullName, clientId, createdAd, updatedAd, color, date, officer, description, resolution } = cases;
 
    useEffect(() => {
       async function fetchData() {
@@ -41,7 +38,9 @@ const Cases = (props) => {
             await createRequest('officers/', 'GET', true, dispatch, fetchOfficersGetSuccess, fetchOfficersGetError)
 
          } else {
-            console.log('token нет в localStorage, авторизуйтесь')
+            //вывод сообщения "Token нет в localStorage, авторизуйтесь"
+            dispatch(getModal())
+            dispatch(tokenError())
          }
       }
       fetchData();
@@ -61,10 +60,12 @@ const Cases = (props) => {
          const caseId = caseObj._id;
 
          dispatch(fetchCaseRemoveStarted());
-         await fetchRequest(`cases/${caseId}`, 'DELETE', true, dispatch, fetchCaseRemoveSuccess, fetchCaseRemoveError, caseObj._id)
+         await createRequest(`cases/${caseId}`, 'DELETE', true, dispatch, fetchCaseRemoveSuccess, fetchCaseRemoveError, caseId)
 
       } else {
-         console.log('token нет в localStorage, авторизуйтесь')
+         //вывод сообщения "Token нет в localStorage, авторизуйтесь"
+         dispatch(getModal())
+         dispatch(tokenError())
       }
    }
 
@@ -76,22 +77,22 @@ const Cases = (props) => {
             <table className={css.table}>
                <thead className={css.thead}>
                   <tr className={css.tr}>
-                     <th>ФИО пользователя</th>
-                     <th>Дата создания сообщения</th>
-                     <th>Дата кражи</th>
-                     <th>Номер лицензии</th>
-                     <th>Тип велосипеда</th>
-                     <th>Цвет</th>
-                     <th>Ответственный сотрудник</th>
-                     <th>Статус сообщения</th>
-                     <th>Удалить сообщение</th>
+                     <th scope="col">ФИО пользователя</th>
+                     <th scope="col">Дата создания сообщения</th>
+                     <th scope="col">Дата кражи</th>
+                     <th scope="col">Номер лицензии</th>
+                     <th scope="col">Тип велосипеда</th>
+                     <th scope="col">Цвет</th>
+                     <th scope="col">Ответственный сотрудник</th>
+                     <th scope="col">Статус сообщения</th>
+                     <th scope="col">Удалить сообщение</th>
                   </tr>
                </thead>
                <tbody className={css.tbody}>
                   {
                      cases.cases.length && cases.cases.map(caseObj => {
                         return (
-                           <tr key={caseObj._id}>
+                           <tr className={css.tr} key={caseObj._id}>
                               <td><Link to={`/cases/${caseObj._id}`} className={css.link}>{caseObj.ownerFullName}</Link></td>
                               <td><Link to={`/cases/${caseObj._id}`} className={css.link}>{caseObj.createdAt}</Link></td>
                               <td><Link to={`/cases/${caseObj._id}`} className={css.link}>{caseObj.date}</Link></td>

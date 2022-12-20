@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createRequest } from '../../fetch/createRequest';
 import { fetchRequest } from '../../fetch/fetchRequest';
-import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
+import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError, getModal } from '../../storage/actions/officerActions';
 import { fetchCaseGetStarted, fetchCaseGetSuccess, fetchCaseGetError } from '../../storage/actions/casesActions';
 import { fetchCaseEditStarted, fetchCaseEditSuccess, fetchCaseEditError } from '../../storage/actions/casesActions';
 import { fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
+import { tokenError } from '../../storage/actions/authActions';
 import { getOfficersName } from '../getOfficersName';
 import { getArrayOfficersName } from '../getArrayOfficersName';
 import Button from '../formElements/button/Button';
@@ -20,8 +21,6 @@ import Loader from '../loader/Loader';
 import css from './CaseDetal.module.css';
 
 const CaseDetal = (props) => {
-   //const { cases } = props;
-   const [isEdit, setEdit] = useState(false);
    const [isMessage, setMessage] = useState(false);
    const ref = useRef(null);
    const [isDisabled, setDisabled] = useState(true);
@@ -31,15 +30,15 @@ const CaseDetal = (props) => {
 
    const dispatch = useDispatch();
    const cases = useSelector(state => state.cases);
-   const bikeType = useSelector(state => state.bikeType);
-   const caseStatus = useSelector(state => state.caseStatus);
    const officers = useSelector(state => state.officers);
 
    useEffect(() => {
       async function fetchData() {
 
+         //localStorage.removeItem('token')
          const token = localStorage.getItem('token');
          console.log('token=', token);
+
          if (token) {
             //Запрос для проверки валидности токена.
             dispatch(fetchTokenValidityStarted());
@@ -55,7 +54,9 @@ const CaseDetal = (props) => {
             await createRequest('officers/', 'GET', true, dispatch, fetchOfficersGetSuccess, fetchOfficersGetError)
 
          } else {
-            console.log('token нет в localStorage, авторизуйтесь')
+            //вывод сообщения "Token нет в localStorage, авторизуйтесь"
+            dispatch(getModal())
+            dispatch(tokenError())
          }
       }
       fetchData();
@@ -136,7 +137,9 @@ const CaseDetal = (props) => {
          await fetchRequest(`cases/${caseId}`, 'PUT', data, true, dispatch, fetchCaseEditSuccess, fetchCaseEditError, setMessage)
 
       } else {
-         console.log('token нет в localStorage, авторизуйтесь')
+         //вывод сообщения "Token нет в localStorage, авторизуйтесь"
+         dispatch(getModal())
+         dispatch(tokenError())
       }
    }
 

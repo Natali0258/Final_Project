@@ -1,5 +1,5 @@
 export const OFFICER_ACTIONS = {
-   // ADD_TO_OFFICER: 'ADD_TO_OFFICER',
+   //Удаление данных о сотруднике
    REMOVE_FROM_OFFICER: 'REMOVE_FROM_OFFICER',
    //Вызов модального окна
    GET_MODAL: 'GET_MODAL',
@@ -9,6 +9,10 @@ export const OFFICER_ACTIONS = {
    GET_REGISTRATION: 'GET_REGISTRATION',
    //Закрытие окна регистрации
    CLOSE_REGISTRATION: 'CLOSE_REGISTRATION',
+   //Вывод сообщения о результате регистрации
+   RESULT_REGISTRATION: 'RESULT_REGISTRATION',
+   //Закрыть сообщение о результате регистрации
+   CLOSE_RESULT_REGISTRATION: 'CLOSE_RESULT_REGISTRATION',
    //проверка валидности токена
    FETCH_TOKEN_VALIDITY_STARTED: 'FETCH_TOKEN_VALIDITY_STARTED',
    FETCH_TOKEN_VALIDITY_SUCCESS: 'FETCH_TOKEN_VALIDITY_SUCCESS',
@@ -38,21 +42,6 @@ export const OFFICER_ACTIONS = {
    REMOVE_FROM_APPROVED_OFFICER: 'REMOVE_FROM_APPROVED_OFFICER',
 }
 
-// export const addToOfficer = (id, email, password, firstName, lastName, clientId, approved) => {
-//    return {
-//       type: OFFICER_ACTIONS.ADD_TO_OFFICER,
-//       payload:
-//       {
-//          id,
-//          email,
-//          password,
-//          firstName,
-//          lastName,
-//          clientId,
-//          approved,
-//       }
-//    }
-// }
 export const removeFromOfficer = (id) => {
    return {
       type: OFFICER_ACTIONS.REMOVE_FROM_OFFICER,
@@ -84,6 +73,20 @@ export const getRegistration = () => {
 export const closeRegistration = () => {
    return {
       type: OFFICER_ACTIONS.CLOSE_REGISTRATION
+   }
+}
+
+//Вывод сообщения о результате регистрации
+export const resultRegistration = () => {
+   return {
+      type: OFFICER_ACTIONS.RESULT_REGISTRATION
+   }
+}
+
+//Закрыть сообщение о результате регистрации
+export const closeResultRegistration = () => {
+   return {
+      type: OFFICER_ACTIONS.CLOSE_RESULT_REGISTRATION
    }
 }
 

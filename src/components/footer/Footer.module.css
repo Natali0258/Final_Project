@@ -2,7 +2,7 @@
    display: flex;
    justify-content: center;
    height: 100px;
-   width: 100%;
+   width: 100vw;
    background-color: black;
    position: relative;
    z-index: 3;
@@ -20,27 +20,13 @@
    font-size: 20px;
    line-height: 50%;
    font-family: "Inter", sans-serif;
-}
-.footerLogo {
-   display: flex;
-   flex-direction: column;
-   color: #ffa500;
-   line-height: 50%;
-}
-.logo {
-   margin-top: 0px;
-   height: 70px;
-}
-.text {
-   font-size: 24px;
-   line-height: 50%;
-   margin-top: 10px;
-   font-family: "Nunito Sans", serif;
+   background-color: black;
 }
 .container {
    display: flex;
    flex-direction: column;
    align-items: center;
+   background-color: black;
 }
 .nav {
    display: flex;
@@ -48,8 +34,13 @@
    word-wrap: break-word;
    margin-bottom: 10px;
 }
+a {
+   list-style: none;
+   display: inline-block;
+}
 .link {
    margin: 0 18px;
+   line-height: 1.2em;
    color: #ffa500;
    text-decoration: none;
 }
@@ -99,16 +90,6 @@ a:hover {
    .instagram {
       margin-top: 15px;
    }
-   .logo{
-      font-weight: 700;
-      font-size: 28px;
-      line-height: 150%;
-      margin-top: 0px;
-      height: 70px;
-   }
-   .text {
-      font-size: 26px;
-   }
 }
 @media  screen and (max-width: 639px){
    .footer, .wrapper {
@@ -126,15 +107,5 @@ a:hover {
    .twitter,
    .instagram {
       margin-top: 15px;
-   }
-   .logo{
-      font-weight: 700;
-      font-size: 28px;
-      line-height: 150%;
-      margin-top: 0px;
-      height: 70px;
-   }
-   .text {
-      font-size: 24px;
    }
 }

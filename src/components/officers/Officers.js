@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
-import { fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
+import { getModal, fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
+import { tokenError } from '../../storage/actions/authActions';
 import { createRequest } from '../../fetch/createRequest';
 import OfficersTable from '../officersTable/OfficersTable';
 import Loader from '../loader/Loader';
@@ -28,7 +29,9 @@ const Officers = () => {
             await createRequest('officers/', 'GET', true, dispatch, fetchOfficersGetSuccess, fetchOfficersGetError)
 
          } else {
-            console.log('token нет в localStorage, авторизуйтесь')
+            //вывод сообщения "Token нет в localStorage, авторизуйтесь"
+            dispatch(getModal())
+            dispatch(tokenError())
          }
       }
       fetchData();

@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-//import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { createRequest } from '../../fetch/createRequest';
-import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
+import { getModal, fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
 import { fetchOfficerRemoveStarted, fetchOfficerRemoveSuccess, fetchOfficerRemoveError } from '../../storage/actions/officerActions';
+import { tokenError } from '../../storage/actions/authActions';
 import Button from '../formElements/button/Button';
 import css from './OfficersTable.module.css';
 
-const OfficersTable = (props) => {
-   //const { checked, setChecked } = props;
-   //const params = useParams();
-   // const { officerId } = params;
+const OfficersTable = () => {
    const dispatch = useDispatch();
    const officers = useSelector(state => state.officers);
 
@@ -30,7 +26,9 @@ const OfficersTable = (props) => {
          await createRequest(`officers/${officerId}`, 'DELETE', true, dispatch, fetchOfficerRemoveSuccess, fetchOfficerRemoveError, officerId)
 
       } else {
-         console.log('token нет в localStorage, авторизуйтесь')
+         //вывод сообщения "Token нет в localStorage, авторизуйтесь"
+         dispatch(getModal())
+         dispatch(tokenError())
       }
    }
 

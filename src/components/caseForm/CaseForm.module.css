@@ -4,24 +4,27 @@
    width: 100vw;
    background-color: black;
    height: 100vh;
+   margin: 0 auto;
 }
 .wrapper {
    display: flex;
    justify-content: space-between;
    width: 1235px;
+   height: 100vh;
    margin: 0 auto;
    position: relative;
    font-family: "Inter", sans-serif;
 }
 .formBike {
-   background-image: url(./formBike.jpg);
+   background-image: url(../../images/formBike.jpg);
+   background-size: cover;
    position: absolute;
    background-position: center center;
-   min-width: 1235px;
+   background-repeat: no-repeat;
+   width: 100%;
    height: 100vh;
    margin: 0 auto;
    z-index: 1;
-   background-repeat: no-repeat;
 }
 .loading{
    display: flex;
@@ -43,7 +46,6 @@
    border-radius: 20px;
    margin: 130px auto 0;
    z-index: 1;
-   /* position: relative; */
 }
 .title {
    display: flex;
@@ -73,7 +75,7 @@
 }
 .button {
    display: flex;
-   margin: auto;
+   margin: 20px auto;
    margin-bottom: 30px;
 }
 @media  screen and (max-width: 1439px)  and (min-width: 1024px) {
@@ -86,8 +88,8 @@
    .formBike {
       background-size:cover;
       margin: 0 auto;
-      max-width: 1439px;
-      min-width: 100vw;
+      max-width: 100%;
+      min-width: 100%;
       height: 100vh;
    }
    .container {
@@ -101,17 +103,19 @@
       min-width: 100vw;
       margin: 0 auto;
       height: 100vh;
+      overflow: auto;
    }
    .formBike {
-      background-size:cover;
+      background-size: cover;
       margin: 0 auto;
-      max-width: 1023px;
+      max-height: 100%;
+      overflow: auto;
       min-width: 100vw;
-      height: 100vh;
    }
    .form {
       flex: 0 1 70%;
-      height: 700px;
+      height: 600px;
+      overflow: auto;
    }
    .container {
       display: flex;
@@ -125,23 +129,30 @@
    }
 }
 @media  screen and (max-width: 639px){
+   .form{
+      padding-left: 40px;
+   }
    .caseForm, .wrapper {
       max-width: 639px;
       min-width: 100vw;
       margin: 0 auto;
       height: auto;
       height: 100vh;
+      overflow: auto;
    }
    .formBike {
       background-size:cover;
       margin: 0 auto;
-      min-width: 100vw;
       max-width: 639px;
-      height: 100vh;
+      height: 100%;
    }
    .form {
-      flex: 0 1 60%;
-      height: 700px;
+      flex: 0 1 70%;
+      height: 600px;
+      overflow: auto;
+      margin: 130px auto 0;
+      padding: 5px;
+
    }
    .container {
       display: flex;

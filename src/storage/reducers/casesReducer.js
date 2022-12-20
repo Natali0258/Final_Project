@@ -101,9 +101,6 @@ const casesReducer = (state = initialState, action) => {
          }
       case CASE_ACTIONS.FETCH_CASE_GET_SUCCESS:
          const index = state.cases.findIndex(caseObj => caseObj._id === action.data.data._id)
-         // console.log('state.officers=', state.officers)
-         // console.log('action.data.data=', action.data.data)
-         // console.log('index=', index)
          return {
             ...state,
             isLoading: false,
@@ -125,9 +122,6 @@ const casesReducer = (state = initialState, action) => {
          }
       case CASE_ACTIONS.FETCH_CASE_EDIT_SUCCESS:
          const indexCase = state.cases.findIndex(caseObj => caseObj._id === action.data.data._id)
-         console.log('state.cases=', state.cases)
-         console.log('action.data.data=', action.data.data)
-         console.log('index=', indexCase)
          return {
             ...state,
             isLoading: false,

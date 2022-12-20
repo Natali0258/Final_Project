@@ -4,7 +4,7 @@ import Input from '../formElements/input';
 import css from './AuthorizationForm.module.css';
 
 const AuthorizationForm = (props) => {
-   const { handleSubmit, handleChange, values, setValues } = props;
+   const { handleSubmit, values, setValues } = props;
    return (
       <form className={css.form} onSubmit={handleSubmit}>
          <div className={css.container}>
@@ -15,6 +15,7 @@ const AuthorizationForm = (props) => {
                required={'required'}
                placeholder={'IvanovIvan@mail.ru'}
                onChange={email => setValues({ ...values, email })} />
+            <div className={css.blank}></div>
             <Input title={'Введите пароль:'} id={'passwordAuthorization'}
                type={'password'}
                name={'password'}
@@ -23,6 +24,7 @@ const AuthorizationForm = (props) => {
                placeholder={'********'}
                minlength={'8'}
                onChange={password => setValues({ ...values, password })} />
+            <div className={css.blank}></div>
             <div className={css.btn}>
                <Button type={'submit'} name={'Авторизация'} />
             </div>

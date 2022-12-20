@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { createRequest } from '../../fetch/createRequest';
 import { fetchRequest } from '../../fetch/fetchRequest';
-import { fetchOfficerGetStarted, fetchOfficerGetSuccess, fetchOfficerGetError } from '../../storage/actions/officerActions';
+import { getModal, fetchOfficerGetStarted, fetchOfficerGetSuccess, fetchOfficerGetError } from '../../storage/actions/officerActions';
 import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
 import { fetchOfficerEditStarted, fetchOfficerEditSuccess, fetchOfficerEditError } from '../../storage/actions/officerActions';
+import { tokenError } from '../../storage/actions/authActions';
 import Button from '../formElements/button/Button';
 import ButtonClose from '../formElements/buttonClose';
 import MessageDataSaved from '../messageDataSaved/MessageDataSaved';
@@ -18,19 +19,15 @@ const OfficerDetal = () => {
    const [isEdit, setEdit] = useState(true);
    const [isMessage, setMessage] = useState(false);
    const [checked, setChecked] = useState('true');
-   //const ref = useRef();
    const params = useParams();
    const { officerId } = params;
 
    const dispatch = useDispatch();
    const officers = useSelector(state => state.officers);
 
-   console.log('officerId=', officerId);
-   console.log('state.officers=', officers);
    useEffect(() => {
       async function fetchData() {
          const token = localStorage.getItem('token');
-         console.log('token=', token);
          if (token) {
             //Запрос для проверки валидности токена.
             dispatch(fetchTokenValidityStarted());
@@ -41,7 +38,9 @@ const OfficerDetal = () => {
             await createRequest(`officers/${officerId}`, 'GET', true, dispatch, fetchOfficerGetSuccess, fetchOfficerGetError)
 
          } else {
-            console.log('token нет в localStorage, авторизуйтесь')
+            //вывод сообщения "Token нет в localStorage, авторизуйтесь"
+            dispatch(getModal())
+            dispatch(tokenError())
          }
       }
       fetchData();
@@ -50,12 +49,9 @@ const OfficerDetal = () => {
    const handleClick = (e) => {
       e.preventDefault();
       setEdit(!isEdit);
-      console.log('isEdit=', isEdit)
    }
 
-   console.log('officers=', officers);
    const officer = officers.officers.find(officer => officerId == officer._id)
-   console.log('officer._id=', officer._id);
 
    const [values, setValues] = useState(
       {
@@ -68,7 +64,6 @@ const OfficerDetal = () => {
    const handleSubmit = async (e) => {
       e.preventDefault();
       const token = localStorage.getItem('token');
-      console.log('token=', token);
       if (token) {
          //Запрос для проверки валидности токена.
          dispatch(fetchTokenValidityStarted());
@@ -95,7 +90,9 @@ const OfficerDetal = () => {
          await fetchRequest(`officers/${officerId}`, 'PUT', data, true, dispatch, fetchOfficerEditSuccess, fetchOfficerEditError)
 
       } else {
-         console.log('token нет в localStorage, авторизуйтесь')
+         //вывод сообщения "Token нет в localStorage, авторизуйтесь"
+         dispatch(getModal())
+         dispatch(tokenError())
       }
    }
 
@@ -153,7 +150,7 @@ const OfficerDetal = () => {
                            id={'approve'}
                            type={'radio'}
                            name={'radio'}
-                           value={'true'}
+                           value={'false'}
                            checked={checked === 'true' ? true : false}
                            onChange={(e) => setChecked(e.target.value)} />
                         <RadioButton title={'снять одобрение'}

@@ -20,7 +20,6 @@ const DropDown = (props) => {
                })
             }
          </select>
-
       </div >
    )
 }

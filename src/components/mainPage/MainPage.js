@@ -1,5 +1,4 @@
 import React from 'react';
-import mainPage from './main-page.jpg';
 import css from './MainPage.module.css';
 
 const MainPage = () => {
