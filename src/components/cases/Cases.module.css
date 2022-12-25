@@ -54,7 +54,7 @@
    overflow-y: scroll;
 }
 .tbody {
-   height: 500px;
+   height: 440px;
 }
 tr{
    display: grid;

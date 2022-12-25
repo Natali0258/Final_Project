@@ -9,13 +9,19 @@ import Authorisation from '../authorization/Authorization';
 import Result from '../result/Result';
 import RegAndAuthResult from '../regAndAuthResult/RegAndAuthResult';
 import css from './App.module.css';
+import * as officersSelectors from '../../storage/selectors';
+import * as authSelectors from '../../storage/selectors';
 import { useSelector } from 'react-redux';
 
 function App() {
-  const isModalActive = useSelector(state => state.officers.isModalActive);
-  const isAuthorization = useSelector(state => state.auth.isAuthorization);
-  const isRegistration = useSelector(state => state.officers.isRegistration);
-  const isError = useSelector(state => state.auth.isError)
+  const isModalActive = useSelector(officersSelectors.isModalActive);
+  const isAuthorization = useSelector(authSelectors.isAuthorization);
+  const isRegistration = useSelector(officersSelectors.isRegistration);
+  const isError = useSelector(authSelectors.isError);
+  // const isModalActive = useSelector(state => state.officers.isModalActive);
+  // const isAuthorization = useSelector(state => state.auth.isAuthorization);
+  // const isRegistration = useSelector(state => state.officers.isRegistration);
+  // const isError = useSelector(state => state.auth.isError)
   const isAuthResult = useSelector(state => state.auth.isAuthResult)
   console.log('isError=', isError)
   return (

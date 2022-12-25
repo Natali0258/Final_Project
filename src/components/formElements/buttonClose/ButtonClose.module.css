@@ -21,3 +21,43 @@
    transform: rotate(45deg);
    position: absolute;
 }
+
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v8.4.14,
+* Autoprefixer: v10.4.7
+* Browsers: last 4 version
+*/
+
+/* 
+.cross {
+   display: -webkit-box;
+   display: -ms-flexbox;
+   display: flex;
+   -webkit-box-pack: end;
+   -ms-flex-pack: end;
+   justify-content: end;
+   margin: 10px 10px 10px 0;
+   position: relative;
+}
+.line1 {
+   width: 0px;
+   height: 33px;
+   right: 17px;
+   border: 1px solid #000000;
+   -webkit-transform: rotate(45deg);
+   -ms-transform: rotate(45deg);
+   transform: rotate(45deg);
+   position: absolute;
+}
+.line2 {
+   width: 33px;
+   height: 0px;
+   top: 17px;
+   right: 0px;
+   border: 1px solid #000000;
+   -webkit-transform: rotate(45deg);
+   -ms-transform: rotate(45deg);
+   transform: rotate(45deg);
+   position: absolute;
+} */
