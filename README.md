@@ -2,10 +2,22 @@
 
 ![Коллаж](https://user-images.githubusercontent.com/83341999/185465189-4dd1be6a-b6fa-41b9-bf41-ab691439bd10.png)
 
-Hello!
-This is my final project: a bicycle theft reporting app. The application is intended for employees of a bicycle rental company and for ordinary users.
-Only a limited part of the functionality is available to the average user: the main page and the page with the ability to report a new case of theft.
-For company employees, a page with a list of all known cases of theft is available (designed in the form of a table). It is also possible to view detailed information about each case and edit fields.
+Привет!
+
+Это мой учебный финальный проект "Сервис проката велосипедов".  Приложение предназначено для учета случаев кражи велосипедов.
+
+Рядовому пользователю приложения доступна ограниченная часть функционала: главная страница и страница с возможностью сообщить о новом случае кражи.
+
+Для сотрудников компании, после регистрации и авторизации, доступны: страница со списком всех известных случаев кражи и страница со списком сотрудников компании. Списки выведены на экран в виде таблицы. 
+
+При клике по любому элементу списка осуществляется переход на детальную страницу, где можно просмотреть подробную информацию о каждом случае кражи и о каждом сотруднике. 
+
+В таблицах предусмотрена возможность удаления сообщения и удаления сотрудника, а на детальной странице предусмотрена возможность редактирования полей. Также на детальной странице сотрудника предусмотрена возможность одобрить сотрудника/снять одобрение при помощи радио кнопок. 
+
+К каждому сообщению о краже можно закрепить определенного сотрудника из списка одобренных сотрудников. 
+
+У каждого сообщения о краже возможны три статуса: new, in_progress и done. При выборе статуса “done” становится доступным и обязательным для заполнения поле завершающего комментария.
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
