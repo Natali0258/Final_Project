@@ -30,7 +30,7 @@
    display: flex;
    flex-direction: column;
    width: 540px;
-   height: 530px;
+   height: 540px;
    border: 2px solid rgb(58, 58, 240);
    background: rgb(212, 212, 243);
    border-radius: 20px;
@@ -60,9 +60,9 @@
    margin-top: 5px;
 }
 .titleStatus{
-   width: 40%;
+   width: 100%;
 }
-.input {
+.input, .inputStatus {
    font-family: "Inter", sans-serif;
    font-style: italic;
    background: white;
@@ -75,21 +75,25 @@
    padding-left: 5px;
    border: 2px solid rgb(212, 212, 243);
 }
-.statOfficer {
+.inputStatus{
+   width: 200px;
+}
+.statusOfficer {
    display: flex;
    justify-content: start;
 }
-.checkbox {
+.approved{
+   display: flex;
+   flex-direction:column;
+}
+.radioButtons {
    display: flex;
    flex-direction: column;
    margin-left: 10px;
    margin-top: 16px;
 }
-.radioButton {
-   margin-bottom: 10px;
-}
 .btn {
-   margin-top: 5px;
+   margin-top: 10px;
 }
 .wrap{
    display: flex;
@@ -139,9 +143,14 @@
    }
    .form{
       padding: 5px;
+      height: 510px;
    }
    .title{
+      margin-top: 10px;
       margin-left: 80px;
+   }
+   .btn {
+      margin-top: 0px;
    }
 }
 @media  screen and (max-width: 1023px)  and (min-width: 640px){
@@ -195,9 +204,6 @@
    }
    .container {
       margin: auto;
-   }
-   .statusOfficer{
-      margin: 0 30px;
    }
    .label, .input, .titleStatus {
    font-size: 22px;

@@ -119,6 +119,16 @@
       display: flex;
       justify-content: space-evenly;
    }
+   .formLeft,
+   .formRight {
+      margin-top: 5px;
+   }
+   .border {
+      height: 520px;
+   }
+   .title {
+      margin-top: 5px;
+   }
 }
 @media  screen and (max-width: 1023px)  and (min-width: 640px){
    .detalCase, .wrapper{

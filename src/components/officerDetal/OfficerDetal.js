@@ -143,14 +143,17 @@ const OfficerDetal = () => {
                   <p className={css.input}>{officer.email}</p>
                   <h3 className={css.label}>clientId:</h3>
                   <p className={css.input}>{officer.clientId}</p>
-                  <div className={css.statOfficer}>
-                     <p className={css.titleStatus}>Статус сотрудника:</p>
-                     <div className={css.checkbox}>
+                  <div className={css.statusOfficer}>
+                     <div className={css.approved}>
+                        <p className={css.titleStatus}>Статус сотрудника:</p>
+                        <p className={css.inputStatus}>{officer.approved ? 'одобрен' : 'не одобрен'}</p>
+                     </div>
+                     <div className={css.radioButtons}>
                         <RadioButton title={'одобрить'}
                            id={'approve'}
                            type={'radio'}
                            name={'radio'}
-                           value={'false'}
+                           value={'true'}
                            checked={checked === 'true' ? true : false}
                            onChange={(e) => setChecked(e.target.value)} />
                         <RadioButton title={'снять одобрение'}
