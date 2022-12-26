@@ -17,7 +17,7 @@ function App() {
   const isRegistration = useSelector(state => state.officers.isRegistration);
   const isError = useSelector(state => state.auth.isError)
   const isAuthResult = useSelector(state => state.auth.isAuthResult)
-  console.log('isError=', isError)
+  //console.log('isError=', isError)
   return (
     <BrowserRouter>
       <div className={css.App}>
