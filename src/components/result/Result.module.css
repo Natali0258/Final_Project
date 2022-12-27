@@ -7,7 +7,7 @@
    border-radius: 20px;
    top:0;
    left:0;
-   margin-top: -250px;
+   margin-top: -200px;
    margin-left: -235px;
    z-index: 2;
    position: absolute;
@@ -40,7 +40,6 @@
    .wrapp {
       width: 80vw;
       padding: 10px;
-      margin-top: -250px;
       margin-left: -calc(60vw/2);
    }
 }
@@ -48,7 +47,6 @@
    .wrapp {
       width: 80vw;
       padding: 10px;
-      margin-top: -350px;
       margin-left: -200px;
       padding: 5px 5px 30px;
    }
@@ -56,7 +54,6 @@
 @media  screen and (max-width: 399px){
    .wrapp {
       width: 80vw;
-      margin-top: -350px;
       margin-left: -140px; 
       padding: 10px 5px;
    }
