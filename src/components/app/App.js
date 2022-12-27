@@ -16,7 +16,7 @@ function App() {
   const isAuthorization = useSelector(state => state.auth.isAuthorization);
   const isRegistration = useSelector(state => state.officers.isRegistration);
   const isError = useSelector(state => state.auth.isError)
-  const isAuthResult = useSelector(state => state.auth.isAuthResult)
+  //const isAuthResult = useSelector(state => state.auth.isAuthResult)
   //console.log('isError=', isError)
   return (
     <BrowserRouter>
@@ -32,11 +32,11 @@ function App() {
               <RegAndAuthResult />
             </Result>
           }
-          {isAuthResult &&
+          {/* {isAuthResult &&
             <Result>
               <RegAndAuthResult />
             </Result>
-          }
+          } */}
         </Modal>
       </div >
     </BrowserRouter>
