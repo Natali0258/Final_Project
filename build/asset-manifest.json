@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/Final_Project/static/css/main.de0792b9.css",
+    "main.js": "/Final_Project/static/js/main.c9255599.js",
+    "static/media/bikeOfficer.jpg": "/Final_Project/static/media/bikeOfficer.a1779592c676989baea8.jpg",
+    "static/media/formBike.jpg": "/Final_Project/static/media/formBike.f1cf6052b6fb538bec94.jpg",
+    "static/media/Inter-Black.ttf": "/Final_Project/static/media/Inter-Black.24d6be6c502d39fb3ce1.ttf",
+    "static/media/Inter-Bold.ttf": "/Final_Project/static/media/Inter-Bold.a73db89c43e44ca8f5e0.ttf",
+    "static/media/Inter-Medium.ttf": "/Final_Project/static/media/Inter-Medium.e7231ba33760832432b8.ttf",
+    "static/media/Inter-Light.ttf": "/Final_Project/static/media/Inter-Light.58a136ec3193fa8a63e5.ttf",
+    "static/media/main-page.jpg": "/Final_Project/static/media/main-page.2b6e534a7118c9750cf8.jpg",
+    "static/media/caseBike.jpg": "/Final_Project/static/media/caseBike.a5a7236e6414ab3e5c5a.jpg",
+    "static/media/NunitoSans-Bold.ttf": "/Final_Project/static/media/NunitoSans-Bold.8268666c3b2ca2ec11c0.ttf",
+    "static/media/bike-orang.png": "/Final_Project/static/media/bike-orang.0aecce6e2e1a8d0bfb1c.png",
+    "index.html": "/Final_Project/index.html",
+    "static/media/line1.svg": "/Final_Project/static/media/line1.bc05bcd405ec08f80abd2f569fe25964.svg",
+    "static/media/line2.svg": "/Final_Project/static/media/line2.ebd3212a9036753beed750f97b40c041.svg",
+    "main.de0792b9.css.map": "/Final_Project/static/css/main.de0792b9.css.map",
+    "main.c9255599.js.map": "/Final_Project/static/js/main.c9255599.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.de0792b9.css",
+    "static/js/main.c9255599.js"
+  ]
+}
