@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, HashRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import Main from '../main/Main';
@@ -20,8 +20,7 @@ function App() {
   const isError = useSelector(authSelectors.isError);
 
   return (
-    // <BrowserRouter>
-    <HashRouter hashType="hasgbang">
+    <BrowserRouter>
       <div className={css.App}>
         <Header />
         <Main />
@@ -36,7 +35,7 @@ function App() {
           }
         </Modal>
       </div >
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
