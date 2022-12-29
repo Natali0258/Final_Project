@@ -19,7 +19,7 @@ const Main = () => {
             <Route path="/cases/:caseId" element={<CaseDetal />} />
             <Route exact path="/officers" element={<Officers />} />
             <Route path="/officers/:officerId" element={<OfficerDetal />} />
-            <Route path="*" element={<Error />} />
+            {/* <Route path="*" element={<Error />} /> */}
          </Routes>
       </main >
    )
