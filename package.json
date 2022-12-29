@@ -25,7 +25,8 @@
     "eject": "react-scripts eject",
     "minImages": "imagemin src/images/* --out-dir=dist/images",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "build-localhost": "PUBLIC_URL= "
   },
   "eslintConfig": {
     "extends": [
@@ -49,5 +50,5 @@
     "browser-sync": "^2.27.7",
     "node-sass": "^7.0.1"
   },
-  "homepage": "."
+  "homepage": "/"
 }
