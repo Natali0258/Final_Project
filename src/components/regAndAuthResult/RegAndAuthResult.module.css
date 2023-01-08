@@ -1,0 +1,56 @@
+.title, .message {
+   color: black;
+   font-weight: 400;
+}
+.title{
+   padding:0;
+   margin: 30px auto 20px;
+   padding: 20px;
+   font-size: 26px;
+}
+.message, .error{
+   display: flex;
+   flex-wrap: wrap;
+   padding: 20px 20px 60px;
+   font-size: 22px;
+   line-height: 1.5em;
+}
+.error{
+padding-top: 100px;
+}
+.hello,
+.link,
+.helloLink {
+   display: flex;
+   flex-direction: column;
+   line-height: 1.5em;
+   color: black;
+   vertical-align: center;
+   z-index: 2;
+}
+.hello,
+.helloLink {
+   font-size: 24px;
+   font-weight: 700;
+   padding: 20px;
+}
+.helloLink, .hello {
+   margin: 30px auto;
+}
+.link {
+   display: inline;
+   height: 50ph;
+   font-size: 22px;
+   font-weight: 700;
+   padding: 20px 20px 60px;
+}
+@media  screen and (max-width: 1023px)  and (min-width: 640px) {
+   .title, .message {
+      font-size: 24px;
+   }
+}
+@media  screen and (max-width: 639px){
+   .title, .message {
+      font-size: 28px;
+   }
+}

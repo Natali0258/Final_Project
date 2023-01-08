@@ -1,0 +1,46 @@
+.wrapper {
+   margin-top: 10px;
+   width: 400px;
+   position: relative;
+}
+.label {
+   color: black;
+   font-size: 18px;
+   font-weight: 400;
+}
+.textarea {
+   font-family: "Inter", sans-serif;
+   font-style: italic;
+   background: white;
+   color: black;
+   width: 380px;
+   height: 95px;
+   font-size: 18px;
+   font-weight: 400;
+   margin-top: 7px;
+   padding-left: 10px;
+   border: 2px solid rgb(212, 212, 243);
+   overflow: auto;
+}
+@media  screen and (max-width: 1023px)  and (min-width: 640px){
+   .wrapper {
+      width: 400px;
+      margin-top: 10px;
+   }
+   .label, .textarea {
+      font-size: 22px;
+   }
+}
+@media  screen and (max-width: 639px){
+   .wrapper {
+      width: 60vw;
+   }
+   .label {
+      width: 60vw;
+      font-size: 22px;
+   }
+   .textarea {
+      width: 60vw;
+      font-size: 22px;
+   }
+}

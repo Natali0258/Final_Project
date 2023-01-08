@@ -1,0 +1,10 @@
+.wrap{
+   display: flex;
+   flex-direction: column;
+   width: 300px;
+   height: 120px;
+   margin-top: -30px;
+   margin-left: -20px;
+   z-index: 3;
+   position: absolute;
+}

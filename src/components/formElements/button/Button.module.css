@@ -1,0 +1,21 @@
+.btn {
+   display: flex;
+   margin: auto;
+   font-weight: 700;
+   font-size: 20px;
+   line-height: 140%;
+   background: #ffa500;
+   color: white;
+   border: 2px solid #ffa500;
+   border-radius: 20px;
+   padding: 5px 10px;
+}
+.btn:hover {
+   color: #000000;
+   cursor: pointer;
+}
+@media  screen and (max-width: 1023px){
+   .btn {
+      font-size: 24px;
+   }
+}

@@ -1,0 +1,31 @@
+.wrap {
+   display: flex;
+   flex-direction: column;
+   text-align: center;
+   color: #ffa500;
+   line-height: 50%;
+   width: 150px;
+   height: 100px;
+}
+.logo {
+   margin-top: 5px;
+   height: 65px;
+   font-weight: 700;
+   font-size: 22px;
+}
+.text {
+   font-size: 18px;
+   line-height: 50%;
+   margin-top: 10px;
+   font-family: "Nunito Sans", serif;
+}
+@media  screen and (max-width: 1023px)  and (min-width: 640px) {
+   .logo {
+      height: 70px;
+   }
+}
+@media  screen and (max-width: 639px){
+   .logo {
+      height: 70px;
+   }
+}

@@ -1,0 +1,37 @@
+.message {
+   display: flex;
+   flex-direction: column;
+   width: 300px;
+   height: 120px;
+   border: 2px solid rgb(58, 58, 240);
+   background: rgb(212, 212, 243);
+   border-radius: 20px;
+   margin-top: 250px;
+   margin-left: 450px;
+   z-index: 2;
+   position: absolute;
+}
+.save {
+   text-align: center;
+   margin-top: 30px;
+}
+@media  screen and (max-width: 1023px)  and (min-width: 840px){
+   .message {
+      margin-left: 300px;
+   } 
+}
+@media  screen and (max-width: 839px)  and (min-width: 640px){
+   .message {
+      margin-left: 200px;
+   } 
+}
+@media  screen and (max-width: 639px) and (min-width: 400px){
+   .message {
+      margin-left: 100px;
+   } 
+}
+@media  screen and (max-width: 399px){
+   .message {
+      margin-left: 20px;
+   }
+}

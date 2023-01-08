@@ -1,0 +1,57 @@
+.wrap {
+   width: 400px;
+   height: 60px;
+   margin-top: 10px;
+   position: relative;
+}
+.label {
+   height: 27px;
+   width: 350px;
+   color: black;
+   font-size: 18px;
+   font-weight: 400;
+}
+.select {
+   font-family: "Inter", sans-serif;
+   font-style: italic;
+   display: flex;
+}
+.select,
+.option {
+   height: 28px;
+   width: 394px;
+   color: black;
+   font-size: 16px;
+   font-weight: 400;
+   margin-top: 8px;
+   border: 2px solid rgb(212, 212, 243);
+}
+@media  screen and (max-width: 1023px)  and (min-width: 640px){
+   .wrap {
+      width: 400px;
+      margin-top: 10px;
+   }
+   .label, .select {
+      height: 30px;
+      font-size: 22px;
+   }
+   .select,
+   .option {
+      font-size: 20px;
+      margin-top: 10px;
+   }
+}
+@media  screen and (max-width: 639px){
+   .wrap {
+      width: 60vw;
+      height: 100%;
+   }
+   .label {
+      width: 62vw;
+      font-size: 22px;
+   }
+   .select {
+      width: 62vw;
+      font-size: 22px;
+   }
+}
