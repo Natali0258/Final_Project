@@ -9,8 +9,9 @@ import { fetchCaseGetStarted, fetchCaseGetSuccess, fetchCaseGetError } from '../
 import { fetchCaseEditStarted, fetchCaseEditSuccess, fetchCaseEditError } from '../../storage/actions/casesActions';
 import { fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
 import { tokenError } from '../../storage/actions/authActions';
-import { getOfficersName } from '../getOfficersName';
-import { getArrayOfficersName } from '../getArrayOfficersName';
+import { getOfficersName } from '../functions/getOfficersName';
+import { getArrayOfficersName } from '../functions/getArrayOfficersName';
+import { changeDateFormat } from '../functions/changeDateFormat';
 import Button from '../formElements/button/Button';
 import ButtonClose from '../formElements/buttonClose/ButtonClose';
 import Input from '../formElements/input/Input';
@@ -101,21 +102,23 @@ const CaseDetal = (props) => {
    const handleSubmit = async (e) => {
       e.preventDefault();
       const token = localStorage.getItem('token');
+      console.log('token=', token)
       if (token) {
          //Запрос для проверки валидности токена.
          dispatch(fetchTokenValidityStarted());
-         await createRequest('auth/', 'GET', false, dispatch, fetchTokenValiditySuccess, fetchTokenValidityError)
+         await createRequest('auth/', 'GET', true, dispatch, fetchTokenValiditySuccess, fetchTokenValidityError)
 
          //PUT Запрос для редактирования сообщения о краже 
          //(доступен только авторизованным пользователям):
          let date = new Date();
-         let Year = date.getFullYear();
-         let Month = date.getMonth();
-         let Day = date.getDate();
-         let Hour = date.getHours();
-         let Minutes = date.getMinutes();
-         let Seconds = date.getSeconds();
-         let editDate = Day + '.' + Month + '.' + Year + ' ' + Hour + ':' + Minutes + ':' + Seconds
+         const createDate = changeDateFormat(date)
+         // let Year = date.getFullYear();
+         // let Month = date.getMonth();
+         // let Day = date.getDate();
+         // let Hour = date.getHours();
+         // let Minutes = date.getMinutes();
+         // let Seconds = date.getSeconds();
+         // let editDate = Day + '.' + Month + '.' + Year + ' ' + Hour + ':' + Minutes + ':' + Seconds
          //console.log('editDate=', editDate)
 
          const data = {
@@ -128,14 +131,14 @@ const CaseDetal = (props) => {
             "officer": officerId,
             "description": `${values.description}`,
             "resolution": `${values.resolution}`,
-            "updatedAt": `${editDate}`,
+            "updatedAt": `${createDate}`,
             //"createdAt": `${values.createdAt}`,
          }
 
          dispatch(fetchCaseEditStarted());
          //console.log('caseObj._id', caseObj._id, 'caseId=', caseId, 'data=', data)
          await fetchRequest(`cases/${caseId}`, 'PUT', data, true, dispatch, fetchCaseEditSuccess, fetchCaseEditError, setMessage)
-
+         console.log('status=', data.status)
       } else {
          //вывод сообщения "Token нет в localStorage, авторизуйтесь"
          dispatch(getModal())
@@ -190,20 +193,20 @@ const CaseDetal = (props) => {
                            id={'colorDetalCase'}
                            type={'text'}
                            name={'color'}
-                           value={values.color}
+                           value={values.color === null ? ' ' : values.color}
                            onChange={color => setValues({ ...values, color })} />
                         <Input title={'Дата кражи:'}
                            id={'dateDetalCase'}
                            type={'text'}
                            name={'date'}
-                           value={values.date}
+                           value={values.date === null ? ' ' : values.date}
                            onChange={date => setValues({ ...values, date })} />
                         <DropDown title={'Статус сообщения:'}
                            id={'statusDetalCase'}
                            type={'text'}
                            name={'status'}
                            options={cases.caseStatus}
-                           value={values.status}
+                           value={values.status === null ? ' ' : values.status}
                            onChange={handleChange} />
                      </div>
 
@@ -211,7 +214,7 @@ const CaseDetal = (props) => {
                         <p className={css.label}>Дата создания сообщения:</p>
                         <p className={css.input}>{caseObj.createdAt}</p>
                         <p className={css.label}>Дата последнего обновления сообщения:</p>
-                        <p className={css.input}>{caseObj.updatedAt}</p>
+                        <p className={css.input}>{caseObj.updatedAt === null ? ' ' : caseObj.updatedAt}</p>
                         <p className={css.label}>clientId, уникальный для каждого студента:</p>
                         <p className={css.input}>{caseObj.clientId}</p>
                         <DropDown title={'Ответственный сотрудник:'}
@@ -219,14 +222,14 @@ const CaseDetal = (props) => {
                            type={'text'}
                            name={'officer'}
                            options={arrayOfficersName}
-                           value={values.officer}
+                           value={values.officer === null ? '' : values.officer}
                            onChange={officer => setValues({ ...values, officer })} />
                         <Textarea title={'Дополнительный комментарий:'}
                            id={'textareaDetalCase'}
                            type={'text'}
                            name={'description'}
                            style={{ height: "30px" }}
-                           value={values.description === "null" ? '' : values.description}
+                           value={values.description === null ? '' : values.description}
                            onChange={description => setValues({ ...values, description })} />
                         <Textarea title={'Завершающий комментарий:'}
                            id={'resolutionDetalCase'}
@@ -235,7 +238,7 @@ const CaseDetal = (props) => {
                            isDisabled={isDisabled}
                            isRequired={isRequired}
                            style={{ height: "30px" }}
-                           value={values.resolution === "null" ? '' : values.resolution}
+                           value={values.resolution === null ? '' : values.resolution}
                            onChange={resolution => setValues({ ...values, resolution })} />
                      </div>
                   </div>

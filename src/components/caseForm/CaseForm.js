@@ -8,7 +8,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchRequest } from '../../fetch/fetchRequest';
 import { createRequest } from '../../fetch/createRequest';
-import { getArrayOfficersName } from '../getArrayOfficersName';
+import { getArrayOfficersName } from '../functions/getArrayOfficersName';
+import { changeDateFormat } from '../functions/changeDateFormat';
 import ButtonClose from '../formElements/buttonClose/ButtonClose';
 import Input from '../formElements/input/Input';
 import Textarea from '../formElements/textarea/Textarea';
@@ -32,7 +33,7 @@ const CaseForm = () => {
          if (auth.isAuth === false) localStorage.removeItem('token');
 
          const token = localStorage.getItem('token');
-         console.log('token=', token);
+         //console.log('token=', token);
 
          if (token) {
             //вывод на экран DropDown со списком ответственных сотрудников
@@ -75,15 +76,9 @@ const CaseForm = () => {
    //которые образованны из свойств lastName и firstName
    const officersName = getArrayOfficersName(officers);
 
+   //Изменение формата даты
    let date = new Date();
-   let Year = date.getFullYear();
-   let Month = date.getMonth();
-   let Day = date.getDate();
-   let Hour = date.getHours();
-   let Minutes = date.getMinutes();
-   let Seconds = date.getSeconds();
-   let editDate = Day + '.' + Month + '.' + Year + ' ' + Hour + ':' + Minutes + ':' + Seconds
-   //console.log('editDate=', editDate)
+   const createDate = changeDateFormat(date)
 
    const handleSubmitCaseForm = async (e) => {
       e.preventDefault();
@@ -97,7 +92,7 @@ const CaseForm = () => {
          date: values.date,
          officer: values.officer,
          description: values.description,
-         createdAt: editDate,
+         createdAt: createDate,
       };
 
       const arrName = caseObj.officer.split(' ');
@@ -274,7 +269,8 @@ const CaseForm = () => {
                <MessageDataSaved
                   isMessage={isMessage}
                   setMessage={setMessage}
-                  title={'Данные сохранены'} />
+                  title={`Ваше обращение от ${createDate} зарегистрировано в базе`}
+               />
             }
          </div >
       </div >

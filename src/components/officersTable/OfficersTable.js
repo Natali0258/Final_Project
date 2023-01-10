@@ -44,7 +44,7 @@ const OfficersTable = () => {
             </tr>
          </thead>
          <tbody className={css.tbody}>
-            {officers.officers.length && officers.officers.map(officer => (
+            {officers.officers.length ? officers.officers.map(officer => (
                <tr className={css.tr} key={officer._id} >
                   <td className={css.lastName}><Link to={`/officers/${officer._id}`}>{officer.lastName}</Link></td>
                   <td className={css.firstName}><Link to={`/officers/${officer._id}`}>{officer.firstName}</Link></td>
@@ -57,7 +57,8 @@ const OfficersTable = () => {
                         onClick={() => handleDelete(officer)} />
                   </td>
                </tr>
-            ))}
+            )) : null
+            }
          </tbody>
       </table>)
 }

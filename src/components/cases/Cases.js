@@ -7,7 +7,7 @@ import { fetchCasesGetStarted, fetchCasesGetSuccess, fetchCasesGetError } from '
 import { fetchCaseRemoveStarted, fetchCaseRemoveSuccess, fetchCaseRemoveError } from '../../storage/actions/casesActions';
 import { fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
 import { tokenError } from '../../storage/actions/authActions';
-import { getOfficersName } from '../getOfficersName';
+import { getOfficersName } from '../functions/getOfficersName';
 import Button from '../formElements/button/Button';
 import css from './Cases.module.css';
 

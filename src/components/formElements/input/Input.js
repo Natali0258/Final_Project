@@ -3,6 +3,13 @@ import css from './Input.module.css';
 
 const Input = (props) => {
    const { title, id, type, name, value, required, placeholder, minLength, onChange } = props;
+   function checkSpaces(value) {
+      if (value === '' || value.trim() !== '') {
+         return false;
+      } else {
+         return true;
+      }
+   }
 
    return (
       <div className={css.wrapper}>
@@ -16,7 +23,12 @@ const Input = (props) => {
             placeholder={placeholder}
             minLength={minLength}
             onChange={e => onChange(e.target.value)}
-         >{value.name}</input>}
+         >{value.name === null ? '' : value.name}</input>}
+
+         {/* Проверка поля на ввод одних пробелов */}
+         {(checkSpaces(value) === true) && required &&
+            (<div className={css.checkSpaces}>Поле не должно содержать одни пробелы </div>)}
+
          {type === 'password' &&
             (<div className={css.hint}>Пароль должен содержать восемь или более символов.</div>)
          }
