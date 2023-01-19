@@ -1,15 +1,15 @@
 .detalOfficer {
    display: flex;
    justify-content: center;
-   width: 100vw;
    background-color: black;
+   width: 100%;
    height: 100vh;
-   margin: 40px auto 0;
+   margin: 0 auto;
 }
 .wrapper {
    display: flex;
    justify-content: start;
-   flex-basis: 1235px;
+   width: 100%;
    height: 100vh;
    margin: 0 auto;
    position: relative;
@@ -26,7 +26,7 @@
    margin: 0 auto;
    z-index: 1;
 }
-.form {
+.container {
    display: flex;
    flex-direction: column;
    width: 540px;
@@ -45,7 +45,7 @@
    margin-top: 15px;
    margin-left: 80px;
 }
-.container {
+.form {
    display: flex;
    flex-direction: column;
    margin-top: 5px;
@@ -126,7 +126,7 @@
    z-index: 6;
    position: absolute;
 }
-@media  screen and (max-width: 1439px)  and (min-width: 1024px) {
+/* @media  screen and (max-width: 1439px)  and (min-width: 1024px) {
    .detalOfficer{
       max-width: 1439px;
       margin: 0 auto;
@@ -152,7 +152,7 @@
    .btn {
       margin-top: 0px;
    }
-}
+} */
 @media  screen and (max-width: 1023px)  and (min-width: 640px){
    .detalOfficer, .wrapper {
       max-width: 1023px;
@@ -167,7 +167,7 @@
       min-width: 100vw;
       height: 100vh;
    }
-   .form{
+   .container{
       height: 590px;
       margin-left: 50px;
    }
@@ -191,7 +191,7 @@
       min-width: 100vw;
       height: 100vh;
    }
-   .form{
+   .container{
       max-width: 80vw;
       min-width: 80vw;
       min-height: 75%;
@@ -202,7 +202,7 @@
    .title {
       width: 70%;
    }
-   .container {
+   .form {
       margin: auto;
    }
    .label, .input, .titleStatus {

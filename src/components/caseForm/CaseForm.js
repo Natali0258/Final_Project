@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { fetchTokenValidityStarted, fetchTokenValiditySuccess, fetchTokenValidityError } from '../../storage/actions/officerActions';
-import { getModal, fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
+import { fetchOfficersGetStarted, fetchOfficersGetSuccess, fetchOfficersGetError } from '../../storage/actions/officerActions';
 import { fetchCaseSendStarted, fetchCaseSendSuccess, fetchCaseSendError } from '../../storage/actions/casesActions';
-import { tokenError } from '../../storage/actions/authActions';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchRequest } from '../../fetch/fetchRequest';
@@ -65,12 +64,43 @@ const CaseForm = () => {
          clientId: 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
          createdAd: '',
          updatedAd: '',
-         color: '',
+         color: ' ',
          date: '',
          officer: '',
-         description: '',
-         resolution: '',
+         description: ' ',
+         resolution: ' ',
       })
+
+   const [validation, setValidation] = useState(
+      {
+         licenseNumberValid: false,
+         ownerFullNameValid: false,
+         formValid: false
+      }
+   )
+
+   const handleLicenseNumber = (licenseNumber) => {
+      setValues({ ...values, licenseNumber });
+      //console.log('values1=', values.licenseNumber);
+      let isLicenseNumberValid = licenseNumber.trim() !== '';
+      setValidation({
+         ...validation, licenseNumberValid: isLicenseNumberValid,
+         formValid: validation.licenseNumberValid && validation.ownerFullNameValid
+      })
+   }
+
+   const handleOwnerFullName = (ownerFullName) => {
+      setValues({ ...values, ownerFullName });
+      //console.log('values2=', values.ownerFullName);
+      let isOwnerFullNameValid = ownerFullName.trim() !== '';
+      setValidation({
+         ...validation, ownerFullNameValid: isOwnerFullNameValid,
+         formValid: validation.licenseNumberValid && validation.ownerFullNameValid
+      });
+   }
+   // console.log('licenseNumberValid=', validation.licenseNumberValid)
+   // console.log('ownerFullNameValid=', validation.ownerFullNameValid)
+   // console.log('formValid=', validation.formValid)
 
    //Формируем массив officersName из имен ответственных сотрудников, 
    //которые образованны из свойств lastName и firstName
@@ -146,11 +176,11 @@ const CaseForm = () => {
                clientId: 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
                createdAt: '',
                updatedAt: '',
-               color: '',
+               color: ' ',
                date: '',
                officer: '',
-               description: '',
-               resolution: '',
+               description: ' ',
+               resolution: ' ',
             }
          )
       } else {
@@ -178,11 +208,11 @@ const CaseForm = () => {
                clientId: 'b4609e1b-9a39-46ed-b198-aca28359c8e2',
                createdAt: '',
                updatedAt: '',
-               color: '',
+               color: ' ',
                date: '',
                officer: '',
-               description: '',
-               resolution: '',
+               description: ' ',
+               resolution: ' ',
             }
          )
       }
@@ -212,7 +242,7 @@ const CaseForm = () => {
                         value={values.licenseNumber}
                         placeholder={'110012'}
                         required={'required'}
-                        onChange={licenseNumber => setValues({ ...values, licenseNumber })} />
+                        onChange={handleLicenseNumber} />
                      <Input title={'ФИО пользователя: *'}
                         id={'ownerFullNameCaseForm'}
                         type={'text'}
@@ -220,7 +250,7 @@ const CaseForm = () => {
                         value={values.ownerFullName}
                         required={'required'}
                         placeholder={'Иванов Иван Иванович'}
-                        onChange={ownerFullName => setValues({ ...values, ownerFullName })} />
+                        onChange={handleOwnerFullName} />
                      <DropDown title={'Tип велосипеда: *'}
                         id={'bikeTypeCaseForm'}
                         type={'text'}
@@ -262,7 +292,8 @@ const CaseForm = () => {
                   </div>
                </div>
                <div className={css.button}>
-                  <Button type={'submit'} name={'Coxранить'} />
+                  <Button disabled={!validation.formValid}
+                     type={'submit'} name={'Coxранить'} />
                </div>
             </form>
             {isMessage &&

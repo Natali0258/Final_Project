@@ -100,12 +100,12 @@ const OfficerDetal = () => {
       <div className={css.detalOfficer}>
          <div className={css.wrapper}>
             <div className={css.imgOfficer}></div>
-            <div className={css.form}>
+            <div className={css.container}>
                <Link to='/officers'>
                   <ButtonClose />
                </Link>
                <p className={css.title}>Детальная страница сотрудника</p>
-               <form className={css.container} onSubmit={handleSubmit}>
+               <form className={css.form} onSubmit={handleSubmit}>
                   <Input title={'Фамилия сотрудника:'}
                      id={'lastNameDetalOfficer'}
                      type={'text'}
@@ -135,7 +135,6 @@ const OfficerDetal = () => {
                         <h3 className={css.label}>Пароль: *</h3>
                         <div className={css.btn}>
                            <Button name={'Изменить пароль'} type={'button'}
-                              // ref={ref} 
                               onClick={handleClick} />
                         </div>
                      </>}

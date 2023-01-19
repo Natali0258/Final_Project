@@ -41,15 +41,17 @@ const Officers = () => {
       <div className={css.officers}>
          <div className={css.wrapper}>
             <div className={css.imgOfficer}></div>
-            <div className={css.border}>
-               <h3 className={css.title}>Ответственные сотрудники</h3>
-               {isLoading ?
-                  <Loader /> :
-                  <OfficersTable
-                     checked={checked}
-                     setChecked={setChecked}
-                     officers={officers} />
-               }
+            <div className={css.container}>
+               <div className={css.border}>
+                  <h3 className={css.title}>Ответственные сотрудники</h3>
+                  {isLoading ?
+                     <Loader /> :
+                     <OfficersTable
+                        checked={checked}
+                        setChecked={setChecked}
+                        officers={officers} />
+                  }
+               </div>
             </div>
          </div>
       </div >

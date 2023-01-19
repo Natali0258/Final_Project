@@ -1,33 +1,31 @@
 .footer {
    display: flex;
    justify-content: center;
-   height: 100px;
-   width: 100vw;
+   width: 100%;
    background-color: black;
-   position: relative;
+   height: 100px;
+   margin: 0 auto;
    z-index: 3;
-   bottom: 0;
 }
 .wrapper {
-   bottom: 0;
    display: flex;
    justify-content: center;
-   align-items: center;
-   height: 100px;
-   flex-basis: 1235px;
-   color: #ffa500;
-   font-weight: 700;
-   font-size: 20px;
-   line-height: 50%;
-   font-family: "Inter", sans-serif;
+   width: 1235px;
+   margin: 0 auto;
+   bottom: 0;
    background-color: black;
 }
 .contacts {
    display: flex;
    justify-content: center;
    align-items: center;
-   font-size: 16px;
+   color: #ffa500;
+   font-weight: 700;
+   font-size: 20px;
    line-height: 50%;
+   font-family: "Inter", sans-serif;
+   background-color: black;
+   margin: 5px;
 }
 .socialNetwork {
    display: flex;
@@ -35,32 +33,17 @@
    align-items: center;
    margin: 0 60px;
 }
-.facebook,
-.twitter,
-.instagram {
+.link_button {
+   background: black;
+   border: 1px solid black;
+   cursor: pointer;
+   text-decoration: underline;
+   display: inline;
+   margin: 5px;
+}
+.item {
    height: 35px;
    color: #ffa500;
-}
-@media  screen and (max-width: 1439px) and (min-width: 1024px){
-   .footer, .wrapper {
-      max-width: 1439px;
-      margin: 0 auto;
-   }
-}
-@media  screen and (max-width: 1023px)  and (min-width: 640px) {
-   .footer, .wrapper {
-      max-width: 1023px;
-      margin: 0 auto;
-   }
-   .contacts {
-      display: flex;
-      flex-direction: column;
-   }
-   .facebook,
-   .twitter,
-   .instagram {
-      margin-top: 15px;
-   }
 }
 @media  screen and (max-width: 639px){
    .footer, .wrapper {
@@ -71,9 +54,7 @@
       display: flex;
       flex-direction: column;
    }
-   .facebook,
-   .twitter,
-   .instagram {
-      margin-top: 15px;
+   .item {
+      margin-top: 10px;
    }
 }

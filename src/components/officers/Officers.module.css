@@ -1,15 +1,15 @@
 .officers {
    display: flex;
    justify-content: center;
-   width: 100vw;
    background-color: black;
+   width: 100%;
    height: 100vh;
    margin: 0 auto;
 }
 .wrapper {
    display: flex;
-   justify-content: space-between;
-   flex-basis: 1235px;
+   justify-content: center;
+   width: 100%;
    height: 100vh;
    margin: 0 auto;
    position: relative;
@@ -26,8 +26,14 @@
    margin: 0 auto;
    z-index: 1;
 }
+.container{
+   display: flex;
+   justify-content: space-between;
+   width: 1400px
+}
 .border {
    display: flex;
+   /* flex: 0 1 70%; */
    flex-direction: column;
    align-items: center;
    margin: 120px 0 0 40px;
@@ -60,28 +66,6 @@
 .btn:hover {
    color: #000000;
    cursor: pointer;
-}
-@media  screen and (max-width: 1439px)  and (min-width: 1024px) {
-   .officers, .wrapper{
-      max-width: 1439px;
-      min-width: 100vw;
-      margin: 0 auto;
-      height: 100vh;
-      overflow: auto;
-   }
-   .imgOfficer {
-      background-size: cover;
-      margin: 0 auto;
-      height: 100vh;
-   }
-   .border {
-      height: 500px;
-   }
-   .table {
-      margin: 170px 20px auto;
-      width: calc(100%-20px);
-      padding: 10px 5px;
-   }
 }
 @media  screen and (max-width: 1023px)  and (min-width: 640px){
    .officers, .wrapper{

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createRequest } from '../../fetch/createRequest';
 import { fetchRequest } from '../../fetch/fetchRequest';
@@ -69,6 +69,7 @@ const CaseDetal = (props) => {
    //Находим по id объект (случай кражи)
    const caseObj = cases.cases.find(caseObj => caseId === caseObj._id)
    //console.log('caseObj=', caseObj)
+
    const [values, setValues] = useState(
       {
          licenseNumber: caseObj.licenseNumber,
@@ -112,15 +113,10 @@ const CaseDetal = (props) => {
          //(доступен только авторизованным пользователям):
          let date = new Date();
          const createDate = changeDateFormat(date)
-         // let Year = date.getFullYear();
-         // let Month = date.getMonth();
-         // let Day = date.getDate();
-         // let Hour = date.getHours();
-         // let Minutes = date.getMinutes();
-         // let Seconds = date.getSeconds();
-         // let editDate = Day + '.' + Month + '.' + Year + ' ' + Hour + ':' + Minutes + ':' + Seconds
-         //console.log('editDate=', editDate)
 
+         if (values.resolution === 'null') {
+            return values.resolution = ' '
+         }
          const data = {
             "licenseNumber": `${values.licenseNumber}`,
             "ownerFullName": `${values.ownerFullName}`,
@@ -162,7 +158,7 @@ const CaseDetal = (props) => {
       <div className={css.detalCase}>
          <div className={css.wrapper}>
             <div className={css.caseBike}></div>
-            <div className={css.border}>
+            <div className={css.case}>
                <Link to='/cases'>
                   <ButtonClose />
                </Link>
@@ -193,20 +189,17 @@ const CaseDetal = (props) => {
                            id={'colorDetalCase'}
                            type={'text'}
                            name={'color'}
-                           value={values.color === null ? ' ' : values.color}
+                           value={values.color || ''}
                            onChange={color => setValues({ ...values, color })} />
-                        <Input title={'Дата кражи:'}
-                           id={'dateDetalCase'}
-                           type={'text'}
-                           name={'date'}
-                           value={values.date === null ? ' ' : values.date}
-                           onChange={date => setValues({ ...values, date })} />
+                        <p className={css.label}>Дата кражи:</p>
+                        <p className={css.input}>{caseObj.date ? caseObj.date : values.date = values.createdAt}</p>
                         <DropDown title={'Статус сообщения:'}
                            id={'statusDetalCase'}
                            type={'text'}
                            name={'status'}
+                           required={'required'}
                            options={cases.caseStatus}
-                           value={values.status === null ? ' ' : values.status}
+                           value={values.status || ''}
                            onChange={handleChange} />
                      </div>
 
@@ -222,24 +215,26 @@ const CaseDetal = (props) => {
                            type={'text'}
                            name={'officer'}
                            options={arrayOfficersName}
-                           value={values.officer === null ? '' : values.officer}
+                           value={values.officer || ''}
                            onChange={officer => setValues({ ...values, officer })} />
                         <Textarea title={'Дополнительный комментарий:'}
                            id={'textareaDetalCase'}
                            type={'text'}
                            name={'description'}
                            style={{ height: "30px" }}
-                           value={values.description === null ? '' : values.description}
+                           value={values.description || ''}
                            onChange={description => setValues({ ...values, description })} />
-                        <Textarea title={'Завершающий комментарий:'}
-                           id={'resolutionDetalCase'}
-                           type={'text'}
-                           name={'resolution'}
-                           isDisabled={isDisabled}
-                           isRequired={isRequired}
-                           style={{ height: "30px" }}
-                           value={values.resolution === null ? '' : values.resolution}
-                           onChange={resolution => setValues({ ...values, resolution })} />
+                        {values.status === 'done' &&
+                           <Textarea title={'Завершающий комментарий:'}
+                              id={'resolutionDetalCase'}
+                              type={'text'}
+                              name={'resolution'}
+                              isDisabled={isDisabled}
+                              isRequired={isRequired}
+                              style={{ height: "30px" }}
+                              value={values.resolution || ''}
+                              onChange={resolution => setValues({ ...values, resolution })} />
+                        }
                      </div>
                   </div>
                   <div className={css.btn}>

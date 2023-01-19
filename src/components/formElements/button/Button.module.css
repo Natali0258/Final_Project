@@ -13,6 +13,7 @@
 .btn:hover {
    color: #000000;
    cursor: pointer;
+   transition: color .5s linear;
 }
 @media  screen and (max-width: 1023px){
    .btn {

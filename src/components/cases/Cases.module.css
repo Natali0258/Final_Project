@@ -2,14 +2,14 @@
    display: flex;
    justify-content: center;
    background-color: black;
+   width: 100%;
    height: 100vh;
-   width: 100vw;
    margin: 0 auto;
 }
 .wrapper {
    display: flex;
    justify-content: center;
-   min-width: 1235px;
+   width: 100vw;
    height: 100vh;
    margin: 0 auto;
    position: relative;
@@ -36,10 +36,8 @@
    z-index: 2;
 }
 .table {
-   table-layout: fixed;
-   position: absolute;
    margin: 170px 20px;
-   width: calc(100%-20px);
+   max-width: 1350px;
    padding: 10px 0;
    border: 2px solid #000000;
    border-collapse: collapse;
@@ -89,22 +87,9 @@ td {
    z-index: 2;
 }
 @media  screen and (max-width: 1439px)  and (min-width: 1024px) {
-   .cases, .wrapper{
-      max-width: 1439px;
-      min-width: 100vw;
-      margin: 0 auto;
-      height: 100vh;
-      overflow: auto;
-   }
-   .caseBike {
-      background-size: cover;
-      margin: 0 auto;
-      height: 100vh;
-   }
    .table {
-      max-width: 80%;
+      max-width: 90%;
       margin: 170px 10px auto;
-      width: calc(100%-20px);
       padding: 10px 5px;
    }
 }
